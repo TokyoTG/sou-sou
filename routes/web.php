@@ -16,3 +16,34 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+
+Route::prefix('/dashboard')->group(function () {
+    Route::get('/', function () {
+        return view('dashboard.index');
+    })->name('dashboard.index');
+
+    //users section
+    Route::resource('users', 'UsersController');
+
+    //end users section
+
+    //groups section
+    Route::resource('groups', 'GroupController');
+
+    //end groups section
+
+
+    Route::get('/settings', function () {
+        return view('dashboard.settings');
+    })->name('dashboard.settings');
+
+
+    Route::get('/complaints', function () {
+        return view('dashboard.complaints');
+    })->name('dashboard.complaints');
+
+    Route::get('/wait_list', function () {
+        return view('dashboard.wait_list');
+    })->name('dashboard.wait_list');
+});
