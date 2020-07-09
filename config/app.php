@@ -28,6 +28,8 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'key' => env('APP_KEY', 'SomeRandomStringSomeRandomString'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Debug Mode
