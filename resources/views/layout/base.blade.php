@@ -63,6 +63,21 @@
         .content{
             min-height: 100vh;
         }
+        #profile{
+            width: 40px;
+            border-radius: 50%;
+            box-sizing: border-box;
+            position: relative;
+            background: lightgreen;
+            height: 40px;
+        }
+
+        #profile p{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%,-50%);
+        }
 
     </style>
 </head>

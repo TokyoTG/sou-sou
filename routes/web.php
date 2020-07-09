@@ -19,7 +19,7 @@ Route::get('/', function () {
 
 
 Route::prefix('/dashboard')->group(function () {
-    Route::get('/', function () {
+    Route::get('/home', function () {
         return view('dashboard.index');
     })->name('dashboard.index');
 

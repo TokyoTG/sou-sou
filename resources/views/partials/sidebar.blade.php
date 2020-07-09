@@ -14,6 +14,9 @@
                         <a href="{{route('dashboard.wait_list')}}"> <i class="menu-icon fa fa-list-alt"></i>Wait List</a>
                     </li>
                     <li class="links">
+                        <a href="{{route('dashboard.complaints')}}"> <i class="menu-icon fa fa-list-alt"></i>Notifications</a>
+                    </li>
+                    <li class="links">
                         <a href="{{route('dashboard.complaints')}}"> <i class="menu-icon fa fa-list-alt"></i>Complaints</a>
                     </li>
                     <li class="links">
