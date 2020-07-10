@@ -4,7 +4,7 @@
                     <a href="{{route('dashboard.index')}}"><i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
                     </li>
                     <li class="menu-title">Menu</li><!-- /.menu-title -->
-                    <li class="links">
+                    <li class="active">
                         <a href="{{route('users.index')}}"> <i class="menu-icon fa fa-users"></i>Users</a>
                     </li>
                      <li class="links">

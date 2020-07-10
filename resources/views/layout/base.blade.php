@@ -355,7 +355,19 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('dashboard/assets/js/sb-admin-2.min.js')}}"></script>
+  <script>
+    let links = [...document.getElementsByClassName('nav-item')];
+   var loc = window.location.href;
+      $(document).ready(()=>{
+        links.forEach(link=>{
+        if(link.firstElementChild.getAttribute('href')  == loc){
+          link.classList.add('active');
 
+        }
+      })
+      })
+
+  </script>
 </body>
 
 </html>
