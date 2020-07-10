@@ -14,6 +14,7 @@ class GroupController extends Controller
     public function index()
     {
         //
+        return view('dashboard.groups');
     }
 
     /**
@@ -46,6 +47,7 @@ class GroupController extends Controller
     public function show($id)
     {
         //
+        return view('dashboard.singleGroup');
     }
 
     /**
