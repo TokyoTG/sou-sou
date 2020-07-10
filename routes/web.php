@@ -39,6 +39,11 @@ Route::prefix('/dashboard')->group(function () {
     })->name('dashboard.settings');
 
 
+    Route::get('/notifications', function () {
+        return view('dashboard.notifications');
+    })->name('dashboard.notifications');
+
+
     Route::get('/complaints', function () {
         return view('dashboard.complaints');
     })->name('dashboard.complaints');

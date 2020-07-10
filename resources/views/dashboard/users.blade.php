@@ -1,39 +1,12 @@
 @extends('layout.base')
-@section('custom_css')
-    
-@endsection
 
-@section('sidebar')
-<li >
-<a href="{{route('dashboard.index')}}"><i class="menu-icon fa fa-dashboard"></i>Dashboard </a>
-</li>
-<li class="menu-title">Menu</li><!-- /.menu-title -->
-<li class="active">
-    <a href="{{route('users.index')}}"> <i class="menu-icon fa fa-users"></i>Users</a>
-</li>
-    <li>
-    <a href="{{route('groups.index')}}"> <i class="menu-icon fa fa-folder"></i>Groups</a>
-</li>
-    <li>
-    <a href="{{route('dashboard.wait_list')}}"> <i class="menu-icon fa fa-list-alt"></i>Wait List</a>
-</li>
-<li class="links">
-    <a href="{{route('dashboard.complaints')}}"> <i class="menu-icon fa fa-list-alt"></i>Notifications</a>
-</li>
-<li>
-    <a href="{{route('dashboard.complaints')}}"> <i class="menu-icon fa fa-list-alt"></i>Complaints</a>
-</li>
-<li>
-    <a href="{{route('dashboard.settings')}}"> <i class="menu-icon fa fa-cogs"></i>Settings</a>
-</li>
-@endsection
 
 @section('title')
     <h1>Users</h1>
 @endsection
 
 @section('newBtn')
- <li><button class="btn btn-primary" data-toggle="modal" data-target="#myModal"> New
+ <button class="d-none d-sm-inline-block btn  btn-primary shadow-sm" data-toggle="modal" data-target="#myModal"> New
      <i class="fa fa-plus my-float"></i></button>
 @endsection
 @section('contents')
