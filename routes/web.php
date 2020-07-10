@@ -17,6 +17,24 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
+
+Route::get('/register', function () {
+    return view('register');
+})->name('register');
+
+Route::get('/forgot_pasword', function () {
+    return view('forgot');
+})->name('forgot');
+
+
+Route::get('/reset_password', function () {
+    return view('reset');
+})->name('reset');
+
+
 
 Route::prefix('/dashboard')->group(function () {
     Route::get('/home', function () {

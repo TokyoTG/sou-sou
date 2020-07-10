@@ -17,7 +17,11 @@
 
   <!-- Custom styles for this template-->
   <link href="{{asset('dashboard/assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
-
+<style>
+  .nav-tabs .nav-link.active{
+    border-left: 3px solid #4e73df;
+  }
+</style>
 </head>
 
 <body id="page-top">
