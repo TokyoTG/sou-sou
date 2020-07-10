@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('title')
-    <h1>Groups</h1>
+    <h4>Groups</h4>
 @endsection
 @section('newBtn')
     <button class="d-none d-sm-inline-block btn  btn-primary shadow-sm" data-toggle="modal" data-target="#myModal"> New
@@ -9,18 +9,13 @@
 @endsection
 @section('contents')
 
-
-  <div class="content">
-    <div class="animated fadeIn">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                                
-                    <div class="card-header">
-                        <strong class="card-title">All Groups</strong>
-                    </div>
-                    <div class="card-body">
-                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+  <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">All Groups</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                      <table id="bootstrap-data-table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -51,14 +46,10 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
+              </div>
             </div>
-
-
-        </div>
-    </div><!-- .animated -->
 </div>
+
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

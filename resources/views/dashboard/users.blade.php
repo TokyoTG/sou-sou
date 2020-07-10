@@ -2,7 +2,7 @@
 
 
 @section('title')
-    <h1>Users</h1>
+    <h4>Users</h4>
 @endsection
 
 @section('newBtn')
@@ -12,17 +12,13 @@
 @section('contents')
 
 
-  <div class="content">
-    <div class="animated fadeIn">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                                
-                    <div class="card-header">
-                        <strong class="card-title">All Users</strong>
-                    </div>
-                    <div class="card-body">
-                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+  <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                      <table id="bootstrap-data-table" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>Name</th>
@@ -57,14 +53,11 @@
                                 </tr>
                             </tbody>
                         </table>
-                    </div>
-                </div>
+              </div>
             </div>
-
-
-        </div>
-    </div><!-- .animated -->
 </div>
+
+
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

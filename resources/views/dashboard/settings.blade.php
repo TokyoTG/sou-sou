@@ -2,7 +2,7 @@
 @section('custom_css')
 
 @section('title')
-    <h1>User Name</h1>
+    <h4>User Name</h4>
 @endsection
 @section('newBtn')
 

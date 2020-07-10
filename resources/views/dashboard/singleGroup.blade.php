@@ -2,7 +2,7 @@
 @section('custom_css')
 
 @section('title')
-    <h1>Group Name</h1>
+    <h4>Group Name</h4>
 @endsection
 @section('newBtn')
 <p class="d-none d-sm-inline-block ">Status <span class="badge badge-success">active</span></p> 

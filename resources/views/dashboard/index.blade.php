@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('title')
-    <h1>Dashboard</h1>
+    <h4>Dashboard</h4>
 @endsection
 
 

@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('title')
-    <h1>Notifications</h1>
+    <h4>Notifications</h4>
 @endsection
 @section('contents')
   <div class="content">
