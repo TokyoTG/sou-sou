@@ -36,7 +36,7 @@
                                     <td>Edinburgh</td>
                                     <td>
                                         <div class="btn-group mt-2 mr-1">
-                                        <button type="button" class="btn btn-info dropdown-toggle"
+                                        <button type="button" class="btn btn-primary dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Actions<i class="icon"><span data-feather="chevron-down"></span></i>
                                         </button>
