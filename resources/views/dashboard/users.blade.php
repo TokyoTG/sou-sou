@@ -18,24 +18,55 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                      <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                            <thead>
+                @isset($users)
+                <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Account Number</th>
+                            <th>Phone Number</th>
+                            <th>No. of Groups</th>
+                            <th>Reg. Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    @if(count($users) > 0)
+                        @foreach ($users as $user)
+                        @php
+    
+                        $now = time(); 
+                        $your_date = strtotime($user->created_at);
+                        $datediff = round(($now - $your_date) / 86400);   
+                        if($datediff < 1){
+                            $datediff = round(($now - $your_date) / 3600);
+                            $join_date = $datediff."Hours ago";
+                            if($datediff > 0){
+                                if($datediff > 1){
+                                    $join_date = $datediff." Hours ago";
+                                }else{
+                                    $join_date = $datediff." Hour ago";
+                                }
+                            }else{
+                                $datediff = round(($now - $your_date) / 60);
+                               
+                                if($datediff > 1){
+                                 $join_date = $datediff." Minutes ago";
+                                }else{
+                                    $join_date = $datediff." Minute ago";
+                                }
+                            }
+                          
+                        }else {
+                              $join_date = $datediff."Days";
+                        }
+                        @endphp
+                              <tbody>
                                 <tr>
-                                    <th>Name</th>
-                                    <th>Account Number</th>
-                                    <th>Phone Number</th>
-                                    <th>Position</th>
-                                    <th>Reg. Date</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Tiger Nixon</td>
-                                    <td>System Architect</td>
-                                    <td>Edinburgh</td>
-                                     <td>System Architect</td>
-                                    <td>Edinburgh</td>
+                                    <td>{{$user->full_name}}</td>
+                                <td>{{ isset($user->account_number)  ? $user->account_number : "Not Set"}}</td>
+                                    <td>{{$user->phone_number}}</td>
+                                <td>{{ isset($user->groups_in)  ? $user->groups_in : "Not Set"}}</td>
+                                    <td>{{$join_date}}</td>
                                     <td>
                                         <div class="btn-group mt-2 mr-1">
                                         <button type="button" class="btn btn-primary dropdown-toggle"
@@ -43,16 +74,22 @@
                                             Actions<i class="icon"><span data-feather="chevron-down"></span></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="{{route('users.show', 2)}}">View User</a>
+                                            <a class="dropdown-item" href="{{route('users.show',$user->id)}}">View User</a>
                                             <a class="dropdown-item" href="#">Active</a>
-                                            <a class="dropdown-item" href="#">Deactivate</a>
+                                            <a class="dropdown-item" href="#">Freez</a>
                                             <a class="dropdown-item" href="#">Delete</a>
                                         </div>
                                     </div>
                                     </td>
                                 </tr>
-                            </tbody>
-                        </table>
+                            </tbody> 
+                        @endforeach
+
+                         
+                    </table>
+                    @endif
+                @endisset
+                  
               </div>
             </div>
 </div>

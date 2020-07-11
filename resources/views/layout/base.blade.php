@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Blank</title>
+  @yield('title_page')
 
   <!-- Custom fonts for this template-->
   <link href="{{asset('dashboard/assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -20,6 +20,17 @@
 <style>
   .nav-tabs .nav-link.active{
     border-left: 3px solid #4e73df;
+  }
+
+  .fa-eye{
+    font-size: 1.2em;
+  }
+  td{
+    text-align: center;
+  }
+
+  a:hover{
+    text-decoration: none;
   }
 </style>
 </head>
@@ -37,7 +48,11 @@
         <div class="sidebar-brand-icon rotate-n-15">
           <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-3">
+          @if (Cookie::get('full_name') !== null)
+         {{ Cookie::get('full_name') }}  
+          @endif
+        </div>
       </a>
 
       <!-- Divider -->
@@ -58,22 +73,40 @@
         Menu
       </div>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('users.index')}}">
-         <i class="fa-fw fa fa-users"></i>
-          <span>Users</span></a>
-    </li>
+@if(Cookie::get('role') !== null && Cookie::get('role') == "admin")
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('users.index')}}">
+            <i class="fa-fw fa fa-users"></i>
+            <span>Users</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('dashboard.wait_list')}}">
+           <i class="menu-icon fa fa-list-alt"></i>
+            <span>Wait List</span></a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('dashboard.complaints')}}">
+            <i class="menu-icon fa fa-list-alt"></i>
+            <span>Complaints</span></a>
+        </li>
+@endif
+
+
     <li class="nav-item">
         <a class="nav-link" href="{{route('groups.index')}}">
          <i class="fa-fw fa fa-folder"></i>
           <span>Groups</span></a>
     </li>
+    
+@if(Cookie::get('role') !== null && Cookie::get('role') == "member")
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('join_group')}}">
+            <i class="fa-fw fa fa-user-plus"></i>
+            <span>Join Group</span></a>
+        </li>
+@endif
       <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('dashboard.wait_list')}}">
-         <i class="menu-icon fa fa-list-alt"></i>
-          <span>Wait List</span></a>
-      </li>
+
 
     <li class="nav-item">
         <a class="nav-link" href="{{route('dashboard.notifications')}}">
@@ -81,11 +114,7 @@
           <span>Notifications</span></a>
       </li>
       
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('dashboard.complaints')}}">
-         <i class="menu-icon fa fa-list-alt"></i>
-          <span>Complaints</span></a>
-      </li>
+
 
       <!-- Nav Item - Tables -->
       <li class="nav-item">
@@ -213,20 +242,12 @@
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{route('dashboard.settings')}}">
                   <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                   Settings
                 </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+              <a class="dropdown-item" href="{{route('logout')}}">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>

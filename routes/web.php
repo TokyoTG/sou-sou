@@ -17,9 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/login',"LoginController@index")->name('login');
+
+Route::post('/login',"LoginController@login")->name('login');
 
 Route::get('/register', function () {
     return view('register');
@@ -41,6 +41,9 @@ Route::prefix('/dashboard')->group(function () {
         return view('dashboard.index');
     })->name('dashboard.index');
 
+
+    Route::get('/logout', 'LogoutController@index')->name('logout');
+
     //users section
     Route::resource('users', 'UsersController');
 
@@ -50,6 +53,10 @@ Route::prefix('/dashboard')->group(function () {
     Route::resource('groups', 'GroupController');
 
     //end groups section
+
+    Route::get('/join_group', function () {
+        return view('dashboard.join_group');
+    })->name('join_group');
 
 
     Route::get('/settings', function () {

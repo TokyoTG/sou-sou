@@ -23,7 +23,7 @@
                             <thead>
                                 <tr>
                                     <th>Name</th>
-                                    <th>Position</th>
+                                    <th>Level</th>
                                     <th>Phone</th>
                                     <th>Action</th>
                                 </tr>
@@ -41,7 +41,9 @@
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
                                         <a class="dropdown-item" href="{{route('users.show', 2)}}">View User</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
+                                        @if(Cookie::get('role') !== null && Cookie::get('role') == "admin")   
+                                        <a class="dropdown-item" href="#">Delete</a>
+                                        @endif
                                         </div>
                                     </div>
                                     </td>

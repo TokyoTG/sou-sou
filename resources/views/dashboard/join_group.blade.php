@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('title')
-    <h4>Groups</h4>
+    <h4>Available Groups</h4>
 @endsection
 
 @section('newBtn')
@@ -18,7 +18,7 @@
             </div>
             <div class="card-body">
               <div class="table-responsive">
-                @if(Cookie::get('role') !== null && Cookie::get('role') == "admin")
+                @if(Cookie::get('groups_in') !== null && Cookie::get('groups_in') < 4)
                 {{-- <====================== START OF ADMIN GROUP TABLE==================> --}}
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                       <thead>
@@ -41,40 +41,18 @@
                                       Actions<i class="icon"><span data-feather="chevron-down"></span></i>
                                   </button>
                                   <div class="dropdown-menu dropdown-menu-right">
-                              <a class="dropdown-item" href="{{route('groups.show', 2)}}">View Group</a>
-                                      <a class="dropdown-item" href="#">Active</a>
-                                      <a class="dropdown-item" href="#">Deactivate</a>
-                                      <a class="dropdown-item" href="#">Delete</a>
+                                    <a class="dropdown-item" href="{{route('groups.show', 2)}}">View Group</a>
+                                      <a class="dropdown-item" href="#">Join</a>
                                   </div>
                               </div>
                               </td>
                           </tr>
                       </tbody>
                   </table>
-{{-- 
-<--====================== END OF ADMIN GROUP TABLE==================>-> --}}
-               @elseif(Cookie::get('role') !== null && Cookie::get('role') == "member")
-               {{-- <======================USERS GROUP TABLE==================> --}}
-               <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                   <thead>
-                       <tr>
-                           <th>Name</th>
-                           <th>No. of Members</th>
-                           <th>Membership Status</th>
-                           <th>View Group</th>
-                       </tr>
-                   </thead>
-                   <tbody>
-                       <tr>
-                           <td>Tiger Nixon</td>
-                           <td>11</td>
-                           <td>Wait List <span class="badge badge-success">4th</span></td>
-                       <td > <a href="{{route('groups.show', 2)}}"> View <i class="fa fa-eye"></i> </a> </td>
-                       </tr>
-                   </tbody>
-               </table>
-               {{-- <======================USERS GROUP TABLE==================>   --}}
+               @else
+                  You cannot join any more group
                @endif
+    
            </div>
             </div>
 </div>
