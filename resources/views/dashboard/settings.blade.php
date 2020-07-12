@@ -1,8 +1,17 @@
 @extends('layout.base')
 @section('custom_css')
 
+
+@php
+
+    $names = explode(' ',$user->full_name);
+    $user_id = $user->id;
+
+@endphp
+
+
 @section('title')
-    <h4>User Name</h4>
+<h4>{{ $user->full_name}}</h4>
 @endsection
 @section('newBtn')
 
@@ -12,6 +21,10 @@
 @endsection
 
 @section('contents')
+@if(Session::has('message'))
+<p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
+    {{ Session::get('message') }}</p>
+@endif
   <div class="content">
     <div class="animated fadeIn">
         <div class="row">
@@ -28,6 +41,7 @@
                             <ul class="nav flex-column nav-tabs user-tabs">
                                 <li class="nav-item"><a class="nav-link active" href="#user-details" data-toggle="tab">Details</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#user-profile" data-toggle="tab">Profile</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#reset-password" data-toggle="tab">Change Password</a></li>
                             </ul>
                         </div>
                     </div>
@@ -42,7 +56,7 @@
                                                 <label><b>Fullname</b></label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>{{ isset($user_details['first_name'])  &&  isset($user_details['last_name']) ? $user_details['first_name'] ." ". $user_details['last_name']: "full name" }}</p>
+                                                <p>{{$user->full_name}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -50,21 +64,15 @@
                                                 <label><b>Email</b></label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>{{ isset($user_details['email']) ? $user_details['email'] : "Email" }}</p>
+                                                <p>{{$user->email}}</p>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
-                                                <label><b>Status</b></label>
+                                                <label><b>No. of Groups</b></label>
                                             </div>
                                             <div class="col-md-6">
-                                               @isset($user_details['is_active'])
-                                                    @if (  $user_details['is_active'] )
-                                                    Activated
-                                                @else
-                                                    Not Activated
-                                                @endif
-                                               @endisset
+                                                <p>{{$user->groups_in}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -72,39 +80,48 @@
                                 <div class="tab-pane fade" id="user-profile">
                                     <div class="tile user-settings">
                                         <h4 class="line-head">Profile</h4>
-                                        <form method="POST"  action="">
+                                    <form method="POST"  action="{{route('users.update',$user_id)}}">
                                             @csrf
+                                            <input name="_method" type="hidden" value="PUT">
+                                            <input type="hidden" name="request_control" value="profile-update">
                                             <div class="row mb-12">
                                                 <div class="col-md-9">
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>First Name</label>
-                                                            <input class="form-control" type="text" name="first_name" value="{{ isset($user_details['first_name']) ? $user_details['first_name'] : "Not Set" }}">
+                                                            <input class="form-control" type="text" name="first_name" value="{{ $names[0] }}">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>Last Name</label>
-                                                            <input class="form-control" type="text" name="last_name" value="{{ isset($user_details['last_name']) ? $user_details['last_name'] : "Not Set" }}">
+                                                            <input class="form-control" type="text" name="last_name" value="{{$names[1]}}">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>Email</label>
-                                                            <input class="form-control" type="text" name="email" value="{{ isset($user_details['email']) ? $user_details['email'] : "Not set" }}">
+                                                            <input class="form-control" type="text" name="email" value="{{$user->email}}">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>Phone Number</label>
-                                                            <input class="form-control" type="text" name="phone_number" value="{{ isset($user_details['phone_number']) ? $user_details['phone_number'] : "not set" }}">
+                                                            <input class="form-control" type="text" name="phone_number" value="{{$user->phone_number}}">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>
-                                                    <input type="text" value="profile_update" name="control" hidden>
+                                                    <div class="clearfix"></div><br>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label>Account Number</label>
+                                                            <input class="form-control" type="text" name="account_number" value="{{$user->account_number != null ? $user->account_number : "Not Set"}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div><br>
                                                 </div>
                                             </div>
                                             <br>
@@ -116,7 +133,47 @@
                                         </form>
                                     </div>
                                 </div>
-                    
+                                <div class="tab-pane fade" id="reset-password">
+                                    <div class="tile user-settings">
+                                        <h4 class="line-head">Change Password</h4>
+                                        <form method="POST"  action="{{route('users.update',$user_id)}}">
+                                            @csrf
+                                            <input name="_method" type="hidden" value="PUT">
+                                            <input type="hidden" name="request_control" value="password-update">
+                                            <div class="row mb-12">
+                                                <div class="col-md-9">
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label>Old Password</label>
+                                                            <input class="form-control" type="password" name="old_password">
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div><br>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label>New Password</label>
+                                                            <input class="form-control" type="password" name="password">
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div><br>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label>Confirm Password</label>
+                                                            <input class="form-control" type="password" name="password_confirmation">
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div><br>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row mb-12">
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-primary" type="submit"> Save <i class="fa fa-fw fa-lg fa-check-circle"></i></button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

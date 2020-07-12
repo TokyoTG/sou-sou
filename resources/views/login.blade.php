@@ -17,8 +17,8 @@
                   <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                 </div>
                       @if(Session::has('message'))
-                                        <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
-                                            {{ Session::get('message') }}</p>
+                        <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
+                            {{ Session::get('message') }}</p>
                       @endif
                 <form class="user" method="POST" action="{{route('login')}}">
                   @csrf

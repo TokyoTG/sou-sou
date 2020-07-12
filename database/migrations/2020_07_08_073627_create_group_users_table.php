@@ -18,6 +18,8 @@ class CreateGroupUsersTable extends Migration
             $table->string("user_id");
             $table->string('group_id');
             $table->string('group_name');
+            $table->string('user_level');
+            $table->string('status');
             $table->timestamps();
         });
     }

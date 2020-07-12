@@ -30,6 +30,7 @@
                             <th>Action</th>
                         </tr>
                     </thead>
+                    <tbody>
                     @if(count($users) > 0)
                         @foreach ($users as $user)
                         @php
@@ -60,7 +61,7 @@
                               $join_date = $datediff."Days";
                         }
                         @endphp
-                              <tbody>
+                             
                                 <tr>
                                     <td>{{$user->full_name}}</td>
                                 <td>{{ isset($user->account_number)  ? $user->account_number : "Not Set"}}</td>
@@ -75,16 +76,14 @@
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" href="{{route('users.show',$user->id)}}">View User</a>
-                                            <a class="dropdown-item" href="#">Active</a>
-                                            <a class="dropdown-item" href="#">Freez</a>
-                                            <a class="dropdown-item" href="#">Delete</a>
+                                            <a class="dropdown-item" href="{{route('users.destroy',$user->id)}}">Delete</a>
                                         </div>
                                     </div>
                                     </td>
                                 </tr>
-                            </tbody> 
+                         
                         @endforeach
-
+                        </tbody> 
                          
                     </table>
                     @endif

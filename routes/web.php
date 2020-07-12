@@ -54,14 +54,7 @@ Route::prefix('/dashboard')->group(function () {
 
     //end groups section
 
-    Route::get('/join_group', function () {
-        return view('dashboard.join_group');
-    })->name('join_group');
-
-
-    Route::get('/settings', function () {
-        return view('dashboard.settings');
-    })->name('dashboard.settings');
+    Route::get('/join_group','GroupController@show_join_group' )->name('join_group');
 
 
     Route::get('/notifications', function () {
@@ -73,7 +66,9 @@ Route::prefix('/dashboard')->group(function () {
         return view('dashboard.complaints');
     })->name('dashboard.complaints');
 
-    Route::get('/wait_list', function () {
-        return view('dashboard.wait_list');
-    })->name('dashboard.wait_list');
+
+    //wait list 
+
+    Route::resource('wait_list', 'WaitListController');
+  
 });
