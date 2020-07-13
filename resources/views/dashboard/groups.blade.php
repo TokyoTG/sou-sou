@@ -48,6 +48,15 @@
                             <tbody>
                             @foreach ($groups as $group)
                                 <tr>
+                                <form action="{{ route('groups.update',$group->id) }}" method="POST" id={{"update".$group->id}}>
+                                        @csrf
+                                        <input type="hidden" name="group_status" class="input-status">
+                                        <input name="_method" type="hidden" value="PUT">
+                                 </form>
+                                 <form action="{{ route('groups.destroy',$group->id) }}" method="POST" id={{"delete".$group->id}}>
+                                    @csrf
+                                    <input name="_method" type="hidden" value="DELETE">
+                                </form>
                                 <td>{{ isset($group->name) ? $group->name : "Not Set" }}</td>
                                     <td>{{ isset($group->members_number) ? $group->members_number : "Not Set" }}</td>
                                     <td>{{ isset($group->status) ? $group->status : "Not Set" }}</td>
@@ -70,7 +79,7 @@
                                             href="#" data-group_id={{$group->id}}
                                             data-group_name ={{$group->name}}
                                              onclick="showModal(this,'delete-group')"
-                                                >Delete</a>
+                                                >Delete</a>                  
                                         </div>
                                     </div>
                                     </td>
@@ -157,13 +166,8 @@
 				<p>Do you really want to delete <strong class="g-name">GROUP NAME</strong> group? This process cannot be undone.</p>
 			</div>
 			<div class="modal-footer justify-content-center">
-				<form action="{{ route('groups.destroy','') }}" method="POST" class="group-form">
-                    @csrf
-                    <input type="hidden" name="group_id" id="input-group">
-                    <input name="_method" type="hidden" value="DELETE">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button  class="btn btn-primary" type="submit">Proceed</button>
-             </form>
+                    <button  class="btn btn-primary" onclick="deleteGroup()">Proceed</button>
 			</div>
 		</div>
 	</div>
@@ -183,13 +187,8 @@
 				<p>Do you really want to <span id="request-option"></span> <strong class="g-name">GROUP NAME</strong> group? This process cannot be undone.</p>
 			</div>
 			<div class="modal-footer justify-content-center">
-				<form action="{{ route('groups.update','') }}" method="POST" class="group-form">
-                    @csrf
-                    <input type="hidden" name="group_status" id="input-status">
-                    <input name="_method" type="hidden" value="PUT">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button  class="btn btn-primary" type="submit">Proceed</button>
-             </form>
+                    <button  class="btn btn-primary" onclick="updateGroup()">Proceed</button>
 			</div>
 		</div>
 	</div>
@@ -198,18 +197,26 @@
 
 @section('custom_js')
     <script>
+        let group_id;
+        let group_name;
         function showModal(element,modalName){
-            let group_id = element.dataset.group_id;
-            let group_name = element.dataset.group_name;
+             group_id = element.dataset.group_id;
+             group_name = element.dataset.group_name;
             let option = element.dataset.request;
             let request  = element.textContent.split(' ')[0].toLowerCase();
             $('#request-option').text(request);
             $('.g-name').text(group_name);
-            $('#input-status').val(option);
-            let myform = document.getElementById('group-form');
-            let action = $('.group-form').attr('action');
-            $('.group-form').attr('action',action + "/" + group_id)
+            $('.input-status').val(option);
             $(`#${modalName}`).modal('show');
+        }
+
+        function updateGroup(){
+            $(`#update${group_id}`).submit();
+        }
+
+        function deleteGroup(){
+            $(`#delete${group_id}`).submit();
+            console.log('hi')
         }
     </script>
 @endsection

@@ -141,6 +141,7 @@ class GroupController extends Controller
     public function update(Request $request, $id)
     {
         //
+      
         try{
             $group =Group::find($id);
             $group->status = $request->input('group_status');
@@ -151,7 +152,7 @@ class GroupController extends Controller
             return redirect()->route('groups.index');
           }
         }catch(\Exception $e){
-            // $e;
+           return $e;
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message', "Something bad happened, try again");
             return redirect()->route('groups.index');
@@ -182,7 +183,7 @@ class GroupController extends Controller
         }
         
         $request->session()->flash('alert-class', 'alert-success');
-        $request->session()->flash('message', "Group and associated data deleted successfully");
+        $request->session()->flash('message', "Group and associated data has been deleted successfully");
         return redirect()->route('groups.index');
         }catch(\Exception $e){
             $request->session()->flash('alert-class', 'alert-danger');

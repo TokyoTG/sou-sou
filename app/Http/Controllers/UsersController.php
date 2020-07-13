@@ -10,6 +10,8 @@ use App\User;
 use App\GroupUser;
 use Illuminate\Support\Facades\Cookie;
 
+use App\WaitList;
+
 class UsersController extends Controller
 {
     /**
@@ -215,8 +217,30 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         //
+        try{
+            $user = User::find($id);
+            $user_users = GroupUser::where('user_id', $id)->get(['id']);
+            $user_wait_list = WaitList::where('user_id', $id)->get(['id']);
+            if($user != null){
+                  $user->delete();
+            }
+            if(count($user_users) > 0){
+                GroupUser::destroy($user_users->toArray());
+            }
+            if(count($user_wait_list) > 0){
+                WaitList::destroy($user_wait_list->toArray());
+            }
+            $request->session()->flash('alert-class', 'alert-success');
+            $request->session()->flash('message', "User and associated data has been deleted successfully");
+            return redirect()->route('users.index');
+        }catch(\Exception $e){
+            $request->session()->flash('alert-class', 'alert-danger');
+            $request->session()->flash('message', "Something bad happened, try again");
+            return redirect()->route('users.index');
+        }
+        return $id;
     }
 }

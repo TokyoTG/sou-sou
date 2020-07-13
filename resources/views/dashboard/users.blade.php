@@ -3,6 +3,7 @@
 
 @section('title')
     <h4>Users</h4>
+    <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 @endsection
 
 @section('newBtn')
@@ -78,7 +79,17 @@
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" href="{{route('users.show',$user->id)}}">View User</a>
-                                            <a class="dropdown-item" href="{{route('users.destroy',$user->id)}}">Delete</a>
+                                            <a 
+                                            class="dropdown-item" 
+                                            href="#"
+                                            data-user_id={{$user->id}}
+                                            data-user_name={{$user->full_name}}
+                                            onclick="showModal(this)"
+                                            >Delete</a>
+                                            <form action="{{ route('users.destroy',$user->id) }}" method="POST" id={{"user".$user->id}}>
+                                                @csrf
+                                                <input name="_method" type="hidden" value="DELETE">
+                                            </form>
                                         </div>
                                     </div>
                                     </td>
@@ -141,7 +152,7 @@
     </div><!-- /.modal-dialog -->
 </div>
 
-<div id="group" class="modal fade">
+<div id="user" class="modal fade">
 	<div class="modal-dialog modal-confirm modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header flex-column">
@@ -152,16 +163,11 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Do you really want to delete this user? This process cannot be undone.</p>
+				<p>Do you really want to delete <span id="u-name"></span> from users ? This process cannot be undone.</p>
 			</div>
 			<div class="modal-footer justify-content-center">
-				<form action="{{ route('groups.destroy','') }}" method="POST" id="group-form">
-                    @csrf
-                    <input type="hidden" name="group_id" id="input-group">
-                    <input name="_method" type="hidden" value="DELETE">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button  class="btn btn-primary" type="submit">Proceed</button>
-             </form>
+                    <button  class="btn btn-primary" id="submit-action" onclick="submitForm()">Proceed</button>
 			</div>
 		</div>
 	</div>
@@ -169,5 +175,20 @@
 @endsection
 
 @section('custom_js')
+<script>
+
+    let user_id;
+    function showModal(element){
+        let user_name = element.dataset.user_name;
+        user_id =element.dataset.user_id;
+        $('#u-name').text(user_name);
+        $('#user').modal('show');
+    }
+
+    function submitForm(){
+        $(`#user${user_id}`).submit();
+    }
+
     
+</script>
 @endsection
