@@ -61,10 +61,10 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard.index')}}">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon rotate-n-0">
+          <i class="fas fa-user-circle"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">
+        <div class="sidebar-brand-text mx-2">
           @if (Cookie::get('full_name') !== null)
          {{ Cookie::get('full_name') }}  
           @endif
@@ -261,8 +261,11 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Cookie::get('full_name')}}</span>
+              <div class="sidebar-brand-icon rotate-n-0">
+                <i class="fas fa-user-circle"></i>
+              </div>
+                {{-- <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"> --}}
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">

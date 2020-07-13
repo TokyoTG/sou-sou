@@ -17,6 +17,8 @@ class CreateWaitListsTable extends Migration
             $table->id();
             $table->string('group_id');
             $table->integer('position');
+            $table->string('group_name');
+            $table->string('user_name');
             $table->string('user_id');
             $table->timestamps();
         });

@@ -145,21 +145,21 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>Old Password</label>
-                                                            <input class="form-control" type="password" name="old_password">
+                                                            <input class="form-control" type="password" name="old_password" placeholder="Enter old password">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>New Password</label>
-                                                            <input class="form-control" type="password" name="password">
+                                                            <input class="form-control" type="password" name="password" placeholder="Enter new password">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>Confirm Password</label>
-                                                            <input class="form-control" type="password" name="password_confirmation">
+                                                            <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm new password">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>

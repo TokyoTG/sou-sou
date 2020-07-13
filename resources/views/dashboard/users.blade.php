@@ -57,9 +57,11 @@
                                 }
                             }
                           
-                        }else {
-                              $join_date = $datediff."Days";
-                        }
+                        }elseif($datediff >= 2) {
+                              $join_date = $datediff." Days ago";
+                        }else{
+                                $join_date = "Yestarday";
+                              }
                         @endphp
                              
                                 <tr>
@@ -137,6 +139,32 @@
 
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
+</div>
+
+<div id="group" class="modal fade">
+	<div class="modal-dialog modal-confirm modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<div class="icon-box">
+                    <i class="fa fa-times"></i>
+				</div>						
+				<h4 class="modal-title w-100">Are you sure?</h4>	
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Do you really want to delete this user? This process cannot be undone.</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<form action="{{ route('groups.destroy','') }}" method="POST" id="group-form">
+                    @csrf
+                    <input type="hidden" name="group_id" id="input-group">
+                    <input name="_method" type="hidden" value="DELETE">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button  class="btn btn-primary" type="submit">Proceed</button>
+             </form>
+			</div>
+		</div>
+	</div>
 </div>
 @endsection
 

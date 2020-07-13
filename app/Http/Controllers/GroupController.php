@@ -10,6 +10,8 @@ use App\Group;
 
 use App\GroupUser;
 
+use App\WaitList;
+
 use Illuminate\Support\Facades\Validator;
 
 class GroupController extends Controller
@@ -88,8 +90,7 @@ class GroupController extends Controller
                   if($saved){
                         $request->session()->flash('alert-class', 'alert-success');
                         $request->session()->flash('message', "Group created successfully");
-                        $this->groups = Group::all();
-                        return redirect()->route('groups.index')->with('groups', $this->groups);
+                        return redirect()->route('groups.index');
                     }else{
                           $request->session()->flash('alert-class', 'alert-danger');
                         $request->session()->flash('message', "Something bad happened, try again");
@@ -140,6 +141,21 @@ class GroupController extends Controller
     public function update(Request $request, $id)
     {
         //
+        try{
+            $group =Group::find($id);
+            $group->status = $request->input('group_status');
+            $saved =  $group->save();
+          if($saved){
+            $request->session()->flash('alert-class', 'alert-success');
+            $request->session()->flash('message', "Group {$request->input('group_status')} successfully");
+            return redirect()->route('groups.index');
+          }
+        }catch(\Exception $e){
+            // $e;
+            $request->session()->flash('alert-class', 'alert-danger');
+            $request->session()->flash('message', "Something bad happened, try again");
+            return redirect()->route('groups.index');
+        }
     }
 
     /**
@@ -148,15 +164,36 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request,$id)
     {
         //
+        try{
+        $group = Group::find($id);
+        $group_users = GroupUser::where('group_id', $id)->get(['id']);
+        $group_wait_list = WaitList::where('group_id', $id)->get(['id']);
+        if($group != null){
+              $group->delete();
+        }
+        if(count($group_users) > 0){
+            GroupUser::destroy($group_users->toArray());
+        }
+        if(count($group_wait_list) > 0){
+            WaitList::destroy($group_wait_list->toArray());
+        }
+        
+        $request->session()->flash('alert-class', 'alert-success');
+        $request->session()->flash('message', "Group and associated data deleted successfully");
+        return redirect()->route('groups.index');
+        }catch(\Exception $e){
+            $request->session()->flash('alert-class', 'alert-danger');
+            $request->session()->flash('message', "Something bad happened, try again");
+            return redirect()->route('groups.index');
+        }
+       
     }
 
     public function show_join_group(){
         $this->groups = Group::all();
-
-        
         return view('dashboard.join_group')->with('groups', $this->groups);
     }
 }

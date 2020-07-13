@@ -46,13 +46,10 @@ class LoginController extends Controller
                             $user_details = $user[0];
                             if(password_verify($password, $user_details->password)){
                                 Cookie::queue('full_name', $user_details->full_name);
-                                Cookie::queue('email', $user_details->email);
                                 Cookie::queue('role', $user_details->role);
                                 Cookie::queue('id', $user_details->id);
-                                Cookie::queue('account_number', $user_details->account_number);
                                 Cookie::queue('groups_in', $user_details->groups_in);
-                                Cookie::queue('phone_number', $user_details->phone_number);
-                                return redirect()->route('dashboard.index');
+                                return redirect()->route('dashboard.index')->with('user',$user_details);
                             }   
                         }
                         $request->session()->flash('alert-class', 'alert-danger');

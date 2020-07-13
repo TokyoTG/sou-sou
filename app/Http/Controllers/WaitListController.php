@@ -49,6 +49,8 @@ class WaitListController extends Controller
             $wait_list = new WaitList;
             $wait_list->group_id = $group_id;
             $wait_list->user_id = Cookie::get('id');
+            $wait_list->group_name = $group_name;
+            $wait_list->user_name = Cookie::get('full_name');
             $wait_list->position = $position;
             $saved = $wait_list->save();
             if($saved){
@@ -57,7 +59,6 @@ class WaitListController extends Controller
                 return redirect()->route('join_group');
             }
         }catch(\Exception $e){
-            return $e;
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message',"Something went wrong, please try again");
             return redirect()->route('join_group');
@@ -74,6 +75,7 @@ class WaitListController extends Controller
     {
         //
         $list = WaitList::where('group_id', $id)->get();
+        // return $list;
         return view('dashboard.wait_list')->with('list', $list);
     }
 

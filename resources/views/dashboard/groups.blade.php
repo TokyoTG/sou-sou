@@ -4,11 +4,12 @@
 @section('title')
     @if (is_admin())
        <h4>Groups</h4>   
+
     @elseif(is_member())
     <h4>My Groups</h4>
     
     @endif
-  
+  <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 @endsection
 
 
@@ -59,8 +60,17 @@
                                         <div class="dropdown-menu dropdown-menu-right">
                                     <a class="dropdown-item" href="{{route('groups.show', $group->id)}}">View Group</a>
                                             <a class="dropdown-item" href="{{route('wait_list.show', $group->id)}}">Veiw Wait List</a>
-                                            <a class="dropdown-item" href="#">{{ $group->status == 'open' ? 'Close Group' : "Open Group" }}</a>
-                                            <a class="dropdown-item" href="#" data-group_id={{$group->id}}>Delete</a>
+                                            <a class="dropdown-item"
+                                            href="#" data-group_id={{$group->id}}
+                                            data-group_name ={{$group->name}}
+                                            data-request = {{ $group->status == 'open' ? 'closed' : "open" }}
+                                            onclick="showModal(this,'close-group')"
+                                            >{{ $group->status == 'open' ? 'Close Group' : "Open Group" }}</a>
+                                            <a class="dropdown-item" 
+                                            href="#" data-group_id={{$group->id}}
+                                            data-group_name ={{$group->name}}
+                                             onclick="showModal(this,'delete-group')"
+                                                >Delete</a>
                                         </div>
                                     </div>
                                     </td>
@@ -133,7 +143,7 @@
 </div>
 
 
-<div id="group" class="modal fade">
+<div id="delete-group" class="modal fade">
 	<div class="modal-dialog modal-confirm modal-dialog-centered">
 		<div class="modal-content">
 			<div class="modal-header flex-column">
@@ -144,11 +154,42 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Do you really want to delete these records? This process cannot be undone.</p>
+				<p>Do you really want to delete <strong class="g-name">GROUP NAME</strong> group? This process cannot be undone.</p>
 			</div>
 			<div class="modal-footer justify-content-center">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-				<button type="button" class="btn btn-danger">Delete</button>
+				<form action="{{ route('groups.destroy','') }}" method="POST" class="group-form">
+                    @csrf
+                    <input type="hidden" name="group_id" id="input-group">
+                    <input name="_method" type="hidden" value="DELETE">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button  class="btn btn-primary" type="submit">Proceed</button>
+             </form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div id="close-group" class="modal fade">
+	<div class="modal-dialog modal-confirm modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<div class="icon-box">
+                    <i class="fa fa-times"></i>
+				</div>						
+				<h4 class="modal-title w-100">Are you sure?</h4>	
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Do you really want to <span id="request-option"></span> <strong class="g-name">GROUP NAME</strong> group? This process cannot be undone.</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+				<form action="{{ route('groups.update','') }}" method="POST" class="group-form">
+                    @csrf
+                    <input type="hidden" name="group_status" id="input-status">
+                    <input name="_method" type="hidden" value="PUT">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button  class="btn btn-primary" type="submit">Proceed</button>
+             </form>
 			</div>
 		</div>
 	</div>
@@ -156,5 +197,19 @@
 @endsection
 
 @section('custom_js')
-    
+    <script>
+        function showModal(element,modalName){
+            let group_id = element.dataset.group_id;
+            let group_name = element.dataset.group_name;
+            let option = element.dataset.request;
+            let request  = element.textContent.split(' ')[0].toLowerCase();
+            $('#request-option').text(request);
+            $('.g-name').text(group_name);
+            $('#input-status').val(option);
+            let myform = document.getElementById('group-form');
+            let action = $('.group-form').attr('action');
+            $('.group-form').attr('action',action + "/" + group_id)
+            $(`#${modalName}`).modal('show');
+        }
+    </script>
 @endsection

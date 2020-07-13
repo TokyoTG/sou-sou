@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 
 use App\GroupUser;
+use Illuminate\Support\Facades\Cookie;
 
 class UsersController extends Controller
 {
@@ -20,7 +21,7 @@ class UsersController extends Controller
     {
         //
         $users = User::all();
-        // return $users;
+        // return $users->groups;
         return view('dashboard.users')->with('users',$users);
     }
 
@@ -83,6 +84,7 @@ class UsersController extends Controller
                     }
                   
                 } catch(\Exception $e){
+                    // return $e;
                     $request->session()->flash('alert-class', 'alert-danger');
                     $request->session()->flash('message',"Something went wrong with your registeration, please try again");
                     return redirect()->route('register');
@@ -169,6 +171,7 @@ class UsersController extends Controller
                             $user->account_number = $request->input('account_number');
                             $saved = $user->save();
                             if($saved){
+                                Cookie::queue('full_name', $request->input('first_name') . " " . $request->input('last_name'));
                                 $request->session()->flash('alert-class', 'alert-success');
                                 $request->session()->flash('message', "Profile details updated successfully");
                                 return redirect()->route('users.edit',$id);
@@ -216,6 +219,4 @@ class UsersController extends Controller
     {
         //
     }
-
-
 }
