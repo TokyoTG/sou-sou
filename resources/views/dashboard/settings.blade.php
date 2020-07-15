@@ -144,21 +144,21 @@
                                                 <div class="col-md-9">
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <label>Old Password</label>
+                                                            <label>Old Password <i class="fa fa-lock"></i> </label>
                                                             <input class="form-control" type="password" name="old_password" placeholder="Enter old password">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <label>New Password</label>
+                                                            <label>New Password <i class="fa fa-lock"></i> </label>
                                                             <input class="form-control" type="password" name="password" placeholder="Enter new password">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>
                                                     <div class="row">
                                                         <div class="col-md-12">
-                                                            <label>Confirm Password</label>
+                                                            <label>Confirm Password <i class="fa fa-lock"></i> </label>
                                                             <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm new password">
                                                         </div>
                                                     </div>

@@ -10,6 +10,7 @@ use App\User;
 use App\GroupUser;
 use Illuminate\Support\Facades\Cookie;
 
+
 use App\WaitList;
 
 class UsersController extends Controller
@@ -63,7 +64,8 @@ class UsersController extends Controller
                 foreach ($errors->all() as $message) {
                     $request->session()->flash('alert-class', 'alert-danger');
                     $request->session()->flash('message', $message);
-                    return redirect()->route('register');
+                        return redirect()->route('users.index');
+                    
                 }
             } else {
                 try{
@@ -77,19 +79,27 @@ class UsersController extends Controller
                     $saved = $user->save();
                     if($saved) {
                          $request->session()->flash('alert-class', 'alert-success');
-                        $request->session()->flash('message', "You successfully register, you can now login");
-                        return redirect()->route('login');
+                        $request->session()->flash('message', "User with email {$request->input('email')} was created successfully, the user can now login");
+                        return redirect()->route('users.index');
+              
                     }else{
-                          $request->session()->flash('alert-class', 'alert-danger');
-                    $request->session()->flash('message',"Something went wrong with your registeration, please try again");
-                    return redirect()->route('register');
+                        $request->session()->flash('alert-class', 'alert-danger');
+                            $request->session()->flash('message',"Something went wrong with user registeration, please try again");
+                            return redirect()->route('users.index');
+                        
                     }
                   
                 } catch(\Exception $e){
-                    // return $e;
+                    if ($e->getCode() == 23000) {
+                        // Deal with duplicate key error  
+                     $request->session()->flash('alert-class', 'alert-danger');
+                    $request->session()->flash('message',"Email or phone number already exists");
+                    return redirect()->route('users.index');
+                    }
                     $request->session()->flash('alert-class', 'alert-danger');
-                    $request->session()->flash('message',"Something went wrong with your registeration, please try again");
-                    return redirect()->route('register');
+                        $request->session()->flash('message',"Something went wrong with user registeration, please try again");
+                        return redirect()->route('users.index');
+     
                 }
 
             }
@@ -108,7 +118,6 @@ class UsersController extends Controller
         $user = User::find($id);
         $userGroup = GroupUser::where('user_id',$id)->get();
         $user_details = ['info'=>$user,'group_info'=>$userGroup];
-        // return $user_details;
         return view('dashboard.singleUser')->with('user_details',$user_details);
     }
 

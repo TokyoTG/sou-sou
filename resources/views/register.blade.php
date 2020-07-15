@@ -16,7 +16,7 @@
                                         <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
                                             {{ Session::get('message') }}</p>
                                         @endif
-          <form class="user" action="{{route('users.store')}}" method="POST">
+          <form class="user" action="{{route('signup')}}" method="POST">
             @csrf
               <div class="form-group row">
                 <div class="col-sm-6 mb-3 mb-sm-0">

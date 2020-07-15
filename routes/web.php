@@ -25,6 +25,8 @@ Route::get('/register', function () {
     return view('register');
 })->name('register');
 
+Route::post('/register','RegisterController@index')->name('signup');
+
 Route::get('/forgot_pasword', function () {
     return view('forgot');
 })->name('forgot');
@@ -37,38 +39,46 @@ Route::get('/reset_password', function () {
 
 
 Route::prefix('/dashboard')->group(function () {
-    Route::get('/home', function () {
-        return view('dashboard.index');
-    })->name('dashboard.index');
-
-
+   
     Route::get('/logout', 'LogoutController@index')->name('logout');
 
+    Route::group(['middleware' => 'backend.auth'], function () {
+
+        Route::get('/home', function () {
+            return view('dashboard.index');
+        })->name('dashboard.index');
+
     //users section
-    Route::resource('users', 'UsersController');
+        Route::resource('users', 'UsersController');
 
-    //end users section
+        //end users section
 
-    //groups section
-    Route::resource('groups', 'GroupController');
+        //groups section
+        Route::resource('groups', 'GroupController');
 
-    //end groups section
+        Route::resource('group_users', 'GroupUserController');
+        //end groups section
 
-    Route::get('/join_group','GroupController@show_join_group' )->name('join_group');
-
-
-    Route::get('/notifications', function () {
-        return view('dashboard.notifications');
-    })->name('dashboard.notifications');
+        Route::get('/join_group','GroupController@show_join_group' )->name('join_group');
 
 
-    Route::get('/complaints', function () {
-        return view('dashboard.complaints');
-    })->name('dashboard.complaints');
+        Route::get('/notifications', function () {
+            return view('dashboard.notifications');
+        })->name('dashboard.notifications');
 
 
-    //wait list 
+        Route::get('/complaints', function () {
+            return view('dashboard.complaints');
+        })->name('dashboard.complaints');
 
-    Route::resource('wait_list', 'WaitListController');
+
+        //wait list 
+
+        Route::resource('wait_list', 'WaitListController');
+
+    });
+    
+
+   
   
 });

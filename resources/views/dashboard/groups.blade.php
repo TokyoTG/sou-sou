@@ -67,7 +67,7 @@
                                             Actions<i class="icon"><span data-feather="chevron-down"></span></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
-                                    <a class="dropdown-item" href="{{route('groups.show', $group->id)}}">View Group</a>
+                                            <a class="dropdown-item" href="{{route('groups.show', $group->id)}}">View Group</a>
                                             <a class="dropdown-item" href="{{route('wait_list.show', $group->id)}}">Veiw Wait List</a>
                                             <a class="dropdown-item"
                                             href="#" data-group_id={{$group->id}}

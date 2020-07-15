@@ -12,7 +12,10 @@
 @endsection
 @section('contents')
 
-
+@if(Session::has('message'))
+<p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
+    {{ Session::get('message') }}</p>
+@endif
   <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
@@ -111,33 +114,45 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Create New User</h5>
+                <h5 class="modal-title" id="myModalLabel">Register a New User</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form >
-                <div class="form-group">
-                    <label for="full_name" class="control-label mb-1">Full Name</label>
-                    <input id="full_name" name="full_name" type="text" class="form-control" aria-required="true" aria-invalid="false">
+                <form method="POST" action={{route('users.store')}}>
+                    @csrf
+                <div class="form-group row">
+                    <input type="hidden" name="role_admin" value="admin">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label for="first_name" class="control-label mb-1">First Name</label>
+                        <input type="text" class="form-control form-control-user" id="exampleFirstName" name="first_name" >
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="last_name" class="control-label mb-1">Last Name</label>
+                        <input type="text" class="form-control form-control-user" id="exampleLastName" name="last_name" >
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label for="account_number" class="control-label mb-1">Accout Number</label>
-                    <input id="account_number" name="account_number" type="text" class="form-control" aria-required="true" aria-invalid="false">
-                </div>
-                         <div class="form-group">
-                    <label for="phone_number" class="control-label mb-1">Phone Number</label>
-                    <input id="phone_number" name="phone_number" type="text" class="form-control" aria-required="true" aria-invalid="false">
-                </div>
-                <div class="form-group">
-                    <label for="password" class="control-label mb-1">Password</label>
-                    <input id="password" name="password" type="text" class="form-control" aria-required="true" aria-invalid="false">
-                </div>
-                  <div class="form-group">
-                    <label for="confirm_password" class="control-label mb-1">Confirm Password</label>
-                    <input id="confirm_password" name="confirm_password" type="text" class="form-control" aria-required="true" aria-invalid="false">
-                </div>
+                <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label for="email" class="control-label mb-1">Email</label>
+                       <input type="email" class="form-control form-control-user" id="exampleInputEmail" name="email" >
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="phone_number" class="control-label mb-1">Phone Number</label>
+                      <input type="tel" class="form-control form-control-user" id="exampleLastName" name="phone_number">
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <div class="col-sm-6 mb-3 mb-sm-0">
+                        <label for="password" class="control-label mb-1">Password</label>
+                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="password" >
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="password_confirmation" class="control-label mb-1">Confirm Password</label>
+                      <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" name="password_confirmation">
+                    </div>
+                  </div>
                     <div class="form-group">
                         <div class="col-12">
                             <button type="submit" class="btn btn-primary btn-block">Create User</button>

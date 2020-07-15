@@ -37,7 +37,7 @@ class GroupController extends Controller
             $this->groups = Group::all();
         }
         if(Cookie::get('role') !== null && Cookie::get('role') == "member"){
-            $user_id =Cookie::get('id');
+            $user_id = Cookie::get('id');
             $this->groups = GroupUser::where('user_id', $user_id)->get();
         }
         // return $this->groups;
@@ -117,7 +117,7 @@ class GroupController extends Controller
         //
         $members = GroupUser::where('group_id', $id)->get();
         // return $members;
-        return view('dashboard.singleGroup')->with('user',$members);
+        return view('dashboard.singleGroup')->with('members',$members);
     }
 
     /**
@@ -194,7 +194,33 @@ class GroupController extends Controller
     }
 
     public function show_join_group(){
+        $user_id = Cookie::get('id');
         $this->groups = Group::all();
+        $count  = 0;
+        $group_to_show=[];
+        $count += count(GroupUser::where('user_id',$user_id)->get('group_id'));
+        $count  += count(WaitList::where('user_id',$user_id)->get('group_id'));
+        if($count >= 4){
+            $this->groups =[];
+        }
+        $user_groups = GroupUser::where('user_id',$user_id)->get('group_id');
+        $user_wait_list = WaitList::where('user_id',$user_id)->get('group_id');
+        // function filter_group($value){
+
+        // }
+        // if(count($user_groups) > 0){
+        //     foreach($user_groups as $user_groups){
+        //         $group_to_show = array_filter($this->groups,function filter_group($value){
+
+        //             })
+        //     }
+
+        // }
+        // if(count($user_wait_list) > 0){
+            
+        // }
+
+       
         return view('dashboard.join_group')->with('groups', $this->groups);
     }
 }

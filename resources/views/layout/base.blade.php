@@ -97,11 +97,11 @@
             <i class="fa-fw fa fa-users"></i>
             <span>Users</span></a>
         </li>
-        {{-- <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="{{route('wait_list.index')}}">
            <i class="menu-icon fa fa-list-alt"></i>
             <span>Wait List</span></a>
-        </li> --}}
+        </li>
         <li class="nav-item">
             <a class="nav-link" href="{{route('dashboard.complaints')}}">
             <i class="menu-icon fa fa-list-alt"></i>

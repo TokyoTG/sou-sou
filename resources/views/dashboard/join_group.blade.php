@@ -50,7 +50,7 @@
                                             </button>
                                             <div class="dropdown-menu dropdown-menu-right">
                                          <a class="dropdown-item" href="{{route('groups.show', $group->id)}}">View Group</a>
-                                        @if (isset($group->members_number) && $group->members_number  <= 14 ) 
+                                        @if ($group->members_number  <= 14 && $group->status == "open" ) 
                                             <a 
                                             class="dropdown-item" href="#" 
                                             onclick="showModal(this)"
@@ -58,7 +58,7 @@
                                             data-group_name ={{$group->name}}
                                             >
                                             Join Group
-                                                </a>
+                                            </a>
                                         @endif
                                        
                                             </div>
@@ -67,7 +67,7 @@
                                     </tr>
                                 @endforeach
                         @else
-                            No Groups available to join
+                        You are in 4 groups already,you cannot join any more group.
                         @endif
                         </tbody>
                     </table>
@@ -106,33 +106,6 @@
 </div>
 
 
-{{-- <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Are sure you want join Group</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <div class="ml-auto">
-                    <form action="{{ route('dashboard.wait_list') }}" method="POST">
-                        @csrf
-                        <input type="hidden" name="_method" value="DELETE">
-                        <button type="button" class="btn btn-primary btn-lg">Large button</button>
-                        <button type="button" class="btn btn-success btn-lg" type="submit">Large button</button>
-                 </form>
-               
-                </div>
-                
-            </div>
-            <div class="modal-footer">
-            </div>
-
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div> --}}
 @endsection
 
 @section('custom_js')
