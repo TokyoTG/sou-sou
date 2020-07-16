@@ -115,7 +115,8 @@ class GroupController extends Controller
     public function show($id)
     {
         //
-        $members = GroupUser::where('group_id', $id)->get();
+        $group_name = Group::find($id)->name;
+        $members = GroupUser::where('group_name', $group_name)->get();
         // return $members;
         return view('dashboard.singleGroup')->with('members',$members);
     }
@@ -152,7 +153,6 @@ class GroupController extends Controller
             return redirect()->route('groups.index');
           }
         }catch(\Exception $e){
-           return $e;
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message', "Something bad happened, try again");
             return redirect()->route('groups.index');
@@ -171,16 +171,13 @@ class GroupController extends Controller
         try{
         $group = Group::find($id);
         $group_users = GroupUser::where('group_id', $id)->get(['id']);
-        $group_wait_list = WaitList::where('group_id', $id)->get(['id']);
         if($group != null){
               $group->delete();
         }
         if(count($group_users) > 0){
             GroupUser::destroy($group_users->toArray());
         }
-        if(count($group_wait_list) > 0){
-            WaitList::destroy($group_wait_list->toArray());
-        }
+        
         
         $request->session()->flash('alert-class', 'alert-success');
         $request->session()->flash('message', "Group and associated data has been deleted successfully");
@@ -193,34 +190,10 @@ class GroupController extends Controller
        
     }
 
-    public function show_join_group(){
+    public function show_user_list(){
         $user_id = Cookie::get('id');
-        $this->groups = Group::all();
-        $count  = 0;
-        $group_to_show=[];
-        $count += count(GroupUser::where('user_id',$user_id)->get('group_id'));
-        $count  += count(WaitList::where('user_id',$user_id)->get('group_id'));
-        if($count >= 4){
-            $this->groups =[];
-        }
-        $user_groups = GroupUser::where('user_id',$user_id)->get('group_id');
-        $user_wait_list = WaitList::where('user_id',$user_id)->get('group_id');
-        // function filter_group($value){
-
-        // }
-        // if(count($user_groups) > 0){
-        //     foreach($user_groups as $user_groups){
-        //         $group_to_show = array_filter($this->groups,function filter_group($value){
-
-        //             })
-        //     }
-
-        // }
-        // if(count($user_wait_list) > 0){
-            
-        // }
-
-       
-        return view('dashboard.join_group')->with('groups', $this->groups);
+        $user_list  = WaitList::where('user_id',$user_id)->get();
+        // return $user_list;
+        return view('dashboard.user_list')->with('user_list', $user_list);
     }
 }

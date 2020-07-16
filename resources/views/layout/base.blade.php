@@ -102,11 +102,11 @@
            <i class="menu-icon fa fa-list-alt"></i>
             <span>Wait List</span></a>
         </li>
-        <li class="nav-item">
+        {{-- <li class="nav-item">
             <a class="nav-link" href="{{route('dashboard.complaints')}}">
             <i class="menu-icon fa fa-list-alt"></i>
-            <span>Complaints</span></a>
-        </li>
+            <span>Approved List</span></a>
+        </li> --}}
         <li class="nav-item">
           <a class="nav-link" href="{{route('groups.index')}}">
            <i class="fa-fw fa fa-folder"></i>
@@ -124,22 +124,22 @@
             <span>My Groups</span></a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="{{route('join_group')}}">
+            <a class="nav-link" href="{{route('user_list')}}">
             <i class="fa-fw fa fa-user-plus"></i>
-            <span>Join Group</span></a>
+            <span>Wait List</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('tasks.index')}}">
+           <i class="menu-icon fa fa-bell"></i>
+            <span>Tasks</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('payments')}}">
+           <i class="menu-icon fa fa-bell"></i>
+            <span>Verify Payments</span></a>
         </li>
 @endif
       <!-- Nav Item - Charts -->
-
-
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('dashboard.notifications')}}">
-         <i class="menu-icon fa fa-bell"></i>
-          <span>Notifications</span></a>
-      </li>
-      
-
-
       <!-- Nav Item - Tables -->
       <li class="nav-item">
         <a class="nav-link" href="{{route('users.edit',Cookie::get('id'))}}">

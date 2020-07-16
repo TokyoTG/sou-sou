@@ -114,11 +114,17 @@
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>
-                                                    <div class="clearfix"></div><br>
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label>Account Number</label>
                                                             <input class="form-control" type="text" name="account_number" value="{{$user->account_number != null ? $user->account_number : "Not Set"}}">
+                                                        </div>
+                                                    </div>
+                                                    <div class="clearfix"></div><br>
+                                                    <div class="row">
+                                                        <div class="col-md-12">
+                                                            <label>Bank Name</label>
+                                                            <input class="form-control" type="text" name="bank_name" value="{{$user->bank_name != null ? $user->bank_name : "Not Set"}}">
                                                         </div>
                                                     </div>
                                                     <div class="clearfix"></div><br>

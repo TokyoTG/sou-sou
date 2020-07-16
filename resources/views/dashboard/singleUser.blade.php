@@ -67,6 +67,7 @@
                                                         <tr>
                                                             <th>Name</th>
                                                             <th>Level</th>
+                                                            <th>Task Status</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -78,7 +79,10 @@
                                                                 <span class="badge badge-success">{{ isset($group->status) ? $group->status : "Not Set" }}</span>
                                                             </td>
                                                             <td>
-                                                                {{ isset($group->level) ? $group->level : "Not Set" }}
+                                                                {{ isset($group->user_level) ? $group->user_level : "Not Set" }}
+                                                            </td>
+                                                            <td>
+                                                                {{ isset($group->task_status) ? $group->task_status : "Not Set" }}
                                                             </td>
                                                             <td>
                                                                 <div class="btn-group mt-2 mr-1">
@@ -88,8 +92,6 @@
                                                                 </button>
                                                                 <div class="dropdown-menu dropdown-menu-right">
                                                                 <a class="dropdown-item" href="{{route('groups.show',$group->group_id)}}">View Group</a>
-                                                                <a class="dropdown-item" href="">Active Position</a>
-                                                                <a class="dropdown-item" href="#">Deactivate Position</a>
                                                                 </div>
                                                                 </div>
                                                             </td>

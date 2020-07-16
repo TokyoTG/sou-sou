@@ -116,8 +116,11 @@ class UsersController extends Controller
     {
         //
         $user = User::find($id);
+       
         $userGroup = GroupUser::where('user_id',$id)->get();
+        
         $user_details = ['info'=>$user,'group_info'=>$userGroup];
+        // return $user;
         return view('dashboard.singleUser')->with('user_details',$user_details);
     }
 
@@ -180,6 +183,7 @@ class UsersController extends Controller
                             $user->email = $request->input('email');
                             $user->phone_number = $request->input('phone_number');
                             $user->account_number = $request->input('account_number');
+                            $user->bank_name = $request->input('bank_name');
                             $saved = $user->save();
                             if($saved){
                                 Cookie::queue('full_name', $request->input('first_name') . " " . $request->input('last_name'));

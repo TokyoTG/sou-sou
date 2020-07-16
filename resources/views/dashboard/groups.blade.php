@@ -68,7 +68,6 @@
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
                                             <a class="dropdown-item" href="{{route('groups.show', $group->id)}}">View Group</a>
-                                            <a class="dropdown-item" href="{{route('wait_list.show', $group->id)}}">Veiw Wait List</a>
                                             <a class="dropdown-item"
                                             href="#" data-group_id={{$group->id}}
                                             data-group_name ={{$group->name}}
@@ -96,25 +95,35 @@
 <--====================== END OF ADMIN GROUP TABLE==================>-> --}}
                @elseif(is_member())
                {{-- <======================USERS GROUP TABLE==================> --}}
+               @isset($groups)
+                   @if (count($groups) > 0)
+                   <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Level</th>
+                            <th>Task Status</th>
+                            <th>View Group</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($groups as $group)
+                        <tr>
+                        <td>{{$group->group_name}}</td>
+                        <td>{{$group->user_level}}</td>
+                        <td>{{$group->task_status}}</td>
+                        <td > <a href="{{route('groups.show', $group->group_id)}}"> View <i class="fa fa-eye"></i> </a> </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                   @else
+                       <p>You not in any group yet, join the waiting list please.</p>
+                   @endif
+               @endisset
                
-               <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                   <thead>
-                       <tr>
-                           <th>Name</th>
-                           <th>No. of Members</th>
-                           <th>Membership Status</th>
-                           <th>View Group</th>
-                       </tr>
-                   </thead>
-                   <tbody>
-                       <tr>
-                           <td>Tiger Nixon</td>
-                           <td>11</td>
-                           <td>Wait List <span class="badge badge-success">4th</span></td>
-                       <td > <a href="{{route('groups.show', 2)}}"> View <i class="fa fa-eye"></i> </a> </td>
-                       </tr>
-                   </tbody>
-               </table>
+                     
+                
                {{-- <======================USERS GROUP TABLE==================>   --}}
                @endif
            </div>
@@ -193,6 +202,8 @@
 		</div>
 	</div>
 </div>
+
+
 @endsection
 
 @section('custom_js')

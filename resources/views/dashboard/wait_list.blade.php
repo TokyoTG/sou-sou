@@ -11,6 +11,11 @@
 @endsection
 
 @php
+
+  $list = $data['list'];
+  $groups = $data['groups'];
+
+
     function position_prepare($value){
       $str = strval($value);
       
@@ -68,7 +73,6 @@
                   <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                     <thead>
                       <tr>
-                        <th>Group Name</th>
                         <th>User Name</th>
                         <th>Position</th>
                         <th>Date of Request</th>
@@ -78,7 +82,6 @@
                     <tbody>
                     @foreach ($list as $item)
                         <tr>
-                        <td>{{$item->group_name}}</td>
                           <td>{{$item->user_name}}</td>
                           <td>{{ position_prepare($item->position)}}</td>
                         <td>{{$item->created_at}}</td>
@@ -101,9 +104,10 @@
                                   <form action="{{route('group_users.store')}}" method="post" id={{"add".$item->user_id}}>
                                     @csrf
                                     <input type="hidden" name="user_level" class="user-level">
-                                    <input type="hidden" name="group_id" value={{$item->group_id}}>
-                                    <input type="hidden" name="group_name" value={{$item->group_name}}>
+                                    <input type="hidden" name="group_name" class="group_name">
+                                    <input type="hidden" name="list_id" value={{$item->id}}>
                                     <input type="hidden" name="user_id" value={{$item->user_id}}>
+                                    <input type="hidden" name="user_name" value={{$item->user_name}}>
                                   </form>
 
 
@@ -115,8 +119,6 @@
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="input-position" class="input-position">
-                                    <input type="hidden" name="group_id"  class="group_id" value={{$item->group_id}}>
-                                    <input type="hidden" name="list_id"  class="list_id" value={{$item->id}}>
                                     <input type="hidden" name="old_position"  class="old_position" value={{$item->position}}>
                                   </form>
 
@@ -124,7 +126,6 @@
                                   <form action="{{ route('wait_list.destroy',$item->id) }}" method="POST" id={{"delete".$item->user_id}}>
                                     @csrf
                                     @method('DELETE')
-                                    <input type="hidden" name="group_id"  class="group_id" value={{$item->group_id}}>
                                   </form>
                                   <a class="dropdown-item"
                                   href="#"
@@ -147,7 +148,7 @@
                     </tbody>
                   </table>
                   @else
-                      
+                      <p>There are no users on the waiting list</p>
                   @endif
                     
                 @endisset
@@ -210,7 +211,7 @@
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="myModalLabel">Add User to Group</h5>
+              <h5 class="modal-title" id="myModalLabel">Add <span class="u-name"> </span> to Group</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
@@ -220,15 +221,32 @@
                   <p >Please choose one to continue </p>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <label class="input-group-text" name="level" for="level">Chose Level for <span class="u-name"> </span></label>
+                      <label class="input-group-text" name="group" for="level">Chose group</label>
+                    </div>
+                    <select class="custom-select" id="group-name" name="group-name">
+                      <option disabled selected value="">Select One</option>
+                      @if (count($groups) > 0)
+                          @foreach ($groups as $item)
+                          <option value={{$item->name}}>{{$item->name}}</option>
+                          @endforeach
+                      @else
+                          All available groups are closed
+                      @endif
+                    </select>
+                  </div>
+                  <p >Please choose one to continue </p>
+                  <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <label class="input-group-text" name="level" for="level">Chose level</label>
                     </div>
                     <select class="custom-select" id="level">
                       <option disabled selected value="">Select One</option>
-                      <option value="fire">Fire</option>
+                      <option value="flower">Flower</option>
                       <option value="water">Water</option>
                       <option value="earth">Earth</option>
+                      <option value="fire">Fire</option>
                     </select>
-                  </div>
+                    </div>
               </div>
               <div class="form-group">
                   <div class="col-12">
@@ -254,7 +272,7 @@
             let option = element.dataset.request;
             let request  = element.textContent.split(' ')[0].toLowerCase();
             $('#request-option').text(request);
-            $('.u-name').text("  "+user_name);
+            $('.u-name').text(" "+user_name);
             $('.input-status').val(option);
             $(`#${modalName}`).modal('show');
         }
@@ -272,7 +290,10 @@
 
         function addUser(){
           let level = $("#level").val();
+          let group = $('#group-name').val();
           $('.user-level').val(level);
+          $('.group_name').val(group);
+
           $(`#add${user_id}`).submit();
         }
     </script>

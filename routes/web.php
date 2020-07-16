@@ -44,9 +44,7 @@ Route::prefix('/dashboard')->group(function () {
 
     Route::group(['middleware' => 'backend.auth'], function () {
 
-        Route::get('/home', function () {
-            return view('dashboard.index');
-        })->name('dashboard.index');
+        Route::get('/home', 'PagesController@dashboard')->name('dashboard.index');
 
     //users section
         Route::resource('users', 'UsersController');
@@ -59,12 +57,10 @@ Route::prefix('/dashboard')->group(function () {
         Route::resource('group_users', 'GroupUserController');
         //end groups section
 
-        Route::get('/join_group','GroupController@show_join_group' )->name('join_group');
+        Route::get('/list','GroupController@show_user_list' )->name('user_list');
 
 
-        Route::get('/notifications', function () {
-            return view('dashboard.notifications');
-        })->name('dashboard.notifications');
+        Route::resource('tasks', 'NotificationController');
 
 
         Route::get('/complaints', function () {
@@ -75,6 +71,8 @@ Route::prefix('/dashboard')->group(function () {
         //wait list 
 
         Route::resource('wait_list', 'WaitListController');
+
+        Route::get('/payments', 'PagesController@payments')->name('payments');
 
     });
     
