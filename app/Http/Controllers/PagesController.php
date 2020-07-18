@@ -6,6 +6,7 @@ use App\GroupUser;
 
 use App\User;
 
+
 use App\WaitList;
 
 use App\Notification;
@@ -37,11 +38,12 @@ class PagesController extends Controller
     public function payments(){
         $user_id =  Cookie::get('id');
         $users_in_group = [];
-        $group_in = Notification::where('user_id', $user_id)->get();
-        if(count($group_in) > 0){
-            if($group_in[0]->user_level == 'flower'){
-                $group_id = $group_in[0]->group_id;
-                $users_in_group = GroupUser::where('group_id',$group_id)->where('task_status',"completed")->get();
+        $group_in = GroupUser::where('user_id', $user_id)->first();
+        if($group_in){
+            if($group_in->user_level == 'flower'){
+                $group_id = $group_in->group_id;
+                $users_in_group = Notification::where('group_id',$group_id)
+                ->where('completed',true)->get();
             }
         }
         // return $users_in_group;

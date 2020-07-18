@@ -11,7 +11,7 @@
        @if ($show_button)
             <button class="d-none d-sm-inline-block btn 
      btn-primary shadow-sm" data-toggle="modal" data-target="#myModal">
-        <i class="fa fa-plus my-float"></i> Join Wait List</button>
+         Join Wait List <i class="fa fa-plus my-float"></i></button>
        @endif
     @endif
     

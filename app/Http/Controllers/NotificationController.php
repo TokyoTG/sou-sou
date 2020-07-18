@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\GroupUser;
 use Illuminate\Http\Request;
+
+use App\Providers\PaymentVerifiedEvent;
 
 use App\Notification;
 
@@ -19,6 +22,16 @@ class NotificationController extends Controller
     {
         //
         $user_id =  Cookie::get('id');
+        $tasks = Notification::where('user_id',$user_id)->get();
+        foreach($tasks as $task){
+            $now = time(); 
+            $your_date = strtotime($task->created_at);
+            $datediff =60 - round(($now - $your_date) / 60);
+            if($datediff < 0 ){
+                $to_delete = Notification::find($task->id);
+                $to_delete->delete();
+            }
+        }
         $tasks = Notification::where('user_id',$user_id)->get();
         return view('dashboard.notifications')->with('tasks',$tasks);
 
@@ -86,16 +99,28 @@ class NotificationController extends Controller
                 // return $time_left;
                 if($time_left >= 0){
                      $task->completed = true;
-                    $task->save();
+                     $request->session()->flash('message', "Task has been mark completed, wait for the to verify it");
                 }else{
                     $request->session()->flash('alert-class', 'alert-danger');
                     $request->session()->flash('message',"Sorry you have exceeded the amount of time required to finish the task");
                     return redirect()->route('tasks.index');
                 }
             }
-           
             $request->session()->flash('alert-class', 'alert-success');
-            $request->session()->flash('message', "Task has been mark completed, wait for the to verify it");
+            $task->save();
+            if($request_type == "verification"){
+                $user_id = $request->input('user_id');
+                $group_id = $request->input('group_id');
+                GroupUser::where('group_id',$group_id)->where('user_id',$user_id)->update(['task_status'=> 'completed']);
+                // return $user_id;
+                event(new PaymentVerifiedEvent($group_id));
+                $task->verified = true;
+                $task->save();
+                $request->session()->flash('message', "Task has been mark verified");
+                return redirect()->route('payments');
+            }
+            
+           
             return redirect()->route('tasks.index');
         }catch(\Exception $e){
                         $request->session()->flash('alert-class', 'alert-danger');

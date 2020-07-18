@@ -57,20 +57,23 @@
                                                         </button>
                                                     <div class="dropdown-menu dropdown-menu-right">
                                                     <a class="dropdown-item" href="#">View Task</a>
-                                                        <a 
-                                                        class="dropdown-item" href="#"
-                                                        data-user_id={{$item->id}}
-                                                        onclick="showModal(this)"
-                                                        >
-                                                        Mark as Completed
-                                                        </a>
+                                                        @if (!$item->completed)
+                                                            <a 
+                                                            class="dropdown-item" href="#"
+                                                            data-user_id={{$item->id}}
+                                                            onclick="showModal(this)"
+                                                            >
+                                                            Mark as Completed
+                                                            </a> 
+                                                        @endif
+                                                      
                                                     </div>
                                                 <form action="{{ route('tasks.update',$item->id) }}" method="POST" id="tasks{{$item->id}}">
                                                         @csrf
                                                         @method("PUT")
                                                 <input type="hidden" name="time_left" value="{{$datediff}}">
                                                         <input type="hidden" name="request" value="completion">
-                                                    </form>
+                                                </form>
                                                 </td>
                                             </tr>
                                         @endforeach
