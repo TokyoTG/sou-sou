@@ -23,7 +23,7 @@ class UsersController extends Controller
     public function index()
     {
         //
-        $users = User::all();
+        $users = User::where('role','member')->get();
         // return $users->groups;
         return view('dashboard.users')->with('users',$users);
     }

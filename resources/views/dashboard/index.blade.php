@@ -11,7 +11,7 @@
        @if ($show_button)
             <button class="d-none d-sm-inline-block btn 
      btn-primary shadow-sm" data-toggle="modal" data-target="#myModal">
-         Join Wait List <i class="fa fa-plus my-float"></i></button>
+         Join Wait List</button>
        @endif
     @endif
     
@@ -24,6 +24,67 @@
 @if(Session::has('message'))
     <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
         {{ Session::get('message') }}</p>
+@endif
+
+@if (Cookie::get('role') !== null && Cookie::get('role') == "admin")
+    @isset($admin)
+    <div class="row">
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-primary shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Users</div>
+                <div class="h5 mb-0 font-weight-bold text-gray-800">{{$admin['users']}}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-user fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-success shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Groups</div>
+                  <div class="h5 mb-0 font-weight-bold text-gray-800">{{$admin['groups']}}</div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-users fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+          <div class="card border-left-info shadow h-100 py-2">
+            <div class="card-body">
+              <div class="row no-gutters align-items-center">
+                <div class="col mr-2">
+                  <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Wait List</div>
+                  <div class="row no-gutters align-items-center">
+                    <div class="col-auto">
+                      <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{$admin['list']}}</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto">
+                  <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+    @endisset
 @endif
 
 <div id="myModal" class="modal fade">

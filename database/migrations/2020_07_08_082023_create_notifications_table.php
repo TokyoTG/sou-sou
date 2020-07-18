@@ -17,7 +17,9 @@ class CreateNotificationsTable extends Migration
             $table->id();
             $table->string('user_id');
             $table->string('group_id');
+            $table->string('title');
             $table->boolean('completed');
+            $table->boolean('is_read');
             $table->boolean('verified');
             $table->string('message', 250);
             $table->timestamps();

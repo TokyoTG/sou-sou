@@ -18,6 +18,9 @@
                 </div>
                 <form class="user">
                   <div class="form-group">
+                    <input type="text" class="form-control form-control-user" id="exampleInputPassword" placeholder="Enter Password">
+                  </div>
+                  <div class="form-group">
                     <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Enter Password">
                   </div>
                   <div class="form-group">

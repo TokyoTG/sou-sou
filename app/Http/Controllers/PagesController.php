@@ -3,11 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\GroupUser;
-
 use App\User;
-
-
 use App\WaitList;
+use App\Group;
 
 use App\Notification;
 
@@ -21,16 +19,27 @@ class PagesController extends Controller
     public function dashboard(){
         $show_buttun = false;
         $user_id =  Cookie::get('id');
-        $user = User::find($user_id);
-        if($user->groups_in > 0){
-            return view('dashboard.index')->with('show_button',$show_buttun);
-        }   
-        $check_wait_list =   WaitList::where('user_id',$user_id)->get('id');
-        if(count($check_wait_list) >=  4){
-            return view('dashboard.index')->with('show_button',$show_buttun);
-        }else{
-            $show_buttun = true;
-            return view('dashboard.index')->with('show_button',$show_buttun);
+        // $user = User::find($user_id);
+        if(Cookie::get('role') !== null && Cookie::get('role') == "member"){
+             $count_wait_list =   WaitList::where('user_id',$user_id)->count();
+            if($count_wait_list >=  4){
+                return view('dashboard.index')->with('show_button',$show_buttun);
+            }else{
+                $show_buttun = true;
+                return view('dashboard.index')->with('show_button',$show_buttun);
+            }
+        }
+       
+        if(Cookie::get('role') !== null && Cookie::get('role') == "admin"){
+            $count_users = User::all()->count();
+            $count_groups = Group::all()->count();
+            $count_waitlist = WaitList::all()->count();
+            $admin =[
+                'users' => $count_users,
+                'groups' =>  $count_groups,
+                'list'  => $count_waitlist
+            ];
+            return view('dashboard.index')->with('admin',$admin);
         }
         
     }

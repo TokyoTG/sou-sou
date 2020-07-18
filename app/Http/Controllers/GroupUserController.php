@@ -137,6 +137,8 @@ class GroupUserController extends Controller
                             $new_task = new Notification();
                             $new_task->group_id = $group_id;
                             $new_task->verified = false;
+                            $new_task->title = "Bless Top User";
+                            $new_task->is_read = false;
                             $new_task->completed = false;
                             $new_task->user_id = $request->input('user_id');
                             $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked position in the {$group_name} group with the following details : \n Account Number: {$top_user->account_number} \n Bank Name : {$top_user->bank_name} amount within 1 hour. \n Signed Sou Sou Admin";

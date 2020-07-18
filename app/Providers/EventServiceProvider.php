@@ -21,6 +21,9 @@ class EventServiceProvider extends ServiceProvider
         PaymentVerifiedEvent::class=>[
             \App\Listeners\PaymentVerifiedListener::class,
         ],
+        MoveUserToWaitListEvent::class=>[
+            \App\Listeners\MoveUserToWaitListListener::class,
+        ],
     ];
 
     /**

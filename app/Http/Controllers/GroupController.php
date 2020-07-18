@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 
 use App\Group;
-
+use App\Notification;
+use App\User;
 use App\GroupUser;
 
 use App\WaitList;
@@ -117,6 +118,27 @@ class GroupController extends Controller
         //
         $group_name = Group::find($id)->name;
         $members = GroupUser::where('group_name', $group_name)->get();
+        $tasks = Notification::where('group_id',$id)->where('completed',false)->where('verified',false)->get();
+        foreach($tasks as $task){
+            $now = time(); 
+            $your_date = strtotime($task->created_at);
+            $datediff =60 - round(($now - $your_date) / 60);
+            if($datediff < 0 ){
+
+                //removing user from group, deleting notification and reducing the number of people in the group
+                GroupUser::where('user_id',$task->user_id)->delete();
+                Notification::where('user_id',$task->user_id)->delete();
+                Group::where('id', $id)->decrement('members_number');
+
+                $position = count(WaitList::all()) + 1;
+                $user = User::find($task->user_id);
+                $add_new = new WaitList();
+                $add_new->user_id = $task->user_id;
+                $add_new->user_name = $user->full_name;
+                $add_new->position = $position;
+                $add_new->save();
+            }
+        }
         // return $members;
         return view('dashboard.singleGroup')->with('members',$members);
     }

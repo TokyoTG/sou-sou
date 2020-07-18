@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use App\Providers\PaymentVerifiedEvent;
 
 use App\Notification;
-
+use App\Providers\MoveUserToWaitListEvent;
 use Illuminate\Support\Facades\Cookie;
 
 class NotificationController extends Controller
@@ -22,6 +22,7 @@ class NotificationController extends Controller
     {
         //
         $user_id =  Cookie::get('id');
+        $user_name =  Cookie::get('full_name');
         $tasks = Notification::where('user_id',$user_id)->get();
         foreach($tasks as $task){
             $now = time(); 
@@ -29,7 +30,16 @@ class NotificationController extends Controller
             $datediff =60 - round(($now - $your_date) / 60);
             if($datediff < 0 ){
                 $to_delete = Notification::find($task->id);
-                $to_delete->delete();
+                if(!$task->verified && !$task->completed){
+                    //move user ot wait list when task is not verified
+                    $to_delete->delete();
+                    $user_data = [
+                        'user_id' => $user_id,
+                        'user_name' => $user_name,
+                        'group_id' => $task->group_id
+                    ];
+                    event(new MoveUserToWaitListEvent($user_data));
+               }
             }
         }
         $tasks = Notification::where('user_id',$user_id)->get();
