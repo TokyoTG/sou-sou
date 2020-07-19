@@ -14,7 +14,6 @@ class LogoutController extends Controller
     {
         Cookie::queue(Cookie::forget('role'));
         Cookie::queue(Cookie::forget('id'));
-        Cookie::queue(Cookie::forget('groups_in'));
         Cookie::queue(Cookie::forget('full_name'));
         Cookie::queue(Cookie::forget('email'));
 

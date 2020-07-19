@@ -140,6 +140,7 @@ class GroupUserController extends Controller
                             $new_task->title = "Bless Top User";
                             $new_task->is_read = false;
                             $new_task->completed = false;
+                            $new_task->user_name = $username;
                             $new_task->user_id = $request->input('user_id');
                             $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked position in the {$group_name} group with the following details : \n Account Number: {$top_user->account_number} \n Bank Name : {$top_user->bank_name} amount within 1 hour. \n Signed Sou Sou Admin";
                             $group_user->task_status = "uncompleted";
@@ -160,7 +161,11 @@ class GroupUserController extends Controller
                         $request->session()->flash('message', "User added successfully");
                         return redirect()->route('wait_list.index');
                     }catch(\Exception $e){
-                        return $e;
+                        if ($e->getCode() == 23000) {
+                            $request->session()->flash('alert-class', 'alert-danger');
+                            $request->session()->flash('message',"User already exists in a group");
+                            return redirect()->route('wait_list.index');
+                        }
                         $request->session()->flash('alert-class', 'alert-danger');
                         $request->session()->flash('message',"Something went wrong with your request, please try again");
                         return redirect()->route('wait_list.index');
@@ -220,7 +225,6 @@ class GroupUserController extends Controller
              $group_user = GroupUser::find($id);
              $group_id = $request->input('group_id');
             $group_user->delete();
-            User::where('id',$user_id)->decrement('groups_in');
             Group::where('name',$group_name)->decrement('members_number');
             $request->session()->flash('alert-class', 'alert-success');
             $request->session()->flash('message', "User was successfully removed from the group");

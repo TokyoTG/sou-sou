@@ -19,7 +19,6 @@
                                          <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                             <thead>
                                                 <tr>
-                                                    <th>Group Name</th>
                                                     <th>User Name</th>
                                                     <th>Status</th>
                                                     <th>User Level</th>
@@ -29,7 +28,6 @@
                                             <tbody>
                                         @foreach ($pay_data as $item)
                                             <tr>
-                                            <td>{{$item->group_name}}</td>
                                             <td>{{$item->user_name}}</td>
                                             <td>{{$item->completed ? "Completed" : "Not Completed"}} <span class="badge badge-{{$item->verified ?"success"  :"secondary" }}">{{$item->verified ? "Verified" : "Not Verified"}}</span></td>
                                             <td>{{$item->user_level}}</td>

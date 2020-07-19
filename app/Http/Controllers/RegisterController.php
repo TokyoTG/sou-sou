@@ -39,7 +39,6 @@ class RegisterController extends Controller
                     $user->phone_number = $request->input('phone_number');
                     $user->password = password_hash($request->input('password'), PASSWORD_DEFAULT);
                     $user->role = "member";
-                    $user->groups_in = 0;
                     $saved = $user->save();
                     if($saved) {
                          $request->session()->flash('alert-class', 'alert-success');

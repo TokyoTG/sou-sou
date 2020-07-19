@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('title')
-    <h4>Notifications</h4>
+    <h4>Tasks</h4>
     <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 @endsection
 @section('contents')
@@ -27,7 +27,7 @@
                                     <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Message</th>
+                                                <th>Title</th>
                                                 <th>Time left</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
@@ -46,7 +46,7 @@
                                                  }
                                             @endphp
                                                 <tr>
-                                                <td>{{$item->message}}</td>
+                                                <td>{{$item->title}}</td>
                                                 <td>{{$item->completed ?  "Task Completed":$display}}</td>
                                                 <td>{{$item->completed ? "Completed" : "Not Completed"}} <span class="badge badge-{{$item->verified ?"success"  :"secondary" }}">{{$item->verified ? "Verified" : "Not Verified"}}</span></td>
                                                 <td>

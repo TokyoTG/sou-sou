@@ -46,14 +46,14 @@
                                                 <p>{{ isset($user_details['info']->email) ? $user_details['info']->email : "Not Set" }}</p>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-md-6">
                                                 <label><b>No. of Groups</b></label>
                                             </div>
                                             <div class="col-md-6">
                                                 <span class="badge badge-primary">{{ isset($user_details['info']->groups_in) ? $user_details['info']->groups_in : "Not Set" }}</span>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="groups">

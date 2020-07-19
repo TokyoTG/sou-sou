@@ -29,7 +29,6 @@ class PaymentVerifiedListener
                 $flower_id = GroupUser::where('group_id', $group_id)->where('user_level',"flower")->get(['id']);
                 GroupUser::where('group_id', $group_id)->where('user_level',"flower")->delete();
 
-                User::where('id',$flower_id[0]->user_id)->decrement('groups_in');
 
                 //split water and create new group
                 $waters = GroupUser::where('group_id', $group_id)->where('user_level',"water")->take(1)->first();
@@ -123,6 +122,7 @@ class PaymentVerifiedListener
         $new_task->title = "Bless Top User";
         $new_task->completed = false;
         $new_task->user_id = $user->user_id;
+        $new_task->user_name = $user->user_name;
         $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user->full_name} an amount of #1000 the top ranked position in the {$group_name} group with the following details: \n Account Number: {$top_user->account_number}  \n Bank Name : {$top_user->bank_name} .\n This should be done within 1 hour after recieving this message.  \n Signed Sou Sou Admin";
         $new_task->save();
     }

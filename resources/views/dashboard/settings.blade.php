@@ -67,14 +67,14 @@
                                                 <p>{{$user->email}}</p>
                                             </div>
                                         </div>
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="col-md-6">
                                                 <label><b>No. of Groups</b></label>
                                             </div>
                                             <div class="col-md-6">
                                                 <p>{{$user->groups_in}}</p>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="user-profile">

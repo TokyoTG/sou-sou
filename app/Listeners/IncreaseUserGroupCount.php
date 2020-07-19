@@ -16,7 +16,6 @@ class IncreaseUserGroupCount
     {
         //
         $event_data = $event->event_data;
-        User::where('id',$event_data['user_id'])->increment('groups_in');
         Group::where('name',$event_data['group_name'])->increment('members_number');
     }
 }
