@@ -19,15 +19,29 @@ class PagesController extends Controller
     public function dashboard(){
         $show_buttun = false;
         $user_id =  Cookie::get('id');
-        // $user = User::find($user_id);
         if(Cookie::get('role') !== null && Cookie::get('role') == "member"){
              $count_wait_list =   WaitList::where('user_id',$user_id)->count();
+             $group = GroupUser::where('user_id',$user_id)->first();
+             $is_top = GroupUser::where('user_id',$user_id)->where('user_level','flower')->get('group_id');
+             if(count($is_top) > 0){
+                 $group_id = $is_top[0]->group_id;
+                 $payments = Notification::where('completed',true)->where('verified',false)->where('group_id',$group_id)->count();
+             }
+             $member = [
+                'list' => $count_wait_list,
+                'payments' => isset($payments) ? $payments : "None",
+                'show_btn' =>$show_buttun,
+                'groups' => $group->group_name ?  $group->group_name : "Not in group"
+            ];
             if($count_wait_list >=  4){
-                return view('dashboard.index')->with('show_button',$show_buttun);
+                return view('dashboard.index')->with('member',$member);
             }else{
-                $show_buttun = true;
-                return view('dashboard.index')->with('show_button',$show_buttun);
+              
+                $member['show_btn'] = true;
+            return view('dashboard.index')->with('member',$member);
             }
+
+            
         }
        
         if(Cookie::get('role') !== null && Cookie::get('role') == "admin"){

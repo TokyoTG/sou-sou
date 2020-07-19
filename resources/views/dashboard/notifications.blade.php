@@ -19,7 +19,8 @@
                                 <strong class="card-title">All Tasks</strong>
                             </div>
                             <div class="card-body">
-                                @isset($tasks)
+                                <div class="table-responsive">
+                                    @isset($tasks)
                                     @if (count($tasks) > 0)
                                     @php
                                     $count = 0;
@@ -85,6 +86,8 @@
                                     
                                 @endisset
                                    
+                                </div>
+                              
                             </div>
                         </div>
                     </div>

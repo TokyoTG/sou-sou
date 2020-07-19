@@ -118,11 +118,11 @@
     
     
 @if(is_members())
-        <li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link" href="{{route('groups.index')}}">
           <i class="fa-fw fa fa-folder"></i>
             <span>My Groups</span></a>
-        </li>
+        </li> --}}
         <li class="nav-item">
             <a class="nav-link" href="{{route('user_list')}}">
             <i class="fa-fw fa fa-user-plus"></i>

@@ -14,7 +14,8 @@
                                 <strong class="card-title">Payments to Verify</strong>
                             </div>
                             <div class="card-body">
-                                @isset($pay_data)
+                                <div class="table-responsive">
+                                    @isset($pay_data)
                                     @if (count($pay_data) > 0)
                                          <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                             <thead>
@@ -67,6 +68,8 @@
                                     @endif
                                     
                                 @endisset
+                                </div>
+                               
                                
                                         
                                     
