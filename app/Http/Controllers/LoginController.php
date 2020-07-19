@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Cookie;
 
 
 use App\User;
+use App\Notification;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -45,6 +46,8 @@ class LoginController extends Controller
                         if(count($user) > 0){
                             $user_details = $user[0];
                             if(password_verify($password, $user_details->password)){
+                                $tasks = Notification::where('user_id',$user_details->id)->where('is_read',false)->get();
+                                session(['tasks' => $tasks]);
                                 Cookie::queue('full_name', $user_details->full_name);
                                 Cookie::queue('role', $user_details->role);
                                 Cookie::queue('id', $user_details->id);

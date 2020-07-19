@@ -142,7 +142,7 @@ class GroupUserController extends Controller
                             $new_task->completed = false;
                             $new_task->user_name = $username;
                             $new_task->user_id = $request->input('user_id');
-                            $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked position in the {$group_name} group with the following details : \n Account Number: {$top_user->account_number} \n Bank Name : {$top_user->bank_name} amount within 1 hour. \n Signed Sou Sou Admin";
+                            $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked person in the {$group_name} group with the following details : \n Account Number: {$top_user->account_number} \n Bank Name : {$top_user->bank_name} amount within 1 hour. \n Signed Sou Sou Admin";
                             $group_user->task_status = "uncompleted";
                             $new_task->save();
                         }

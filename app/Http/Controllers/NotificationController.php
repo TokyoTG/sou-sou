@@ -77,6 +77,13 @@ class NotificationController extends Controller
     public function show($id)
     {
         //
+        $task = Notification::find($id);
+        $user_id = Cookie::get('id');
+        $task->is_read = true;
+        $task->save();
+        $tasks = Notification::where('user_id',$user_id)->where('is_read',false)->get();
+        session(['tasks' => $tasks]);
+        return view('dashboard.single_task')->with('task',$task);
     }
 
     /**

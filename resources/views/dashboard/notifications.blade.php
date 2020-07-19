@@ -57,7 +57,7 @@
                                                             Actions<i class="icon"><span data-feather="chevron-down"></span></i>
                                                         </button>
                                                     <div class="dropdown-menu dropdown-menu-right">
-                                                    <a class="dropdown-item" href="#">View Task</a>
+                                                    <a class="dropdown-item" href="{{route('tasks.show',$item->id)}}">View Task</a>
                                                         @if (!$item->completed)
                                                             <a 
                                                             class="dropdown-item" href="#"
