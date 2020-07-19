@@ -29,7 +29,6 @@
                             <th>Name</th>
                             <th>Account Number</th>
                             <th>Phone Number</th>
-                            <th>No. of Groups</th>
                             <th>Reg. Date</th>
                             <th>Action</th>
                         </tr>
@@ -72,7 +71,6 @@
                                     <td>{{$user->full_name}}</td>
                                 <td>{{ isset($user->account_number)  ? $user->account_number : "Not Set"}}</td>
                                     <td>{{$user->phone_number}}</td>
-                                <td>{{ isset($user->groups_in)  ? $user->groups_in : "Not Set"}}</td>
                                     <td>{{$join_date}}</td>
                                     <td>
                                         <div class="btn-group mt-2 mr-1">

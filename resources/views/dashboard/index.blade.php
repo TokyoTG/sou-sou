@@ -5,6 +5,8 @@
 <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 @endsection
 
+@if (Cookie::get('role') !== null && Cookie::get('role') == "member")
+
 
 @php
     
@@ -12,7 +14,7 @@
     
 
 @endphp
-
+@endif
 
 @section('title')
     <h4>Home</h4>

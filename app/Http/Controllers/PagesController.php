@@ -31,7 +31,7 @@ class PagesController extends Controller
                 'list' => $count_wait_list,
                 'payments' => isset($payments) ? $payments : "None",
                 'show_btn' =>$show_buttun,
-                'groups' => $group->group_name ?  $group->group_name : "Not in group"
+                'groups' => isset($group->group_name) ?  $group->group_name : "None"
             ];
             if($count_wait_list >=  4){
                 return view('dashboard.index')->with('member',$member);
