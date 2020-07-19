@@ -35,6 +35,10 @@
     text-decoration: none;
   }
 
+  /* .container-fluid{
+    height: 500px;
+    overflow: auto;
+  } */
   
 </style>
 
