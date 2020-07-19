@@ -94,14 +94,14 @@ class GroupUserController extends Controller
                             $request->session()->flash('message',"Request denied, you cannot add a user without account details to group");
                             return redirect()->route('wait_list.index');
                         }
-                        if($group_count <= 0 && $level != "flower"){
-                            $request->session()->flash('message',"Request denied, you cannot add another this level without adding the flower level first");
+                        if($group_count <= 0 && $level != "water"){
+                            $request->session()->flash('message',"Request denied, you cannot add another this level without adding the water level first");
                             return redirect()->route('wait_list.index');
                         }
-                        if($level == "flower"){
-                            $check_flower = GroupUser::where('group_name',$group_name)->where('user_level',"flower")->get('id');
-                            if(count($check_flower) > 0){
-                                $request->session()->flash('message',"Request denied, you cannot have more than 1 user at flower level");
+                        if($level == "water"){
+                            $check_water = GroupUser::where('group_name',$group_name)->where('user_level',"water")->get('id');
+                            if(count($check_water) > 0){
+                                $request->session()->flash('message',"Request denied, you cannot have more than 1 user at water level");
                                 return redirect()->route('wait_list.index');
                             }
                            
@@ -109,20 +109,20 @@ class GroupUserController extends Controller
                             // return print_r($request->input());
                            
                         }else{
-                                $top_user_id = GroupUser::where('group_name',$group_name)->where('user_level',"flower")->get('user_id')[0]->user_id;
+                                $top_user_id = GroupUser::where('group_name',$group_name)->where('user_level',"water")->get('user_id')[0]->user_id;
                                 $top_user = User::find($top_user_id);
-                            if($level == "water"){
-                                $check_water = GroupUser::where('group_name',$group_name)->where('user_level',"water")->get('id');
-                                if(count($check_water) >= 2){
-                                    $request->session()->flash('message',"Request denied, you cannot have more than 2 user at water level");
+                            if($level == "earth"){
+                                $check_earth = GroupUser::where('group_name',$group_name)->where('user_level',"earth")->get('id');
+                                if(count($check_earth) >= 2){
+                                    $request->session()->flash('message',"Request denied, you cannot have more than 2 user at earth level");
                                     return redirect()->route('wait_list.index');
                                 }
                             }
     
-                            if($level == "earth"){
-                                $check_earth = GroupUser::where('group_name',$group_name)->where('user_level',"earth")->get('id');
-                                if(count($check_earth) >= 4){
-                                    $request->session()->flash('message',"Request denied, you cannot have more than 4 user at earth level");
+                            if($level == "air"){
+                                $check_air = GroupUser::where('group_name',$group_name)->where('user_level',"air")->get('id');
+                                if(count($check_air) >= 4){
+                                    $request->session()->flash('message',"Request denied, you cannot have more than 4 user at air level");
                                     return redirect()->route('wait_list.index');
                                 }
                             }

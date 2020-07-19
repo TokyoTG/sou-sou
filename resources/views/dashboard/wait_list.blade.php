@@ -241,9 +241,10 @@
                     </div>
                     <select class="custom-select" id="level">
                       <option disabled selected value="">Select One</option>
-                      <option value="flower">Flower</option>
+                     
                       <option value="water">Water</option>
                       <option value="earth">Earth</option>
+                      <option value="air">Air</option>
                       <option value="fire">Fire</option>
                     </select>
                     </div>

@@ -22,7 +22,7 @@ class PagesController extends Controller
         if(Cookie::get('role') !== null && Cookie::get('role') == "member"){
              $count_wait_list =   WaitList::where('user_id',$user_id)->count();
              $group = GroupUser::where('user_id',$user_id)->first();
-             $is_top = GroupUser::where('user_id',$user_id)->where('user_level','flower')->get('group_id');
+             $is_top = GroupUser::where('user_id',$user_id)->where('user_level','water')->get('group_id');
              if(count($is_top) > 0){
                  $group_id = $is_top[0]->group_id;
                  $payments = Notification::where('completed',true)->where('verified',false)->where('group_id',$group_id)->count();
@@ -64,7 +64,7 @@ class PagesController extends Controller
         $users_in_group = [];
         $group_in = GroupUser::where('user_id', $user_id)->first();
         if($group_in){
-            if($group_in->user_level == 'flower'){
+            if($group_in->user_level == 'water'){
                 $group_id = $group_in->group_id;
                 $users_in_group = Notification::where('group_id',$group_id)
                 ->where('completed',true)->get();

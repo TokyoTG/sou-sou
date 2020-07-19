@@ -25,15 +25,15 @@ class PaymentVerifiedListener
         if($num_of_completed == 15){
 
             try{
-                    //remove flower
-                $flower_id = GroupUser::where('group_id', $group_id)->where('user_level',"flower")->get(['id']);
-                GroupUser::where('group_id', $group_id)->where('user_level',"flower")->delete();
+                    //remove water
+               // $water_id = GroupUser::where('group_id', $group_id)->where('user_level',"water")->get(['id']);
+                GroupUser::where('group_id', $group_id)->where('user_level',"water")->delete();
 
 
-                //split water and create new group
-                $waters = GroupUser::where('group_id', $group_id)->where('user_level',"water")->take(1)->first();
-                $new_flower_user = User::find($waters->user_id);
-                $new_group_name = $waters->group_name ."_splittedHalf";
+                //split earth and create new group
+                $earths = GroupUser::where('group_id', $group_id)->where('user_level',"earth")->take(1)->first();
+                $new_water_user = User::find($earths->user_id);
+                $new_group_name = $earths->group_name ."_splittedHalf";
                 $new_group = new Group();
                 $new_group->name = $new_group_name;
                 $new_group->status = "open";
@@ -42,51 +42,51 @@ class PaymentVerifiedListener
 
                 $this->new_group_id = $new_group->id;
 
-                GroupUser::destroy($waters->id);
+                GroupUser::destroy($earths->id);
 
-                $this->addUsertoGroup($waters,$new_group_name,"flower",$this->new_group_id);
+                $this->addUsertoGroup($earths,$new_group_name,"water",$this->new_group_id);
                 
                 
                 
 
                 //split and delete Earth 
-                $earths = GroupUser::where('group_id', $group_id)->where('user_level',"earth")->take(2)->get();
-                foreach($earths as $earth_member){
-                    GroupUser::destroy($earth_member->id);
-                    $this->addUsertoGroup($earth_member,$new_group_name,"water",$this->new_group_id);
-                    $this->groupMessageDispatcher($this->new_group_id,$earth_member,$new_flower_user,$new_group_name);
+                $airs = GroupUser::where('group_id', $group_id)->where('user_level',"air")->take(2)->get();
+                foreach($airs as $air_member){
+                    GroupUser::destroy($air_member->id);
+                    $this->addUsertoGroup($air_member,$new_group_name,"earth",$this->new_group_id);
+                    $this->groupMessageDispatcher($this->new_group_id,$air_member,$new_water_user,$new_group_name);
                 }
 
                 //split and delete fires 
                 $fires = GroupUser::where('group_id', $group_id)->where('user_level',"fire")->take(4)->get();
                 foreach($fires as $fire_member){
                     GroupUser::destroy($fire_member->id);
-                    $this->addUsertoGroup($fire_member,$new_group_name,"earth",$this->new_group_id);
-                    $this->groupMessageDispatcher($this->new_group_id,$fire_member,$new_flower_user,$new_group_name);
+                    $this->addUsertoGroup($fire_member,$new_group_name,"air",$this->new_group_id);
+                    $this->groupMessageDispatcher($this->new_group_id,$fire_member,$new_water_user,$new_group_name);
                 }
 
                  //assign proper number of member for both group
-                Group::where('name',$waters->group_name)->update(['members_number' => 7]);
+                Group::where('name',$earths->group_name)->update(['members_number' => 7]);
 
                 //updates former group
-                GroupUser::where('group_id', $group_id)->where('user_level',"water")->update(['user_level' => 'flower']);
-                GroupUser::where('group_id', $group_id)->where('user_level',"earth")->update(['user_level' => 'water','task_status'=>'uncompleted']);
-                GroupUser::where('group_id', $group_id)->where('user_level',"fire")->update(['user_level' => 'earth','task_status'=>'uncompleted']);
+                GroupUser::where('group_id', $group_id)->where('user_level',"earth")->update(['user_level' => 'water']);
+                GroupUser::where('group_id', $group_id)->where('user_level',"air")->update(['user_level' => 'earth','task_status'=>'uncompleted']);
+                GroupUser::where('group_id', $group_id)->where('user_level',"fire")->update(['user_level' => 'air','task_status'=>'uncompleted']);
                 // dd("split will happen");
 
                 //sends message to all users in the former group
                 
-               $former_waters = GroupUser::where('group_id', $group_id)->where('user_level',"water")->get();
-               $former_earth = GroupUser::where('group_id', $group_id)->where('user_level',"earth")->get();
-               $former_group_flower = GroupUser::where('group_id', $group_id)->where('user_level',"flower")->first();
-               $former_flower_user = User::find($former_group_flower->user_id);
+               $former_earths = GroupUser::where('group_id', $group_id)->where('user_level',"earth")->get();
+               $former_air = GroupUser::where('group_id', $group_id)->where('user_level',"air")->get();
+               $former_group_water = GroupUser::where('group_id', $group_id)->where('user_level',"water")->first();
+               $former_water_user = User::find($former_group_water->user_id);
 
-               foreach($former_waters as $former_water){
-                $this->groupMessageDispatcher($group_id,$former_water,$former_flower_user,$former_group_flower->group_name);
+               foreach($former_earths as $former_earth){
+                $this->groupMessageDispatcher($group_id,$former_earth,$former_water_user,$former_group_water->group_name);
                }
 
-               foreach($former_earth as $former_water){
-                $this->groupMessageDispatcher($group_id,$former_water,$former_flower_user,$former_group_flower->group_name);
+               foreach($former_air as $former_earth){
+                $this->groupMessageDispatcher($group_id,$former_earth,$former_water_user,$former_group_water->group_name);
                }
     
             } catch(\Exception $e){
@@ -106,7 +106,7 @@ class PaymentVerifiedListener
         $group_user->group_id = $group_id;
         $group_user->group_name = $group_name;
         $group_user->user_level = $user_level;
-        if($user_level != 'flower'){
+        if($user_level != 'water'){
             $group_user->task_status = "completed";
         }
         $group_user->task_status = "uncompleted";
