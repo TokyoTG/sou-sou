@@ -206,28 +206,27 @@
     </head>
     <body>
         <div id="wrapper">
-            @if (Route::has('login'))
+       
                 <div class="top-right">
                     <h2>Sou Sou</h2>
                    <p id="menu" onclick="menu()">Menu</p>
                    <div id="link-container">
                     <p id="close-btn" onclick="closeMenu(this)">+</p>
-                             @auth
-                     <a href="{{ url('/home') }}" class="links">Home</a>
+                    <a href="{{ url('/home') }}" class="links">Home</a>
+                    <a href="#" class="links">About</a>
+                    @if ( Cookie::get('full_name') &&  Cookie::get('role'))
+                    <a href="{{ route('logout') }}" class="links">Logout</a>
+                    <a href="{{ route('dashboard.index') }}" class="links register">Dashboard</a>
                     @else
-                    <a href="{{ route('login') }}" class="links">About</a>
+                        
                     <a href="{{ route('login') }}" class="links">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="links register">Register</a>
-                        @endif
-                    @endauth  
+                    <a href="{{ route('register') }}" class="links register">Register</a>
+                    @endif
+                 
                    </div>
             
                   
                 </div>
-               
-            @endif
             <div id="welcome">
                 <div id="w-text">
                     <h1>Welcome To Sou Sou</h1>
@@ -247,7 +246,7 @@
                     
                 </div>
                 <div class="cards">
-                    <p>Get Add to Group</p>
+                    <p>Get Added to Group</p>
                     <div>
                     <img src="{{asset('dashboard/assets/img/admin.svg')}}" alt="">
                     </div>
