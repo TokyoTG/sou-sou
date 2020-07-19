@@ -23,7 +23,7 @@
 <body class="bg-gradient-primary">
 
   <div class="container">
-
+    <h2><a href="" class="btn btn-primary">Sou Sou</a></h2>
         @yield('content')
 
 

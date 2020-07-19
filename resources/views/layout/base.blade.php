@@ -240,6 +240,8 @@
                         </div>
                       </a>
                       @endforeach
+                  @else
+                  
                   @endif
                     
                 @endisset
@@ -297,7 +299,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
+            <span>Copyright &copy; Sou Sou 2020</span>
           </div>
         </div>
       </footer>
@@ -336,7 +338,9 @@
         }
       })
       })
-
+      setTimeout(function(){
+        $('.alert').hide();
+      },1000)
   </script>
 </body>
 
