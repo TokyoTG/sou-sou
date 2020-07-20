@@ -7,21 +7,18 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class ForgotRequest extends Mailable
+class ResetSuccessful extends Mailable
 {
     use Queueable, SerializesModels;
-
-    public $data;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($data)
+    public function __construct()
     {
         //
-        $this->data = $data;
     }
 
     /**
@@ -32,6 +29,6 @@ class ForgotRequest extends Mailable
     public function build()
     {
         return $this->from('sou-sou@admin.com')
-                ->view('emails.new_forgot');
+        ->view('emails.reset_success');
     }
 }

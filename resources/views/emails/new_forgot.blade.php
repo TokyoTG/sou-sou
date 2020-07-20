@@ -90,7 +90,7 @@
                 <div class="content" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; max-width: 600px; display: block; margin: 0 auto; padding: 20px;">
                     <table class="main" width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; border-radius: 3px; background-color: #fff; margin: 0; border: 1px solid #e9e9e9;" bgcolor="#fff">
                         <tr style="font-family: 'Sedgwick Ave', cursive 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
-                            <td class="alert alert-warning" style="font-family: 'Sedgwick Ave', cursive 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 30px; vertical-align: top; color: #0D0221; font-weight: 500; text-align: center; border-radius: 3px 3px 0 0; background-color: #fafafa; margin: 0; padding: 20px;" align="center" bgcolor="#FF9F00" valign="top">
+                            <td class="alert alert-warning" style="font-family: 'Sedgwick Ave', cursive 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 30px; vertical-align: top; color: #fff; font-weight: 500; text-align: center; border-radius: 3px 3px 0 0; background-color: #4e73df; margin: 0; padding: 20px;" align="center" bgcolor="#FF9F00" valign="top">
                                 Sou Sou
                             </td>
                         </tr>
@@ -99,14 +99,14 @@
                                 <table width="100%" cellpadding="0" cellspacing="0" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                     <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                         <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
-                                            Hi,
+                                            Hi {{$data['user_name']}},
                                         </td>
                                     </tr>
                                     <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                                         <td class="content-block" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; vertical-align: top; margin: 0; padding: 0 0 20px;" valign="top">
                                             You recently requested to reset your password for your Cocoon Account.
                                             <br>
-                                        Copy this token <strong>{{$otp}}</strong> and click the button below to reset it.
+                                        Copy this token <span style="font-weight: bold">{{$data['otp']}}</span> and click the button below to reset it.
                                         </td>
                                     </tr>
                                     <tr style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">

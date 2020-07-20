@@ -15,19 +15,24 @@
               <div class="p-5">
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Reset Password</h1>
+                  @if(Session::has('message'))
+                  <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
+                      {{ Session::get('message') }}</p>
+                @endif
                 </div>
-                <form class="user">
+              <form class="user" method="POST" action="{{route('reset')}}">
+                  @csrf
                   <div class="form-group">
-                    <input type="text" class="form-control form-control-user" id="exampleInputPassword" placeholder="Enter Password">
+                    <input type="text" class="form-control form-control-user"  name="token" placeholder="Enter Reset Token">
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Enter Password">
+                    <input type="password" class="form-control form-control-user" name="password" placeholder="Enter Password">
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Confirm Password">
+                    <input type="password" class="form-control form-control-user" name="password_confirmation" placeholder="Confirm Password">
                   </div>
                   <div class="form-group">
-                  <button href="#" class="btn btn-primary btn-user btn-block" type="submit">
+                  <button  class="btn btn-primary btn-user btn-block" type="submit">
                     Submit
                   </button>
                   <hr>

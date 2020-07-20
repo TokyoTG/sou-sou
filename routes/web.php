@@ -32,6 +32,7 @@ Route::get('/forgot_pasword', function () {
 })->name('forgot');
 
 Route::post('/forgot_pasword', 'ForgotPasswordController@index')->name('forgot');
+Route::post('/reset_password', 'ForgotPasswordController@reset')->name('reset');
 
 
 Route::get('/reset_password', function () {

@@ -105,7 +105,7 @@
                         <tr
                             style="font-family: 'Sedgwick Ave', cursive 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; margin: 0;">
                             <td class="alert alert-warning"
-                                style="font-family: 'Sedgwick Ave', cursive 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 30px; vertical-align: top; color: #0D0221; font-weight: 500; text-align: center; border-radius: 3px 3px 0 0; background-color: #fafafa; margin: 0; padding: 20px;"
+                                style="font-family: 'Sedgwick Ave', cursive 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 30px; vertical-align: top; color: #fff; font-weight: 500; text-align: center; border-radius: 3px 3px 0 0; background-color: #4e73df; margin: 0; padding: 20px;"
                                 align="center" bgcolor="#FF9F00" valign="top">
                                 Sou Sou
                             </td>
