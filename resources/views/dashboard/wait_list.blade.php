@@ -101,7 +101,7 @@
                                   >Add to Group</a>
 
                                   {{-- //START ADD USER TO GROUP FORM --}}
-                                  <form action="{{route('group_users.store')}}" method="post" id={{"add".$item->user_id}}>
+                                  <form action="{{route('group_users.store')}}" method="post" id={{"add".$item->id}}>
                                     @csrf
                                     <input type="hidden" name="user_level" class="user-level">
                                     <input type="hidden" name="group_name" class="group_name">
@@ -115,7 +115,7 @@
 
 
                                   {{-- //CHANGE USER POSITION FORM --}}
-                                  <form action="{{route('wait_list.update',$item->user_id)}}" method="post" id={{"update".$item->user_id}}>
+                                  <form action="{{route('wait_list.update',$item->id)}}" method="post" id={{"update".$item->id}}>
                                     @csrf
                                     @method('PUT')
                                     <input type="hidden" name="input-position" class="input-position">
@@ -123,20 +123,20 @@
                                   </form>
 
                                   {{-- //REMOVE USER FORM --}}
-                                  <form action="{{ route('wait_list.destroy',$item->id) }}" method="POST" id={{"delete".$item->user_id}}>
+                                  <form action="{{ route('wait_list.destroy',$item->id) }}" method="POST" id={{"delete".$item->id}}>
                                     @csrf
                                     @method('DELETE')
                                   </form>
                                   <a class="dropdown-item"
                                   href="#"
                                   onclick="showModal(this,'myModal')"
-                                    data-user_id={{$item->user_id}}
+                                    data-user_id={{$item->id}}
                                     data-user_name={{$item->user_name}}
-                                    >Change Postion</a>
+                                    >Change Position</a>
 
                                   {{-- //REMOVE USER --}}
                                   <a class="dropdown-item" href="#"
-                                  data-user_id={{$item->user_id}}
+                                  data-user_id={{$item->id}}
                                   onclick="showModal(this,'remove_user')"
                                   data-user_name={{$item->user_name}}
                                   >Remove User</a>
@@ -173,7 +173,7 @@
               </div>
               <div class="form-group">
                   <div class="col-12">
-                      <button type="button" class="btn btn-primary btn-block"  onclick="updatePostion()">Change Postion</button>
+                      <button type="button" class="btn btn-primary btn-block"  onclick="updatePostion()">Change Position</button>
                   </div>
               </div>
            

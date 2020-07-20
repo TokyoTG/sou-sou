@@ -24,6 +24,12 @@ class EventServiceProvider extends ServiceProvider
         MoveUserToWaitListEvent::class=>[
             \App\Listeners\MoveUserToWaitListListener::class,
         ],
+        PopulateGroupEvent::class=>[
+            \App\Listeners\PopulateGroupListener::class,
+        ],
+        PopulateOldGroupEvent::class=>[
+            \App\Listeners\PopulateOldGroupListener::class,
+        ],
     ];
 
     /**

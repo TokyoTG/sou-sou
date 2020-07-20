@@ -106,10 +106,10 @@ class PaymentVerifiedListener
         $group_user->group_id = $group_id;
         $group_user->group_name = $group_name;
         $group_user->user_level = $user_level;
-        if($user_level != 'water'){
+        $group_user->task_status = "uncompleted";
+        if($user_level == 'water'){
             $group_user->task_status = "completed";
         }
-        $group_user->task_status = "uncompleted";
         $group_user->save();
     }
 

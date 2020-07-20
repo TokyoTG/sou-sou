@@ -15,11 +15,16 @@
               <div class="p-5">
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Forgot Password</h1>
+                  @if(Session::has('message'))
+                  <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
+                      {{ Session::get('message') }}</p>
+                @endif
                   <p>Please enter the email associated with your account</p>
                 </div>
-                <form class="user">
+              <form class="user" method="POST" action="{{route('forgot')}}">
+                  @csrf
                   <div class="form-group">
-                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    <input type="email" class="form-control form-control-user" name="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                   </div>
                   <button href="#" class="btn btn-primary btn-user btn-block" type="submit">
                     Submit

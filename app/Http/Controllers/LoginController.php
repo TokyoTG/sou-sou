@@ -50,6 +50,7 @@ class LoginController extends Controller
                                 session(['tasks' => $tasks]);
                                 Cookie::queue('full_name', $user_details->full_name);
                                 Cookie::queue('role', $user_details->role);
+                                Cookie::queue('email', $user_details->email);
                                 Cookie::queue('id', $user_details->id);
                                 Cookie::queue('expires', strtotime('+ 1 day'));
                                 return redirect()->route('dashboard.index')->with('user',$user_details);

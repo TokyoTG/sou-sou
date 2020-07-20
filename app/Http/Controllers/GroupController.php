@@ -176,7 +176,7 @@ class GroupController extends Controller
           }
         }catch(\Exception $e){
             $request->session()->flash('alert-class', 'alert-danger');
-            $request->session()->flash('message', "Something bad happened, try again");
+            $request->session()->flash('message', "Something went wrong with you request, please try again");
             return redirect()->route('groups.index');
         }
     }

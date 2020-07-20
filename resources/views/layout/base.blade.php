@@ -212,6 +212,8 @@
             </li>
             @php
                 $tasks = Session::get('tasks');
+                // var_dump($tasks) ;
+                // die();
             @endphp
 
             <!-- Nav Item - Alerts -->

@@ -5,11 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\WaitList;
+use App\Group;
+use App\GroupUser;
 
 use Illuminate\Support\Facades\Validator;
 
-use App\Group;
-use App\GroupUser;
+use App\Providers\PopulateGroupEvent;
+use App\Providers\PopulateOldGroupEvent;
+
+
 use Illuminate\Support\Facades\Cookie;
 
 class WaitListController extends Controller
@@ -23,6 +27,9 @@ class WaitListController extends Controller
     {
         //
         $list = WaitList::orderBy('position', 'asc')->get();
+        //return count($list->unique('user_id')->take(1));
+        // $list = $list->unique('user_id');
+        // $list = $list->unique('user_id')->take(2);
         $groups = Group::where('status',"open")->get('name');
         // return $list;
         $data = ['groups'=>$groups, 'list'=>$list];
@@ -57,13 +64,51 @@ class WaitListController extends Controller
             //     $request->session()->flash('message',"You can not join the join waiting list more than 4 times");
             //     return redirect()->route('dashboard.index');
             // }
-            $position = count(WaitList::all()) + 1;
+            $wait_list_count = count(WaitList::all());
+            $position = $wait_list_count + 1;
             $wait_list = new WaitList;
             $wait_list->user_id = Cookie::get('id');
             $wait_list->user_name = Cookie::get('full_name');
+            $wait_list->user_email = Cookie::get('email');
             $wait_list->position = $position;
             $saved = $wait_list->save();
             if($saved){
+
+
+                $wait_list = WaitList::orderBy('position', 'asc')->get();
+                $unique_list = $wait_list->unique('user_id')->take(8);
+                $new_unique =$wait_list->unique('user_id')->take(15);
+
+
+                //check if there any group t be filled
+                if(count($unique_list) >= 8){
+                    $check_group = Group::where('status','open')->first();
+                     if($check_group){
+                        $num_group_users = GroupUser::where('group_id', $check_group->id)->count();
+                        if($num_group_users == 7){
+                           
+                            $group_data = [
+                                'name'=>$check_group->name,
+                                'id' =>$check_group->id
+                            ];
+                            $data = [
+                                'new_members' => $unique_list,
+                                'group_info' =>$group_data
+                            ];
+                            event(new PopulateOldGroupEvent($data));
+                        } 
+                    }
+                }
+
+                //creates new group when there are 15 users and they have no group
+                if(count($new_unique) >= 15 ){
+                    $check_group = Group::where('status','open')->first();
+                    if(count($check_group) > 0){
+                        event(new PopulateGroupEvent($new_unique));
+                    }
+                }
+
+
                 $request->session()->flash('alert-class', 'alert-success');
                 $request->session()->flash('message', "You have been successfully added to the wait list");
                 return redirect()->route('dashboard.index');
@@ -133,7 +178,7 @@ class WaitListController extends Controller
                         return redirect()->route('wait_list.index');
                     }else{
                         WaitList::where('position',$input_postion)->update(['position'=> $old_position]);
-                        WaitList::where('user_id',$id)->update(['position'=>$input_postion]);
+                        WaitList::where('id',$id)->update(['position'=>$input_postion]);
                         $request->session()->flash('alert-class', 'alert-success');
                         $request->session()->flash('message', "Position updated successfully");
                         return redirect()->route('wait_list.index');
