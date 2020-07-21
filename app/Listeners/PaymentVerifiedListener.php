@@ -10,7 +10,7 @@ use App\GroupUser;
 use App\Notification;
 
 use App\Group;
-
+use App\Providers\CheckWaitListEvent;
 use App\User;
 
 class PaymentVerifiedListener
@@ -88,6 +88,8 @@ class PaymentVerifiedListener
                foreach($former_air as $former_earth){
                 $this->groupMessageDispatcher($group_id,$former_earth,$former_water_user,$former_group_water->group_name);
                }
+
+               event(new CheckWaitListEvent());
     
             } catch(\Exception $e){
                 if ($e->getCode() == 23000) {

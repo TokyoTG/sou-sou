@@ -30,6 +30,9 @@ class EventServiceProvider extends ServiceProvider
         PopulateOldGroupEvent::class=>[
             \App\Listeners\PopulateOldGroupListener::class,
         ],
+        CheckWaitListEvent::class=>[
+            \App\Listeners\CheckWaitListListener::class,
+        ],
     ];
 
     /**
