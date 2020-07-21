@@ -9,7 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\GroupUser;
 
 use App\Group;
-
+use App\User;
 use App\WaitList;
 
 
@@ -41,10 +41,10 @@ class MoveUserToWaitListListener
             
             GroupUser::where('user_id',$user['user_id'])->delete();
             Group::where('id', $user['group_id'])->decrement('members_number');
-
             $user_to_wait_list = new WaitList();
             $user_to_wait_list->user_id = $user['user_id'];
             $user_to_wait_list->user_name = $user['user_name'];
+            $user_to_wait_list->user_email = $user['user_email'];
             $user_to_wait_list->position = $position;
             $user_to_wait_list->save();
         }catch(\Exception $e){

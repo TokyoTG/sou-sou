@@ -36,7 +36,8 @@ class NotificationController extends Controller
                     $user_data = [
                         'user_id' => $user_id,
                         'user_name' => $user_name,
-                        'group_id' => $task->group_id
+                        'group_id' => $task->group_id,
+                        'user_email' => Cookie::get('email')
                     ];
                     event(new MoveUserToWaitListEvent($user_data));
                }
