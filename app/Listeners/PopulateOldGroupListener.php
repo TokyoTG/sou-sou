@@ -8,6 +8,7 @@ use Illuminate\Queue\InteractsWithQueue;
 
 use App\GroupUser;
 use App\Notification;
+use App\Group;
 use App\User;
 use App\WaitList;
 
@@ -41,6 +42,7 @@ class PopulateOldGroupListener
             $this->groupMessageDispatcher($group['id'],$new_member,$top_user_info,$group['name']);
             WaitList::where('user_id',$new_member->user_id)->delete();
         }
+        Group::where('id',$group['id'])->update(['status'=>'closed', "members_number" => 15]);
     }
     
     public function addUsertoGroup($object, $group_name, $user_level,$group_id){
