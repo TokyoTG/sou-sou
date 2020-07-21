@@ -51,6 +51,8 @@
                                 <form action="{{ route('groups.update',$group->id) }}" method="POST" id={{"update".$group->id}}>
                                         @csrf
                                         <input type="hidden" name="group_status" class="input-status">
+                                        <input type="hidden" name="group_name" class="input-name">
+                                        <input type="hidden" name="request" class="request">
                                         <input name="_method" type="hidden" value="PUT">
                                  </form>
                                  <form action="{{ route('groups.destroy',$group->id) }}" method="POST" id={{"delete".$group->id}}>
@@ -67,18 +69,29 @@
                                             Actions<i class="icon"><span data-feather="chevron-down"></span></i>
                                         </button>
                                         <div class="dropdown-menu dropdown-menu-right">
+
+                                            
                                             <a class="dropdown-item" href="{{route('groups.show', $group->id)}}">View Group</a>
+
+
                                             <a class="dropdown-item"
                                             href="#" data-group_id={{$group->id}}
                                             data-group_name ={{$group->name}}
                                             data-request = {{ $group->status == 'open' ? 'closed' : "open" }}
                                             onclick="showModal(this,'close-group')"
                                             >{{ $group->status == 'open' ? 'Close Group' : "Open Group" }}</a>
+
+                                            <a class="dropdown-item" 
+                                            href="#" data-group_id={{$group->id}}
+                                            data-group_name ={{$group->name}}
+                                             onclick="showModal(this,'rename-group')"
+                                            >Rename</a>
+
                                             <a class="dropdown-item" 
                                             href="#" data-group_id={{$group->id}}
                                             data-group_name ={{$group->name}}
                                              onclick="showModal(this,'delete-group')"
-                                                >Delete</a>                  
+                                            >Delete</a>                  
                                         </div>
                                     </div>
                                     </td>
@@ -182,6 +195,9 @@
 	</div>
 </div>
 
+
+
+
 <div id="close-group" class="modal fade">
 	<div class="modal-dialog modal-confirm modal-dialog-centered">
 		<div class="modal-content">
@@ -203,6 +219,34 @@
 	</div>
 </div>
 
+<div id="rename-group" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="myModalLabel">Rename Group</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="new_name" class="control-label mb-1">Enter New name for <span class="g-name"></span></label>
+                    <input id="new_name"  type="text" class="form-control" aria-required="true" aria-invalid="false">
+                </div>
+                <div class="form-group">
+                    <div class="col-12">
+                        <button type="button" class="btn btn-primary btn-block"  onclick="renameGroup()">Rename Group</button>
+                    </div>
+                </div>
+             
+            </div>
+            <div class="modal-footer">
+            </div>
+  
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div>
+
 
 @endsection
 
@@ -218,10 +262,20 @@
             $('#request-option').text(request);
             $('.g-name').text(group_name);
             $('.input-status').val(option);
+
             $(`#${modalName}`).modal('show');
         }
 
         function updateGroup(){
+            $('.request').val('status');
+            $(`#update${group_id}`).submit();
+        }
+
+        function renameGroup(){
+            $('.request').val('rename');
+            let new_name = $("#new_name").val();
+            $('.input-name').val(new_name);
+            console.log(new_name.length);
             $(`#update${group_id}`).submit();
         }
 

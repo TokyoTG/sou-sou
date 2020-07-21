@@ -36,6 +36,8 @@ class PopulateGroupListener
     public function handle(PopulateGroupEvent $event)
     {
         //
+        // dd('we got here');
+        
         $new_members = $event->members_to_add;
         $new_group_name = $this->generateGroupName();
         $new_group = new Group();
@@ -47,28 +49,35 @@ class PopulateGroupListener
 
         //counters
         $general_count = 0;
+        $water_count = 0;
+
+        $email_arrays =array();
 
         foreach($new_members as $new_member){
-            if( $general_count < 1){
+            if( $general_count < 1 && $water_count == 0){
                 //add user as water
                 $top_user_id = $new_member->user_id;
                 $top_user = User::find($top_user_id);
                 $this->addUsertoGroup($new_member,$new_group_name,'water',$new_group_id);
+                $water_count++;
             }
-            if($general_count < 3 ){
+            if($general_count < 3 && $general_count > 0){
                 //add user as earth
                 $this->addUsertoGroup($new_member,$new_group_name,'earth',$new_group_id);
                 $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
+              
             }
-            if( $general_count < 7){
+            if( $general_count < 7 && $general_count > 2){
                 //add user as air
                 $this->addUsertoGroup($new_member,$new_group_name,'air',$new_group_id);
                 $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
+             
             }
-            if($general_count < 15){
+            if($general_count < 15 && $general_count > 6 ){
                 //add user as fire
                 $this->addUsertoGroup($new_member,$new_group_name,'fire',$new_group_id);
                 $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
+           
             }
             $general_count++;
             WaitList::where('user_id',$new_member->user_id)->delete();
@@ -102,7 +111,7 @@ class PopulateGroupListener
         $new_task->completed = false;
         $new_task->user_id = $user->user_id;
         $new_task->user_name = $user->user_name;
-        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user->full_name} an amount of #1000 the top ranked person in the {$group_name} group with the following details: \n Account Number: {$top_user->account_number}  \n Bank Name : {$top_user->bank_name} .\n This should be done within 1 hour after recieving this message.  \n Signed Sou Sou Admin";
+        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user->full_name} an amount of #1000 the top ranked person in the {$group_name} group with the following details: Account Number: {$top_user->account_number}   Bank Name : {$top_user->bank_name} .\n This should be done within 1 hour after recieving this message.  \n Signed Sou Sou Admin";
         $new_task->save();
     }
 

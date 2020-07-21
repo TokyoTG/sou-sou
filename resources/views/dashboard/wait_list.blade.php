@@ -94,7 +94,7 @@
                               <div class="dropdown-menu dropdown-menu-right">
                                    <a class="dropdown-item" href="{{route('users.show', $item->user_id)}}">View User</a>
                                   <a class="dropdown-item" href="#"
-                                  data-user_id={{$item->user_id}}
+                                  data-user_id={{$item->id}}
                                   onclick="showModal(this,'addUser')"
                                   data-user_name={{$item->user_name}}
                                     
@@ -294,7 +294,6 @@
           let group = $('#group-name').val();
           $('.user-level').val(level);
           $('.group_name').val(group);
-
           $(`#add${user_id}`).submit();
         }
     </script>

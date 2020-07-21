@@ -38,10 +38,10 @@
                   <hr>
                 </form>
                 <div class="text-center">
-                  Remember password ? <a class="medium" href="">Login</a>
+                  Remember password ? <a class="medium" href={{route('login')}}>Login</a>
                 </div>
                 <div class="text-center">
-                  Don't have an account ?<a class="medium" href="register.html"> Create an Account!</a>
+                  Don't have an account ?<a class="medium" href={{route('register')}}> Create an Account!</a>
                 </div>
               </div>
             </div>

@@ -165,20 +165,50 @@ class GroupController extends Controller
     {
         //
       
-        try{
-            $group =Group::find($id);
-            $group->status = $request->input('group_status');
-            $saved =  $group->save();
-          if($saved){
-            $request->session()->flash('alert-class', 'alert-success');
-            $request->session()->flash('message', "Group {$request->input('group_status')} successfully");
-            return redirect()->route('groups.index');
-          }
-        }catch(\Exception $e){
-            $request->session()->flash('alert-class', 'alert-danger');
-            $request->session()->flash('message', "Something went wrong with you request, please try again");
-            return redirect()->route('groups.index');
-        }
+            if($request->input('request') == 'rename'){
+                    $validator = Validator::make($request->all(), [
+                        'group_name' => 'required|alpha|min:3|max:16',
+                    ]);
+                    if ($validator->fails()) {
+                        $errors = $validator->errors();
+                        foreach ($errors->all() as $message) {
+                            $request->session()->flash('alert-class', 'alert-danger');
+                            $request->session()->flash('message', $message);
+                            return redirect()->route('groups.index');
+                        }
+                    } else {
+                        try{
+                            $group =Group::find($id);
+                            $group->name = $request->input('group_name');
+                            $saved =  $group->save();
+                            GroupUser::where('group_id',$id)->update(['group_name' => $group->name]);
+                            if($saved){
+                                $request->session()->flash('alert-class', 'alert-success');
+                                $request->session()->flash('message', "Group renamed successfully");
+                                return redirect()->route('groups.index');
+                            }
+                        }catch(\Exception $e){
+                            $request->session()->flash('alert-class', 'alert-danger');
+                            $request->session()->flash('message', "Something went wrong with you request, please try again");
+                            return redirect()->route('groups.index');
+                        }
+                    }
+            }elseif($request->input('request') == 'status'){
+                try{
+                    $group =Group::find($id);
+                    $group->status = $request->input('group_status');
+                    $saved =  $group->save();
+                    if($saved){
+                        $request->session()->flash('alert-class', 'alert-success');
+                        $request->session()->flash('message', "Group {$request->input('group_status')} successfully");
+                        return redirect()->route('groups.index');
+                    }
+                }catch(\Exception $e){
+                    $request->session()->flash('alert-class', 'alert-danger');
+                    $request->session()->flash('message', "Something went wrong with you request, please try again");
+                    return redirect()->route('groups.index');
+                }
+            }
     }
 
     /**

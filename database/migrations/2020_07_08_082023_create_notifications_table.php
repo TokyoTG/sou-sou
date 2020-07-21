@@ -22,7 +22,7 @@ class CreateNotificationsTable extends Migration
             $table->boolean('completed');
             $table->boolean('is_read');
             $table->boolean('verified');
-            $table->string('message', 250);
+            $table->mediumText('message');
             $table->timestamps();
         });
     }

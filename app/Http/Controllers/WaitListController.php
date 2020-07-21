@@ -103,7 +103,8 @@ class WaitListController extends Controller
                 //creates new group when there are 15 users and they have no group
                 if(count($new_unique) >= 15 ){
                     $check_group = Group::where('status','open')->first();
-                    if(count($check_group) > 0){
+                    if(!$check_group){
+                        // return $new_unique;
                         event(new PopulateGroupEvent($new_unique));
                     }
                 }
@@ -114,6 +115,7 @@ class WaitListController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }catch(\Exception $e){
+            return $e;
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message',"Something went wrong, please try again");
             return redirect()->route('dashboard.index');
