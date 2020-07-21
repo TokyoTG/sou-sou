@@ -66,7 +66,7 @@ class PaymentVerifiedListener
                 }
 
                  //assign proper number of member for both group
-                Group::where('name',$earths->group_name)->update(['members_number' => 7]);
+                Group::where('name',$earths->group_name)->update(['members_number' => 7, 'status'=> "open"]);
 
                 //updates former group
                 GroupUser::where('group_id', $group_id)->where('user_level',"earth")->update(['user_level' => 'water']);
