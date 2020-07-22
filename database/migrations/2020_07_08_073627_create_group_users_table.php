@@ -19,6 +19,7 @@ class CreateGroupUsersTable extends Migration
             $table->string('group_name');
             $table->string('group_id');
             $table->string('user_name');
+            $table->string('user_email');
             $table->string('user_level');
             $table->string('task_status');
             $table->timestamps();

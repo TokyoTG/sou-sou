@@ -127,13 +127,24 @@ class NotificationController extends Controller
             $request->session()->flash('alert-class', 'alert-success');
             $task->save();
             if($request_type == "verification"){
+
                 $user_id = $request->input('user_id');
                 $group_id = $request->input('group_id');
+
+
                 GroupUser::where('group_id',$group_id)->where('user_id',$user_id)->update(['task_status'=> 'completed']);
-                // return $user_id;
-                event(new PaymentVerifiedEvent($group_id));
+
+              
                 $task->verified = true;
                 $task->save();
+
+
+                $num_of_completed = GroupUser::where('group_id',$id)->where('task_status','completed')->count();
+                if($num_of_completed == 15){
+                    event(new PaymentVerifiedEvent($group_id));
+                }
+
+
                 $request->session()->flash('message', "Task has been mark verified");
                 return redirect()->route('payments');
             }

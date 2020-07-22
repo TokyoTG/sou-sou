@@ -8,7 +8,7 @@ use App\WaitList;
 use App\Group;
 
 use App\Notification;
-
+use App\Platform;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Cookie;
@@ -74,5 +74,30 @@ class PagesController extends Controller
         return view('dashboard.verify_payments')->with('pay_data', $users_in_group);
     }
 
+    public function platform(Request $request){
+        
+        try{
+            $status = $request->input('platform_status');
+            $id = $request->input('platform_id');
+            $user_id = $request->input('user_id');
+            $platform = Platform::find($id);
+        
+            if($status){
+                $platform->status = true; 
+            }else{
+                $platform->status = false;
+            }
+        
+            $platform->save();
+            $request->session()->flash('alert-class', 'alert-success');
+            $request->session()->flash('message', "Platform status updated successfully");
+            return redirect()->route('users.edit',$user_id); 
+        } catch(\Exception $e){
+            $request->session()->flash('alert-class', 'alert-danger');
+            $request->session()->flash('message',"Something went wrong with your request, please try again");
+            return redirect()->route('users.edit',$user_id);
+        }
+        
+    }
     
 }

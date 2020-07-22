@@ -33,6 +33,9 @@ class EventServiceProvider extends ServiceProvider
         CheckWaitListEvent::class=>[
             \App\Listeners\CheckWaitListListener::class,
         ],
+        AddedToGroupMailEvent::class=>[
+            \App\Listeners\AddedToGroupMailListener::class,
+        ],
     ];
 
     /**

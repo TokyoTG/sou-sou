@@ -79,11 +79,12 @@ class GroupUserController extends Controller
                         $group_id = $group->id;
                         $group_count = $group->members_number;
                         $list_id = $request->input('list_id');
-
+                        $user_details = WaitList::where('user_id',$user_id)->first();
 
                         $group_user = new GroupUser();
                         $group_user->user_id = $request->input('user_id');
                         $group_user->user_name = $username;
+                        $group_user->user_email = $user_details->user_email;
                         $group_user->group_name = $group_name;
                         $group_user->group_id = $group_id;
                         $group_user->user_level = $level;
@@ -106,6 +107,9 @@ class GroupUserController extends Controller
                             }
                            
                             $group_user->task_status = "completed";
+                            User::where('id',$user_id)->increment('top_times');
+                            User::where('id',$user_id)->increment('group_times');
+                
                             // return print_r($request->input());
                            
                         }else{
@@ -117,6 +121,7 @@ class GroupUserController extends Controller
                                     $request->session()->flash('message',"Request denied, you cannot have more than 2 user at earth level");
                                     return redirect()->route('wait_list.index');
                                 }
+                                User::where('id',$user_id)->increment('group_times');
                             }
     
                             if($level == "air"){
@@ -125,6 +130,7 @@ class GroupUserController extends Controller
                                     $request->session()->flash('message',"Request denied, you cannot have more than 4 user at air level");
                                     return redirect()->route('wait_list.index');
                                 }
+                                User::where('id',$user_id)->increment('group_times');
                             }
     
                             if($level == "fire"){
@@ -133,6 +139,7 @@ class GroupUserController extends Controller
                                     $request->session()->flash('message',"Request denied, you cannot have more than 8 user at fire level");
                                     return redirect()->route('wait_list.index');
                                 }
+                                User::where('id',$user_id)->increment('group_times');
                             }
                             $new_task = new Notification();
                             $new_task->group_id = $group_id;
@@ -166,6 +173,7 @@ class GroupUserController extends Controller
                             $request->session()->flash('message',"User already exists in a group");
                             return redirect()->route('wait_list.index');
                         }
+                        return $e;
                         $request->session()->flash('alert-class', 'alert-danger');
                         $request->session()->flash('message',"Something went wrong with your request, please try again");
                         return redirect()->route('wait_list.index');

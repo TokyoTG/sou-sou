@@ -77,6 +77,10 @@ Route::prefix('/dashboard')->group(function () {
 
         Route::get('/payments', 'PagesController@payments')->name('payments');
 
+        Route::post('/pause',"PagesController@platform")->name('platform');
+
+        Route::post('/generate', "WaitListController@generate_group")->name('generate');
+
     });
     
 

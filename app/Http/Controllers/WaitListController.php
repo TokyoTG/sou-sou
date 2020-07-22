@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\WaitList;
 use App\Group;
 use App\GroupUser;
+use App\Platform;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -218,5 +219,50 @@ class WaitListController extends Controller
                 $request->session()->flash('message',"Something went wrong with your request, please try again");
                 return redirect()->route('wait_list.index');
         }
+    }
+
+
+
+    public function generate_group(Request $request){
+        
+        $platform = Platform::first();
+        if($platform->status){
+            try{
+                $wait_list = WaitList::orderBy('position', 'asc')->get();
+                $new_unique =$wait_list->unique('user_id')->take(15);
+
+                if(count($new_unique) >= 15 ){
+                    // return "ho";
+                    $check_group = Group::where('status','open')->first();
+                    if(!$check_group){
+                        // return $new_unique;
+
+                        event(new PopulateGroupEvent($new_unique));
+                        $request->session()->flash('alert-class', 'alert-success');
+                        $request->session()->flash('message',"Request submitted successfully");
+                        return redirect()->route('wait_list.index');
+                    }
+                }else{
+                    $request->session()->flash('alert-class', 'alert-danger');
+                    $request->session()->flash('message',"Could not create group, list members are not up to 15");
+                    return redirect()->route('wait_list.index');
+                }
+            }catch(\Exception $e){
+                $request->session()->flash('alert-class', 'alert-danger');
+                $request->session()->flash('message',"Something went wrong with your request, please try again");
+                return redirect()->route('wait_list.index');
+            }
+            
+
+        }else{
+            $request->session()->flash('alert-class', 'alert-danger');
+            $request->session()->flash('message',"The platform is paused, no group can be generated");
+            return redirect()->route('wait_list.index');
+        }
+        
+    }
+
+    public function populate_group(Request $request){
+
     }
 }

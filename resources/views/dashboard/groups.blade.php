@@ -15,9 +15,10 @@
 
 
 @section('newBtn')
-   @if(is_admin())
+@if(is_admin())
  <button class="d-none d-sm-inline-block btn  btn-primary shadow-sm" data-toggle="modal" data-target="#myModal"> New
      <i class="fa fa-plus my-float"></i></button>
+     
 @endif
 @endsection
 @section('contents')
@@ -31,7 +32,7 @@
             </div>
 
             <div class="card-body">
-              <div class="table-responsive">
+              <div >
                 @if(is_admin())
                 {{-- <====================== START OF ADMIN GROUP TABLE==================> --}}
                 @isset($groups)
@@ -59,11 +60,17 @@
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
                                 </form>
+
+                                <form action="{{ route('groups.update',$group->id) }}" method="POST" id={{"split".$group->id}}>
+                                    @csrf
+                                    <input name="_method" type="hidden" value="PUT">
+                                    <input type="hidden" name="request" class="request">
+                                </form>
                                 <td>{{ isset($group->name) ? $group->name : "Not Set" }}</td>
-                                    <td>{{ isset($group->members_number) ? $group->members_number : "Not Set" }}</td>
-                                    <td>{{ isset($group->status) ? $group->status : "Not Set" }}</td>
-                                    <td>
-                                        <div class="btn-group mt-2 mr-1">
+                                <td>{{ isset($group->members_number) ? $group->members_number : "Not Set" }}</td>
+                                <td>{{ isset($group->status) ? $group->status : "Not Set" }}</td>
+                                <td>
+                                    <div class="btn-group mt-2 mr-1">
                                         <button type="button" class="btn btn-primary dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             Actions<i class="icon"><span data-feather="chevron-down"></span></i>
@@ -87,13 +94,23 @@
                                              onclick="showModal(this,'rename-group')"
                                             >Rename</a>
 
+
+                                            <a class="dropdown-item" 
+                                            href="#" data-group_id={{$group->id}}
+                                            data-group_name ={{$group->name}}
+                                             onclick="showModal(this,'split-group')"
+                                            >Split</a> 
+                                             
+
                                             <a class="dropdown-item" 
                                             href="#" data-group_id={{$group->id}}
                                             data-group_name ={{$group->name}}
                                              onclick="showModal(this,'delete-group')"
-                                            >Delete</a>                  
+                                            >Delete</a>   
+                                            
+                                            
                                         </div>
-                                    </div>
+                                     </div>
                                     </td>
                                 </tr>
                             @endforeach
@@ -196,6 +213,27 @@
 </div>
 
 
+<div id="split-group" class="modal fade">
+	<div class="modal-dialog modal-confirm modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<div class="icon-box">
+                    <i class="fa fa-times"></i>
+				</div>						
+				<h4 class="modal-title w-100">Are you sure?</h4>	
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>Do you really want to split <strong class="g-name">GROUP NAME</strong> group? This process cannot be undone.</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button  class="btn btn-primary" onclick="splitGroup()">Proceed</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 
 
 <div id="close-group" class="modal fade">
@@ -271,11 +309,15 @@
             $(`#update${group_id}`).submit();
         }
 
+        function splitGroup(){
+            $('.request').val('split');
+            $(`#update${group_id}`).submit();
+        }
+
         function renameGroup(){
             $('.request').val('rename');
             let new_name = $("#new_name").val();
             $('.input-name').val(new_name);
-            console.log(new_name.length);
             $(`#update${group_id}`).submit();
         }
 

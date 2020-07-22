@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\User;
 
 use App\GroupUser;
+use App\Platform;
 use Illuminate\Support\Facades\Cookie;
 
 
@@ -133,6 +134,14 @@ class UsersController extends Controller
     {
         //
         $user = User::find($id);
+        $platform = Platform::first();
+        $data = [
+            'platform' => $platform,
+            'user' =>$user
+        ];
+        if(Cookie::get('role') !== null && Cookie::get('role') == "admin"){
+            return view('dashboard.settings')->with('data',$data);
+        }
         $userGroup = GroupUser::where('user_id',$id)->get();
         return view('dashboard.settings')->with('user',$user);
     }
@@ -154,7 +163,7 @@ class UsersController extends Controller
         if ($request->all()) {
             if($request->input('request_control') =="profile-update"){
                 $validator = Validator::make($request->all(), [
-                'phone_number' => 'required|digits_between:8,16',
+                'phone_number' => 'required|digits_between:6,16',
                 'first_name' => 'required|alpha|min:3|max:16',
                 'email' => 'required|email',
                 'account_number' => 'required|digits_between:6,16',

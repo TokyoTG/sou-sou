@@ -11,6 +11,7 @@ use App\Notification;
 use App\User;
 use App\GroupUser;
 
+use App\Providers\PaymentVerifiedEvent;
 use App\WaitList;
 
 use Illuminate\Support\Facades\Validator;
@@ -208,6 +209,18 @@ class GroupController extends Controller
                     $request->session()->flash('message', "Something went wrong with you request, please try again");
                     return redirect()->route('groups.index');
                 }
+            }elseif($request->input('request') == 'split'){
+                $num_of_completed = GroupUser::where('group_id',$id)->where('task_status','completed')->count();
+                if($num_of_completed == 15){
+                    event(new PaymentVerifiedEvent($id));
+                    $request->session()->flash('alert-class', 'alert-success');
+                    $request->session()->flash('message', "Request successfully");
+                    return redirect()->route('groups.index');
+                }else{
+                    $request->session()->flash('alert-class', 'alert-danger');
+                    $request->session()->flash('message', "Group can not be split yet");
+                    return redirect()->route('groups.index');
+                }
             }
     }
 
@@ -248,4 +261,5 @@ class GroupController extends Controller
         // return $user_list;
         return view('dashboard.user_list')->with('user_list', $user_list);
     }
+
 }

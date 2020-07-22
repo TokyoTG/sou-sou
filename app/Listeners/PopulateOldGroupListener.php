@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Providers\PopulateOldGroupEvent;
+use App\Providers\AddedToGroupMailEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -10,19 +11,12 @@ use App\GroupUser;
 use App\Notification;
 use App\Group;
 use App\User;
+use App\Platform;
 use App\WaitList;
 
 class PopulateOldGroupListener
 {
-    /**
-     * Create the event listener.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+  
 
     /**
      * Handle the event.
@@ -33,22 +27,37 @@ class PopulateOldGroupListener
     public function handle(PopulateOldGroupEvent $event)
     {
         //
-        $new_members  = $event->data['new_members'];
-        $group = $event->data['group_info'];
-        $top_user = GroupUser::where('group_id',$group['id'])->where('user_level','water')->first();
-        $top_user_info = User::find($top_user->user_id);
-        foreach($new_members as $new_member){
-            $this->addUsertoGroup($new_member,$group['name'],'fire',$group['id']);
-            $this->groupMessageDispatcher($group['id'],$new_member,$top_user_info,$group['name']);
-            WaitList::where('user_id',$new_member->user_id)->delete();
+        $platform =  Platform::first();
+        if($platform->status){
+
+
+            $email_arrays =array();
+            $new_members  = $event->data['new_members'];
+            $group = $event->data['group_info'];
+            
+            $top_user = GroupUser::where('group_id',$group['id'])->where('user_level','water')->first();
+            $top_user_info = User::find($top_user->user_id);
+
+            foreach($new_members as $new_member){
+                $this->addUsertoGroup($new_member,$group['name'],'fire',$group['id']);
+                $this->groupMessageDispatcher($group['id'],$new_member,$top_user_info,$group['name']);
+                array_push($email_arrays,$new_member->user_email);
+                User::where('id',$new_member->user_id)->increment('group_times');
+                WaitList::where('user_id',$new_member->user_id)->delete();
+            }
+
+
+            Group::where('id',$group['id'])->update(['status'=>'closed', "members_number" => 15]);
+            event(new AddedToGroupMailEvent($email_arrays));
         }
-        Group::where('id',$group['id'])->update(['status'=>'closed', "members_number" => 15]);
+        return redirect()->route('dashboard.index');
     }
     
     public function addUsertoGroup($object, $group_name, $user_level,$group_id){
         $group_user = new GroupUser();
         $group_user->user_id = $object->user_id;
         $group_user->user_name = $object->user_name;
+        $group_user->user_email = $object->user_email;
         $group_user->group_id = $group_id;
         $group_user->group_name = $group_name;
         $group_user->user_level = $user_level;

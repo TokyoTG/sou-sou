@@ -22,6 +22,8 @@ class CreateUsersTable extends Migration
             // $table->integer('groups_in')->nullable();
             $table->string('email')->unique();
             $table->string('role');
+            $table->integer('group_times')->default(0);
+            $table->integer('top_times')->default(0);
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();

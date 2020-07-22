@@ -1,6 +1,11 @@
 @extends('layout.base')
 @section('custom_css')
-
+@if (Cookie::get('role') !== null && Cookie::get('role') == "admin")
+    @php
+        $user = $data['user'];
+        $platform = $data['platform'];
+    @endphp
+@endif
 
 @php
 
@@ -14,6 +19,8 @@
 <h4>{{ $user->full_name}}</h4>
 @endsection
 @section('newBtn')
+
+
 
 
 @endsection
@@ -41,6 +48,9 @@
                             <ul class="nav flex-column nav-tabs user-tabs">
                                 <li class="nav-item"><a class="nav-link active" href="#user-details" data-toggle="tab">Details</a></li>
                                 <li class="nav-item"><a class="nav-link" href="#user-profile" data-toggle="tab">Profile</a></li>
+                                @if (Cookie::get('role') !== null && Cookie::get('role') == "admin")
+                                <li class="nav-item"><a class="nav-link" href="#platform" data-toggle="tab">Platform Settings</a></li>
+                                @endif
                                 <li class="nav-item"><a class="nav-link" href="#reset-password" data-toggle="tab">Change Password</a></li>
                             </ul>
                         </div>
@@ -133,7 +143,7 @@
                                             <br>
                                             <div class="row mb-12">
                                                 <div class="col-md-12">
-                                                    <button class="btn btn-primary" type="submit"><i class="fa fa-fw fa-lg fa-check-circle"></i> Save</button>
+                                                    <button class="btn btn-primary" type="submit"> Save <i class="fa fa-fw fa-lg fa-check-circle"></i></button>
                                                 </div>
                                             </div>
                                         </form>
@@ -180,6 +190,48 @@
                                         </form>
                                     </div>
                                 </div>
+
+                                @if (Cookie::get('role') !== null && Cookie::get('role') == "admin")
+                                        <div class="tab-pane fade" id="platform">
+                                        <div class="tile user-settings">
+                                            <h5 class="line-head">Change System Status</h5>
+                                            <p>Pause the system from automatically creating new groups</p>
+                                            <div class="row">
+                                            <form method="post" action="{{route('platform')}}">
+                                                @csrf
+                                                <input type="hidden" name="user_id" value="{{$user->id}}">
+                                            <input type="hidden" name="platform_id" value="{{$platform->id}}">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" value="0" id="customRadio1" name="platform_status" class="custom-control-input" {{!$platform->status ? 'checked' : ''}}>
+                                                    <label class="custom-control-label" for="customRadio1">{{!$platform->status ? 'Paused' : 'Pause'}}</label>
+                                                    <p>
+                                                        <small class="muted text">Paused: no new group will be auto created</small>   
+                                                    </p>
+                                                    
+                                                    </div>
+                                                    <div class="clearfix"></div><br>
+                                                    <div class="custom-control custom-radio">
+                                                    <input type="radio" value="1" id="customRadio2" name="platform_status" class="custom-control-input" {{$platform->status ? 'checked' : ''}}>
+                                                    <label class="custom-control-label" for="customRadio2">{{$platform->status ? 'Not Paused' : 'Unpause'}}</label>
+                                                    <p>
+                                                            <small class="muted text">Not Paused: the system from blocking new group creation</small>
+                                                    </p>
+                                                    
+                                                    </div>
+                                                    <div class="clearfix"></div><br>
+                                                    <div class="row mb-12">
+                                                    <div class="col-md-12">
+                                                        <button class="btn btn-primary" type="submit"> Save <i class="fa fa-fw fa-lg fa-check-circle"></i></button>
+                                                    </div>
+                                                </div>
+                                                </form>
+                                            </div>
+                                            
+                                        </div>
+                                    </div> 
+                                @endif
+                                
+                                
                             </div>
                         </div>
                     </div>

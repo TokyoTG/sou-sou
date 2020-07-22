@@ -1,6 +1,8 @@
 @extends('layout.base')
 @section('custom_css')
     
+@include('partials.auth_check')
+
 @endsection
 
 
@@ -57,6 +59,13 @@
       return $res;
     }
 @endphp
+
+
+@section('newBtn')
+   @if(is_admin())
+ <button class="d-none d-sm-inline-block btn  btn-primary shadow-sm" onclick="generateModal()">Generate Group</button>
+@endif
+@endsection
 @section('contents')
 @if(Session::has('message'))
 <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
@@ -261,6 +270,29 @@
       </div><!-- /.modal-content -->
   </div><!-- /.modal-dialog -->
 </div>
+
+
+<div id="generate" class="modal fade">
+	<div class="modal-dialog modal-confirm modal-dialog-centered">
+		<div class="modal-content">
+			<div class="modal-header flex-column">
+				<h4 class="modal-title w-100">Are you sure?</h4>	
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			</div>
+			<div class="modal-body">
+				<p>You about to create a new group from wait list, are sure you want to proceed ?</p>
+			</div>
+			<div class="modal-footer justify-content-center">
+                <form action="{{ route('generate') }}" method="POST">
+                    @csrf
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button  class="btn btn-primary" type="submit">Proceed</button>
+             </form>
+			
+			</div>
+		</div>
+	</div>
+</div>
 @endsection
 
 @section('custom_js')
@@ -276,6 +308,10 @@
             $('.u-name').text(" "+user_name);
             $('.input-status').val(option);
             $(`#${modalName}`).modal('show');
+        }
+
+        function generateModal(){
+          $(`#generate`).modal('show');
         }
 
         function updatePostion(){

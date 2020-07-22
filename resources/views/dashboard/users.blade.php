@@ -28,8 +28,9 @@
                         <tr>
                             <th>Name</th>
                             <th>Account Number</th>
-                            <th>Phone Number</th>
                             <th>Reg. Date</th>
+                            <th>Top Times</th>
+                            <th>Groups Times</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -70,8 +71,10 @@
                                 <tr>
                                     <td>{{$user->full_name}}</td>
                                 <td>{{ isset($user->account_number)  ? $user->account_number : "Not Set"}}</td>
-                                    <td>{{$user->phone_number}}</td>
-                                    <td>{{$join_date}}</td>
+                                <td>{{$join_date}}</td>
+                                    <td>{{$user->top_times}}</td>
+                                    <td>{{$user->group_times}}</td>
+                                  
                                     <td>
                                         <div class="btn-group mt-2 mr-1">
                                         <button type="button" class="btn btn-primary dropdown-toggle"

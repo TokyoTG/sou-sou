@@ -211,7 +211,7 @@
               </div>
             </li>
             @php
-                $tasks = Session::get('tasks');
+                $tasks = Session::get('tasks') ? Session::get('tasks') : array();
                 // var_dump($tasks) ;
                 // die();
             @endphp
@@ -221,9 +221,12 @@
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
-              @if (count($tasks) > 0)
+         
+                   @if (count($tasks) > 0)
                   <span class="badge badge-danger badge-counter">{{count($tasks)}}</span>
+          
               @endif
+            
               
               </a>
               <!-- Dropdown - Alerts -->
@@ -346,7 +349,7 @@
       })
       setTimeout(function(){
         $('.alert').hide();
-      },1000)
+      },1500)
   </script>
 </body>
 

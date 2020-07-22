@@ -3,10 +3,12 @@
 namespace App\Listeners;
 
 use App\Providers\PopulateGroupEvent;
+use App\Providers\AddedToGroupMailEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
 use App\Group;
+use App\Platform;
 use App\GroupUser;
 use App\Notification;
 use App\User;
@@ -37,53 +39,66 @@ class PopulateGroupListener
     {
         //
         // dd('we got here');
-        
-        $new_members = $event->members_to_add;
-        $new_group_name = $this->generateGroupName();
-        $new_group = new Group();
-        $new_group->name = $new_group_name;
-        $new_group->status = 'closed';
-        $new_group->members_number = 15;
-        $new_group->save();
-        $new_group_id = $new_group->id;
 
-        //counters
-        $general_count = 0;
-        $water_count = 0;
+        $platform = Platform::first();
+        // return  "hi";
+        if($platform->status){
+            // return  "hi";
+            $new_members = $event->members_to_add;
+            $new_group_name = $this->generateGroupName();
+            $new_group = new Group();
+            $new_group->name = $new_group_name;
+            $new_group->status = 'closed';
+            $new_group->members_number = 15;
+            $new_group->save();
+            $new_group_id = $new_group->id;
 
-        $email_arrays =array();
+            //counters
+            $general_count = 0;
+            $water_count = 0;
 
-        foreach($new_members as $new_member){
-            if( $general_count < 1 && $water_count == 0){
-                //add user as water
-                $top_user_id = $new_member->user_id;
-                $top_user = User::find($top_user_id);
-                $this->addUsertoGroup($new_member,$new_group_name,'water',$new_group_id);
-                $water_count++;
+            $email_arrays =array();
+
+            foreach($new_members as $new_member){
+                if( $general_count < 1 && $water_count == 0){
+                    //add user as water
+                    $top_user_id = $new_member->user_id;
+                    $top_user = User::find($top_user_id);
+                    User::where('id',$top_user_id)->increment('top_times');
+                    User::where('id',$top_user_id)->increment('group_times');
+                    $this->addUsertoGroup($new_member,$new_group_name,'water',$new_group_id);
+                    $water_count++;
+                }
+                if($general_count < 3 && $general_count > 0){
+                    //add user as earth
+                    User::where('id',$new_member->user_id)->increment('group_times');
+                    $this->addUsertoGroup($new_member,$new_group_name,'earth',$new_group_id);
+                    $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
+                
+                }
+                if( $general_count < 7 && $general_count > 2){
+                    //add user as air
+                    User::where('id',$new_member->user_id)->increment('group_times');
+                    $this->addUsertoGroup($new_member,$new_group_name,'air',$new_group_id);
+                    $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
+                
+                }
+                if($general_count < 15 && $general_count > 6 ){
+                    //add user as fire
+                    User::where('id',$new_member->user_id)->increment('group_times');
+                    $this->addUsertoGroup($new_member,$new_group_name,'fire',$new_group_id);
+                    $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
+            
+                }
+                $general_count++;
+                array_push($email_arrays,$new_member->user_email);
+                WaitList::where('user_id',$new_member->user_id)->delete();
             }
-            if($general_count < 3 && $general_count > 0){
-                //add user as earth
-                $this->addUsertoGroup($new_member,$new_group_name,'earth',$new_group_id);
-                $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
-              
-            }
-            if( $general_count < 7 && $general_count > 2){
-                //add user as air
-                $this->addUsertoGroup($new_member,$new_group_name,'air',$new_group_id);
-                $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
-             
-            }
-            if($general_count < 15 && $general_count > 6 ){
-                //add user as fire
-                $this->addUsertoGroup($new_member,$new_group_name,'fire',$new_group_id);
-                $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
-           
-            }
-            $general_count++;
-            WaitList::where('user_id',$new_member->user_id)->delete();
+            
+            event(new AddedToGroupMailEvent($email_arrays));
+            return redirect()->route('dashboard.index');
         }
-        
-
+        return redirect()->route('dashboard.index');
     }
 
 
@@ -91,6 +106,7 @@ class PopulateGroupListener
         $group_user = new GroupUser();
         $group_user->user_id = $object->user_id;
         $group_user->user_name = $object->user_name;
+        $group_user->user_email = $object->user_email;
         $group_user->group_id = $group_id;
         $group_user->group_name = $group_name;
         $group_user->user_level = $user_level;
