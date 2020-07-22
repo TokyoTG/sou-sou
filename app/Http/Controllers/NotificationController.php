@@ -139,12 +139,13 @@ class NotificationController extends Controller
                 $task->save();
 
 
-                $num_of_completed = GroupUser::where('group_id',$id)->where('task_status','completed')->count();
+                $num_of_completed = GroupUser::where('group_id', $group_id)->where('task_status','completed')->count();
                 if($num_of_completed == 15){
+                   
                     event(new PaymentVerifiedEvent($group_id));
                 }
 
-
+            
                 $request->session()->flash('message', "Task has been mark verified");
                 return redirect()->route('payments');
             }
