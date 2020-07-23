@@ -1,7 +1,7 @@
 @extends('layout.base')
 
 @section('title_page')
-<title>Sou-Sou | Home </title> 
+<title>YBA | Dashboard </title> 
 <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 @endsection
 

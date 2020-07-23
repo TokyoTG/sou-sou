@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Sou Sou | Home</title>
+        <title>YBA| Home</title>
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet">
 
@@ -208,7 +208,7 @@
         <div id="wrapper">
        
                 <div class="top-right">
-                    <h2>Sou Sou</h2>
+                    <h2>Y B A</h2>
                    <p id="menu" onclick="menu()">Menu</p>
                    <div id="link-container">
                     <p id="close-btn" onclick="closeMenu(this)">+</p>
@@ -229,7 +229,7 @@
                 </div>
             <div id="welcome">
                 <div id="w-text">
-                    <h1>Welcome To Sou Sou</h1>
+                    <h1>Welcome To Your Blessings Awaits</h1>
                     <p>The online...........</p> 
                 </div>
                
