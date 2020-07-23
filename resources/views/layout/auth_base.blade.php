@@ -20,10 +20,23 @@
 
 </head>
 
+
+<style>
+  .bg-login-image,.bg-register-image,.bg-password-image {
+  background: url("{{asset('dashboard/assets/img/MLM.jpg')}}");
+  background-position: center;
+  background-size: cover;
+}
+
+</style>
+
 <body class="bg-gradient-primary">
 
   <div class="container">
-    <h2><a href="" class="btn btn-primary">YBA</a></h2>
+  <a href="{{route('welcome')}}" class="btn btn-primary">
+      <h3>YBA</h3>
+      </a>
+   
         @yield('content')
 
 

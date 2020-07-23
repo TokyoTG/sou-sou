@@ -83,7 +83,7 @@
             }
 
             #welcome h1{
-                font-size: 3.5em;
+                font-size: 3em;
 
             }
 
@@ -213,7 +213,7 @@
                    <div id="link-container">
                     <p id="close-btn" onclick="closeMenu(this)">+</p>
                     <a href="{{ url('/home') }}" class="links">Home</a>
-                    <a href="#" class="links">About</a>
+                    {{-- <a href="#" class="links">About</a> --}}
                     @if ( Cookie::get('full_name') &&  Cookie::get('role'))
                     <a href="{{ route('logout') }}" class="links">Logout</a>
                     <a href="{{ route('dashboard.index') }}" class="links register">Dashboard</a>
@@ -229,8 +229,8 @@
                 </div>
             <div id="welcome">
                 <div id="w-text">
-                    <h1>Welcome To Your Blessings Awaits</h1>
-                    <p>The online...........</p> 
+                    <h1>Welcome to Your Blessings Awaits</h1>
+                    {{-- <p>The online...........</p>  --}}
                 </div>
                
             </div>
