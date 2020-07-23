@@ -136,7 +136,7 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('tasks.index')}}">
-           <i class="menu-icon fa fa-bell"></i>
+           <i class="menu-icon fa fa-tasks"></i>
             <span>Tasks</span></a>
         </li>
         <li class="nav-item">

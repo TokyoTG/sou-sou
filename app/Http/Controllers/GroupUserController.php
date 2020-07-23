@@ -17,6 +17,8 @@ use App\Group;
 use App\User;
 
 use App\Providers\UserAddedToGroupEvent;
+use App\Providers\AddedToGroupMailEvent;
+
 use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\TryCatch;
 
@@ -164,6 +166,9 @@ class GroupUserController extends Controller
                         if(count($wait_list) > 0){
                             WaitList::destroy($wait_list->toArray());
                         }
+                        $emails = array();
+                        array_push($emails, $user_details->user_email);
+                        event(new AddedToGroupMailEvent($emails));
                         $request->session()->flash('alert-class', 'alert-success');
                         $request->session()->flash('message', "User added successfully");
                         return redirect()->route('wait_list.index');
