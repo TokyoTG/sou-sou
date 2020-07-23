@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GroupUser;
 use Illuminate\Http\Request;
+use App\User;
 
 use App\Providers\PaymentVerifiedEvent;
 
@@ -24,25 +25,35 @@ class NotificationController extends Controller
         $user_id =  Cookie::get('id');
         $user_name =  Cookie::get('full_name');
         $tasks = Notification::where('user_id',$user_id)->get();
-        foreach($tasks as $task){
+        $all_tasks = Notification::all();
+        $users = array();
+        foreach($all_tasks as $task){
             $now = time(); 
             $your_date = strtotime($task->created_at);
             $datediff =60 - round(($now - $your_date) / 60);
             if($datediff < 0 ){
-                $to_delete = Notification::find($task->id);
+               
                 if(!$task->verified && !$task->completed){
                     //move user ot wait list when task is not verified
+                    $to_delete = Notification::find($task->id);
                     $to_delete->delete();
+                    $user = User::find($user_id);
                     $user_data = [
-                        'user_id' => $user_id,
-                        'user_name' => $user_name,
+                        'user_id' => $user->id,
+                        'user_name' => $user->full_name,
                         'group_id' => $task->group_id,
-                        'user_email' => Cookie::get('email')
+                        'user_email' => $user->email 
                     ];
-                    event(new MoveUserToWaitListEvent($user_data));
+
+                    array_push($users, $user_data);
+                  
                }
             }
         }
+        if(count($users) > 0){
+             event(new MoveUserToWaitListEvent($users));
+        }
+       
         $tasks = Notification::where('user_id',$user_id)->get();
         return view('dashboard.notifications')->with('tasks',$tasks);
 

@@ -22,6 +22,9 @@ class LoginController extends Controller
 
 
   public function login(Request $request){
+      $time = date('H');
+      $int_time = intval($time);
+    //   return $int_time;
         $messages = [
             'required' => 'All input fields are required',
             'email'=> "Invalid email"
@@ -46,6 +49,14 @@ class LoginController extends Controller
                         if(count($user) > 0){
                             $user_details = $user[0];
                             if(password_verify($password, $user_details->password)){
+                                if($user_details->role != 'admin'){
+                                    if($int_time < 8 && $int_time > 20){
+                                        $request->session()->flash('alert-class', 'alert-danger');
+                                        $request->session()->flash('message', "The platform is inactive anytime beyond 8AM and 8PM");
+                                        return redirect()->route('login');
+                                    } 
+                                }
+                                
                                 $tasks = Notification::where('user_id',$user_details->id)->where('is_read',false)->get();
                                 session(['tasks' => $tasks]);
                                 Cookie::queue('full_name', $user_details->full_name);

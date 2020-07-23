@@ -36,17 +36,19 @@ class MoveUserToWaitListListener
     {
         //
         try{
-            $user = $event->user;
+            $users = $event->user;
             $position = count(WaitList::all()) + 1;
-            
-            GroupUser::where('user_id',$user['user_id'])->delete();
+            foreach($users as $user){
+             GroupUser::where('user_id',$user['user_id'])->delete();
             Group::where('id', $user['group_id'])->decrement('members_number');
             $user_to_wait_list = new WaitList();
             $user_to_wait_list->user_id = $user['user_id'];
             $user_to_wait_list->user_name = $user['user_name'];
             $user_to_wait_list->user_email = $user['user_email'];
             $user_to_wait_list->position = $position;
-            $user_to_wait_list->save();
+            $user_to_wait_list->save(); 
+            }
+         
         }catch(\Exception $e){
            dd('something went wrong sending user back to waitlist');
         }
