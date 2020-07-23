@@ -236,11 +236,16 @@ class GroupController extends Controller
         try{
         $group = Group::find($id);
         $group_users = GroupUser::where('group_id', $id)->get(['id']);
+        $notifications = Notification::where('group_id', $id)->get(['id']);
         if($group != null){
               $group->delete();
         }
         if(count($group_users) > 0){
             GroupUser::destroy($group_users->toArray());
+        }
+
+        if(count($notifications) > 0){
+            Notification::destroy($notifications->toArray());
         }
         
         

@@ -50,9 +50,9 @@ class LoginController extends Controller
                             $user_details = $user[0];
                             if(password_verify($password, $user_details->password)){
                                 if($user_details->role != 'admin'){
-                                    if($int_time < 8 && $int_time > 20){
+                                    if($int_time < 8 || $int_time > 20){
                                         $request->session()->flash('alert-class', 'alert-danger');
-                                        $request->session()->flash('message', "The platform is inactive anytime beyond 8AM and 8PM");
+                                        $request->session()->flash('message', "The platform is inactive anytime beyond 8am and 8pm Newyork Time");
                                         return redirect()->route('login');
                                     } 
                                 }
