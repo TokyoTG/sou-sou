@@ -1,6 +1,7 @@
 @extends('layout.base')
 
 @section('title')
+<title>YBA | Tasks </title> 
     <h4>Tasks</h4>
     <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 @endsection

@@ -16,6 +16,7 @@
 
 
 @section('title')
+<title>YBA | Settings </title> 
 <h4>{{ $user->full_name}}</h4>
 @endsection
 @section('newBtn')

@@ -2,6 +2,7 @@
 
 
 @section('title')
+<title>YBA | Users</title> 
     <h4>Users</h4>
     <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 @endsection

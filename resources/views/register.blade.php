@@ -1,5 +1,8 @@
 @extends('layout.auth_base')
 
+@section('title')
+<title>YBA | Register </title> 
+@endsection
 
 @section("content")
 <div class="card o-hidden border-0 shadow-lg my-5">

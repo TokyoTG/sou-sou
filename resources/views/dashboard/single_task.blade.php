@@ -1,6 +1,7 @@
 @extends('layout.base')
 
 @section('title')
+<title>YBA | Task</title> 
     <h4>Task</h4>
     <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 <a href="{{route('tasks.index')}}" class="btn btn-primary">Back</a>

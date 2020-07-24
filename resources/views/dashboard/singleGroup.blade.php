@@ -4,6 +4,7 @@
 
 @endsection
 @section('title')
+<title>YBA | Group</title> 
 <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
     <h4>Group Name</h4>
 @endsection

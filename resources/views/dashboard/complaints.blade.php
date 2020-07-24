@@ -1,6 +1,7 @@
 @extends('layout.base')
 
 @section('title')
+<title>YBA | Complaints </title> 
     <h4>Complaints</h4>
 @endsection
 @section('contents')

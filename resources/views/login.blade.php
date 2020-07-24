@@ -1,6 +1,8 @@
 @extends('layout.auth_base')
 
-
+@section('title')
+<title>YBA | Login </title> 
+@endsection
 @section("content")
 <div class="row justify-content-center">
 

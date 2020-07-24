@@ -1,6 +1,7 @@
 @extends('layout.base')
 
 @section('title')
+<title>YBA | Verify Payments </title> 
 <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
     <h4>Verify Payments</h4>
 @endsection

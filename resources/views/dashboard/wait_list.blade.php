@@ -8,6 +8,7 @@
 
 
 @section('title')
+<title>YBA | Wait List </title> 
     <h4>Wait List</h4>
     <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 @endsection

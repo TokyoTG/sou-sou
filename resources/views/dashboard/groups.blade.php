@@ -2,6 +2,7 @@
 
 @include('partials.auth_check')
 @section('title')
+<title>YBA | Groups </title> 
     @if (is_admin())
        <h4>Groups</h4>   
 

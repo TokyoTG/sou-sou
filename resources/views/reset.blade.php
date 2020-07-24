@@ -1,5 +1,8 @@
 @extends('layout.auth_base')
 
+@section('title')
+<title>YBA | Reset Password </title> 
+@endsection
 
 @section("content")
 <div class="row justify-content-center">
