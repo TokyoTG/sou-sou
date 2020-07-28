@@ -73,14 +73,12 @@ class PopulateGroupListener
                     //add user as earth
                     User::where('id',$new_member->user_id)->increment('group_times');
                     $this->addUsertoGroup($new_member,$new_group_name,'earth',$new_group_id);
-                    $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
                 
                 }
                 if( $general_count < 7 && $general_count > 2){
-                    //add user as air
+                    //add user as wind
                     User::where('id',$new_member->user_id)->increment('group_times');
-                    $this->addUsertoGroup($new_member,$new_group_name,'air',$new_group_id);
-                    $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
+                    $this->addUsertoGroup($new_member,$new_group_name,'wind',$new_group_id);
                 
                 }
                 if($general_count < 15 && $general_count > 6 ){
@@ -111,7 +109,7 @@ class PopulateGroupListener
         $group_user->group_name = $group_name;
         $group_user->user_level = $user_level;
         $group_user->task_status = "uncompleted";
-        if($user_level == 'water'){
+        if($user_level == 'water' || $user_level == 'wind' || $user_level == 'earth'){
             $group_user->task_status = "completed";
         }
         $group_user->save();

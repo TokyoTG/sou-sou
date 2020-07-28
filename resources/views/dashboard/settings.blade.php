@@ -213,7 +213,7 @@
                                                     <div class="clearfix"></div><br>
                                                     <div class="custom-control custom-radio">
                                                     <input type="radio" value="1" id="customRadio2" name="platform_status" class="custom-control-input" {{$platform->status ? 'checked' : ''}}>
-                                                    <label class="custom-control-label" for="customRadio2">{{$platform->status ? 'Not Paused' : 'Unpause'}}</label>
+                                                    <label class="custom-control-label" for="customRadio2">{{$platform->status ? 'Unpaused' : 'Unpause'}}</label>
                                                     <p>
                                                             <small class="muted text">Not Paused: the system from blocking new group creation</small>
                                                     </p>

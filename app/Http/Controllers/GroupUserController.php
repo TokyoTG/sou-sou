@@ -108,10 +108,10 @@ class GroupUserController extends Controller
                                 return redirect()->route('wait_list.index');
                             }
                            
-                            $group_user->task_status = "completed";
+                            
                             User::where('id',$user_id)->increment('top_times');
                             User::where('id',$user_id)->increment('group_times');
-                
+                            $group_user->task_status = "completed";
                             // return print_r($request->input());
                            
                         }else{
@@ -124,15 +124,17 @@ class GroupUserController extends Controller
                                     return redirect()->route('wait_list.index');
                                 }
                                 User::where('id',$user_id)->increment('group_times');
+                                $group_user->task_status = "completed";
                             }
     
-                            if($level == "air"){
-                                $check_air = GroupUser::where('group_name',$group_name)->where('user_level',"air")->get('id');
-                                if(count($check_air) >= 4){
-                                    $request->session()->flash('message',"Request denied, you cannot have more than 4 user at air level");
+                            if($level == "wind"){
+                                $check_wind = GroupUser::where('group_name',$group_name)->where('user_level',"wind")->get('id');
+                                if(count($check_wind) >= 4){
+                                    $request->session()->flash('message',"Request denied, you cannot have more than 4 user at wind level");
                                     return redirect()->route('wait_list.index');
                                 }
                                 User::where('id',$user_id)->increment('group_times');
+                                $group_user->task_status = "completed";
                             }
     
                             if($level == "fire"){
@@ -142,18 +144,24 @@ class GroupUserController extends Controller
                                     return redirect()->route('wait_list.index');
                                 }
                                 User::where('id',$user_id)->increment('group_times');
+                                $group_user->task_status = "uncompleted";
+                                $new_task = new Notification();
+                                $new_task->group_id = $group_id;
+                                $new_task->verified = false;
+                                $new_task->title = "Bless Top User";
+                                $new_task->is_read = false;
+                                $new_task->completed = false;
+                                $new_task->user_name = $username;
+                                $new_task->user_id = $request->input('user_id');
+                                $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked person in the {$group_name} group with the following details : \n Account Number: {$top_user->account_number} \n Bank Name : {$top_user->bank_name} amount within 1 hour. \n Signed YBA Admin";
+                                $new_task->save();
                             }
-                            $new_task = new Notification();
-                            $new_task->group_id = $group_id;
-                            $new_task->verified = false;
-                            $new_task->title = "Bless Top User";
-                            $new_task->is_read = false;
-                            $new_task->completed = false;
-                            $new_task->user_name = $username;
-                            $new_task->user_id = $request->input('user_id');
-                            $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked person in the {$group_name} group with the following details : \n Account Number: {$top_user->account_number} \n Bank Name : {$top_user->bank_name} amount within 1 hour. \n Signed YBA Admin";
-                            $group_user->task_status = "uncompleted";
-                            $new_task->save();
+                            
+
+                                
+                            
+                           
+                            
                         }
                         $group_user->save();
                         $event_data = [

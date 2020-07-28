@@ -46,7 +46,7 @@ class PagesController extends Controller
         }
        
         if(Cookie::get('role') !== null && Cookie::get('role') == "admin"){
-            $count_users = User::all()->count();
+            $count_users = User::where('role','member')->count();
             $count_groups = Group::all()->count();
             $count_waitlist = WaitList::all()->count();
             $admin =[

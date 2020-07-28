@@ -71,8 +71,12 @@
           <i class="fas fa-user-circle"></i>
         </div>
         <div class="sidebar-brand-text mx-2">
-          @if (Cookie::get('full_name') !== null)
-         {{ Cookie::get('full_name') }}  
+          @if(is_admins())
+            Super Admin
+          @elseif(is_members())
+            @if (Cookie::get('full_name') !== null)
+              {{ Cookie::get('full_name') }}  
+            @endif
           @endif
         </div>
       </a>

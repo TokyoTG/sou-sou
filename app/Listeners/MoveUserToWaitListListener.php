@@ -11,6 +11,7 @@ use App\GroupUser;
 use App\Group;
 use App\User;
 use App\WaitList;
+use App\Notification;
 
 
 
@@ -41,6 +42,7 @@ class MoveUserToWaitListListener
             foreach($users as $user){
              GroupUser::where('user_id',$user['user_id'])->delete();
             Group::where('id', $user['group_id'])->decrement('members_number');
+            Notification::where('user_id',$user['user_id'])->where('group_id',$user['group_id'])->delete();
             $user_to_wait_list = new WaitList();
             $user_to_wait_list->user_id = $user['user_id'];
             $user_to_wait_list->user_name = $user['user_name'];

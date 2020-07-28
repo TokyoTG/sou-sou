@@ -254,7 +254,7 @@
                      
                       <option value="water">Water</option>
                       <option value="earth">Earth</option>
-                      <option value="air">Air</option>
+                      <option value="wind">Wind</option>
                       <option value="fire">Fire</option>
                     </select>
                     </div>

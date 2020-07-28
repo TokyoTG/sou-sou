@@ -52,7 +52,7 @@ class LoginController extends Controller
                                 if($user_details->role != 'admin'){
                                     if($int_time < 8 || $int_time > 20){
                                         $request->session()->flash('alert-class', 'alert-danger');
-                                        $request->session()->flash('message', "The platform will be active from 8AM and 8PM New York time");
+                                        $request->session()->flash('message', "YBA is closed from the hours of 8pm to 8am Eastern Time Zone");
                                         return redirect()->route('login');
                                     } 
                                 }
