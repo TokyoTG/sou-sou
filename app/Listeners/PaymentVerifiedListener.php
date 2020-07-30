@@ -83,8 +83,8 @@ class PaymentVerifiedListener
 
                     //updates former group
                     GroupUser::where('group_id', $group_id)->where('user_level',"earth")->update(['user_level' => 'water']);
-                    GroupUser::where('group_id', $group_id)->where('user_level',"wind")->update(['user_level' => 'earth','task_status'=>'uncompleted']);
-                    GroupUser::where('group_id', $group_id)->where('user_level',"fire")->update(['user_level' => 'wind','task_status'=>'uncompleted']);
+                    GroupUser::where('group_id', $group_id)->where('user_level',"wind")->update(['user_level' => 'earth','task_status'=>'completed']);
+                    GroupUser::where('group_id', $group_id)->where('user_level',"fire")->update(['user_level' => 'wind','task_status'=>'completed']);
                     // dd("split will happen");
 
                     //sends message to all users in the former group
