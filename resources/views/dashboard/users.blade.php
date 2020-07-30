@@ -28,7 +28,6 @@
                     <thead>
                         <tr>
                             <th>Name</th>
-                            <th>Account Number</th>
                             <th>Reg. Date</th>
                             <th>Top Times</th>
                             <th>Groups Times</th>
@@ -71,7 +70,6 @@
                              
                                 <tr>
                                     <td>{{$user->full_name}}</td>
-                                <td>{{ isset($user->account_number)  ? $user->account_number : "Not Set"}}</td>
                                 <td>{{$join_date}}</td>
                                     <td>{{$user->top_times}}</td>
                                     <td>{{$user->group_times}}</td>

@@ -41,7 +41,7 @@
                                                     </button>
                                                 <div class="dropdown-menu dropdown-menu-right">
                                                 <a class="dropdown-item" href="{{route('users.show',$item->user_id)}}">View User</a>
-                                                    {{-- @if (!$item->verified) --}}
+                                                    @if (!$item->verified)
                                                         <a 
                                                         class="dropdown-item" href="#" 
                                                         data-user_id={{$item->id}}
@@ -49,7 +49,7 @@
                                                         >
                                                         Mark as Verified
                                                         </a>  
-                                                    {{-- @endif --}}
+                                                    @endif
                                                    
                                                  </div>
                                                  <form action="{{ route('tasks.update',$item->id) }}" method="POST" id="tasks{{$item->id}}">

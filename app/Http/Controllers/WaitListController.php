@@ -8,6 +8,7 @@ use App\WaitList;
 use App\Group;
 use App\GroupUser;
 use App\Platform;
+use App\PaymentMethod;
 
 use Illuminate\Support\Facades\Validator;
 
@@ -58,13 +59,12 @@ class WaitListController extends Controller
         //
         $user_id = Cookie::get('id');
         try{
-            // $check_user =   WaitList::where('user_id',$user_id)->get('id');
-           
-            // if(count($check_user) >= 4){
-            //     $request->session()->flash('alert-class', 'alert-danger');
-            //     $request->session()->flash('message',"You can not join the join waiting list more than 4 times");
-            //     return redirect()->route('dashboard.index');
-            // }
+            $check_user =   PaymentMethod::where('user_id',$user_id)->count();
+            if($check_user < 2){
+                $request->session()->flash('alert-class', 'alert-danger');
+                $request->session()->flash('message',"You must have two methods of recieving payment before you can join waiting list");
+                return redirect()->route('dashboard.index');
+            }
             $wait_list_count = count(WaitList::all());
             $position = $wait_list_count + 1;
             $wait_list = new WaitList;

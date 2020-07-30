@@ -166,7 +166,6 @@ class UsersController extends Controller
                 'phone_number' => 'required|digits_between:6,16',
                 'first_name' => 'required|alpha|min:3|max:16',
                 'email' => 'required|email',
-                'account_number' => 'required|digits_between:6,16',
                 'last_name' => 'required|alpha|min:3|max:16',
                 ], $messages);
             }elseif($request->input('request_control') =="password-update"){
@@ -190,8 +189,6 @@ class UsersController extends Controller
                             $user->full_name = $request->input('first_name') . " " . $request->input('last_name');
                             $user->email = $request->input('email');
                             $user->phone_number = $request->input('phone_number');
-                            $user->account_number = $request->input('account_number');
-                            $user->bank_name = $request->input('bank_name');
                             $saved = $user->save();
                             if($saved){
                                 Cookie::queue('full_name', $request->input('first_name') . " " . $request->input('last_name'));

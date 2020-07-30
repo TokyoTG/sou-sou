@@ -122,17 +122,13 @@
            <i class="fa-fw fa fa-folder"></i>
             <span>Groups</span></a>
       </li>
+      
 @endif
 
 
     
     
 @if(is_members())
-        {{-- <li class="nav-item">
-          <a class="nav-link" href="{{route('groups.index')}}">
-          <i class="fa-fw fa fa-folder"></i>
-            <span>My Groups</span></a>
-        </li> --}}
         <li class="nav-item">
             <a class="nav-link" href="{{route('user_list')}}">
             <i class="fa-fw fa fa-user-plus"></i>
@@ -145,8 +141,13 @@
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('payments')}}">
-           <i class="menu-icon fa fa-bell"></i>
+           <i class="menu-icon fa fa-money-check"></i>
             <span>Verify Payments</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('payment_methods.index')}}">
+          <i class="fa-fw fa fa-money-check-alt"></i>
+            <span>Payment Methods</span></a>
         </li>
 @endif
       <!-- Nav Item - Charts -->

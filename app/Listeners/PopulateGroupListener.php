@@ -10,6 +10,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Group;
 use App\Platform;
 use App\GroupUser;
+use App\PaymentMethod;
 use App\Notification;
 use App\User;
 use App\WaitList;
@@ -63,7 +64,8 @@ class PopulateGroupListener
                 if( $general_count < 1 && $water_count == 0){
                     //add user as water
                     $top_user_id = $new_member->user_id;
-                    $top_user = User::find($top_user_id);
+                    // $top_user = User::find($top_user_id);
+                    $top_user_details = $this->paymentDetails($top_user_id);
                     User::where('id',$top_user_id)->increment('top_times');
                     User::where('id',$top_user_id)->increment('group_times');
                     $this->addUsertoGroup($new_member,$new_group_name,'water',$new_group_id);
@@ -85,7 +87,7 @@ class PopulateGroupListener
                     //add user as fire
                     User::where('id',$new_member->user_id)->increment('group_times');
                     $this->addUsertoGroup($new_member,$new_group_name,'fire',$new_group_id);
-                    $this->groupMessageDispatcher($new_group_id,$new_member,$top_user,$new_group_name);
+                    $this->groupMessageDispatcher($new_group_id,$new_member,$top_user_details,$new_group_name);
             
                 }
                 $general_count++;
@@ -125,7 +127,7 @@ class PopulateGroupListener
         $new_task->completed = false;
         $new_task->user_id = $user->user_id;
         $new_task->user_name = $user->user_name;
-        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user->full_name} an amount of #1000 the top ranked person in the {$group_name} group with the following details: Account Number: {$top_user->account_number}   Bank Name : {$top_user->bank_name} .\n This should be done within 1 hour after recieving this message.  \n Signed YBA Admin";
+        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user['user_name']} the top ranked person in the {$group_name} group with the following details : \n {$top_user['payment_details']} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
         $new_task->save();
     }
 
@@ -138,5 +140,20 @@ class PopulateGroupListener
             $name .= $alphabets[$index];
         }
         return $name;
+    }
+    public function paymentDetails ($top_user_id){
+        $methods = PaymentMethod::where('user_id', $top_user_id)->get();
+        $top_user_name = "";
+        $payment_methods = '';
+        foreach($methods as $index=>$method){
+            ++$index;
+           $payment_methods .="(". $index. ").".  "\n Name: ". $method->platform . " " ." $method->platform-Details: ".  $method->details ."\n";
+           $top_user_name = $method->user_name;
+        }
+        $data = [
+            'payment_details' => $payment_methods,
+            'user_name' => $top_user_name
+        ];
+        return $data;
     }
 }

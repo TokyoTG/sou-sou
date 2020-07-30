@@ -15,6 +15,7 @@ use App\Notification;
 
 use App\Group;
 use App\User;
+use App\PaymentMethod;
 
 use App\Providers\UserAddedToGroupEvent;
 use App\Providers\AddedToGroupMailEvent;
@@ -92,11 +93,8 @@ class GroupUserController extends Controller
                         $group_user->user_level = $level;
                         $request->session()->flash('alert-class', 'alert-danger');
 
-                        $user_to_be_added = User::find($user_id);
-                        if(!$user_to_be_added->account_number || $user_to_be_added->account_number == "" || !$user_to_be_added->bank_name || $user_to_be_added->bank_name == ""){
-                            $request->session()->flash('message',"Request denied, you cannot add a user without account details to group");
-                            return redirect()->route('wait_list.index');
-                        }
+                      
+                      
                         if($group_count <= 0 && $level != "water"){
                             $request->session()->flash('message',"Request denied, you cannot add another this level without adding the water level first");
                             return redirect()->route('wait_list.index');
@@ -117,6 +115,7 @@ class GroupUserController extends Controller
                         }else{
                                 $top_user_id = GroupUser::where('group_name',$group_name)->where('user_level',"water")->get('user_id')[0]->user_id;
                                 $top_user = User::find($top_user_id);
+                           
                             if($level == "earth"){
                                 $check_earth = GroupUser::where('group_name',$group_name)->where('user_level',"earth")->get('id');
                                 if(count($check_earth) >= 2){
@@ -138,6 +137,7 @@ class GroupUserController extends Controller
                             }
     
                             if($level == "fire"){
+                                $top_user_details = PaymentMethod::where('user_id',$top_user_id)->get();
                                 $check_fire = GroupUser::where('group_name',$group_name)->where('user_level',"fire")->get('id');
                                 if(count($check_fire) >= 8){
                                     $request->session()->flash('message',"Request denied, you cannot have more than 8 user at fire level");
@@ -145,6 +145,11 @@ class GroupUserController extends Controller
                                 }
                                 User::where('id',$user_id)->increment('group_times');
                                 $group_user->task_status = "uncompleted";
+                                $payment_details = '';
+                                foreach($top_user_details as $index=>$item){
+                                    ++$index;
+                                    $payment_details .="(". $index. ").".  "\n Name: ". $item->platform . " " ." $item->platform-Details: ".  $item->details ."\n";
+                                }
                                 $new_task = new Notification();
                                 $new_task->group_id = $group_id;
                                 $new_task->verified = false;
@@ -153,14 +158,9 @@ class GroupUserController extends Controller
                                 $new_task->completed = false;
                                 $new_task->user_name = $username;
                                 $new_task->user_id = $request->input('user_id');
-                                $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked person in the {$group_name} group with the following details : \n Account Number: {$top_user->account_number} \n Bank Name : {$top_user->bank_name} amount within 1 hour. \n Signed YBA Admin";
+                                $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked person in the {$group_name} group with the following details : \n {$payment_details} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
                                 $new_task->save();
                             }
-                            
-
-                                
-                            
-                           
                             
                         }
                         $group_user->save();
@@ -170,7 +170,8 @@ class GroupUserController extends Controller
                         ];
                         event(new UserAddedToGroupEvent($event_data));
                         // Group::where('name',$group_name)->increment('members_number');
-                        $wait_list = WaitList::where('user_id',$request->input('user_id'))->where('id',$list_id)->get(['id']);
+                        //$wait_list = WaitList::where('user_id',$request->input('user_id'))->where('id',$list_id)->get(['id']);
+                        $wait_list = WaitList::where('user_id',$request->input('user_id'))->get(['id']);
                         if(count($wait_list) > 0){
                             WaitList::destroy($wait_list->toArray());
                         }

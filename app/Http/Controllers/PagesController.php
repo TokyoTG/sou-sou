@@ -36,12 +36,11 @@ class PagesController extends Controller
             ];
             if($count_wait_list >=  4){
                 return view('dashboard.index')->with('member',$member);
-            }else{
-              
-                $member['show_btn'] = true;
-            return view('dashboard.index')->with('member',$member);
+            }elseif(!$group){
+              $member['show_btn'] = true;
+           
             }
-
+            return view('dashboard.index')->with('member',$member);
             
         }
        

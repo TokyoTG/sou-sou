@@ -81,6 +81,8 @@ Route::prefix('/dashboard')->group(function () {
 
         Route::post('/generate', "WaitListController@generate_group")->name('generate');
 
+        Route::resource('payment_methods', 'PaymentMethodController');
+
     });
     
 

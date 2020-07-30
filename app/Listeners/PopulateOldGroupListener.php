@@ -9,6 +9,7 @@ use Illuminate\Queue\InteractsWithQueue;
 
 use App\GroupUser;
 use App\Notification;
+use App\PaymentMethod;
 use App\Group;
 use App\User;
 use App\Platform;
@@ -36,11 +37,12 @@ class PopulateOldGroupListener
             $group = $event->data['group_info'];
             
             $top_user = GroupUser::where('group_id',$group['id'])->where('user_level','water')->first();
-            $top_user_info = User::find($top_user->user_id);
+            // $top_user_info = User::find($top_user->user_id);
+            $top_user_details = $this->paymentDetails($top_user->user_id);
 
             foreach($new_members as $new_member){
                 $this->addUsertoGroup($new_member,$group['name'],'fire',$group['id']);
-                $this->groupMessageDispatcher($group['id'],$new_member,$top_user_info,$group['name']);
+                $this->groupMessageDispatcher($group['id'],$new_member,$top_user_details,$group['name']);
                 array_push($email_arrays,$new_member->user_email);
                 User::where('id',$new_member->user_id)->increment('group_times');
                 WaitList::where('user_id',$new_member->user_id)->delete();
@@ -75,7 +77,24 @@ class PopulateOldGroupListener
         $new_task->completed = false;
         $new_task->user_id = $user->user_id;
         $new_task->user_name = $user->user_name;
-        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user->full_name} an amount of #1000 the top ranked person in the {$group_name} group with the following details: \n Account Number: {$top_user->account_number}  \n Bank Name : {$top_user->bank_name} .\n This should be done within 1 hour after recieving this message.  \n Signed YBA Admin";
+        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user['user_name']} the top ranked person in the {$group_name} group with the following details : \n {$top_user['payment_details']} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
         $new_task->save();
+     }
+
+
+     public function paymentDetails ($top_user_id){
+         $methods = PaymentMethod::where('user_id', $top_user_id)->get();
+         $top_user_name = "";
+         $payment_methods = '';
+         foreach($methods as $index=>$method){
+            ++$index;
+            $payment_methods .="(". $index. ").".  "\n Name: ". $method->platform . " " ." $method->platform-Details: ".  $method->details ."\n";
+            $top_user_name = $method->user_name;
+         }
+         $data = [
+             'payment_details' => $payment_methods,
+             'user_name' => $top_user_name
+         ];
+         return $data;
      }
     }

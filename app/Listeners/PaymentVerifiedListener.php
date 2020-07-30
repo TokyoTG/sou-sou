@@ -107,6 +107,13 @@ class PaymentVerifiedListener
                     User::where('id',$former_earth->user_id)->increment('group_times');
                 }
 
+
+                $notifications = Notification::where('group_id', $group_id)->get(['id']);
+                if(count($notifications) > 0){
+                    Notification::destroy($notifications->toArray());
+                }
+
+                
                 event(new CheckWaitListEvent());
                 event(new AddedToGroupMailEvent($email_arrays));
         
