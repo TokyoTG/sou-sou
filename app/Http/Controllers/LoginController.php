@@ -49,13 +49,13 @@ class LoginController extends Controller
                         if(count($user) > 0){
                             $user_details = $user[0];
                             if(password_verify($password, $user_details->password)){
-                                // if($user_details->role != 'admin'){
-                                //     if($int_time < 8 || $int_time > 20){
-                                //         $request->session()->flash('alert-class', 'alert-danger');
-                                //         $request->session()->flash('message', "YBA is closed from the hours of 8pm to 8am Eastern Time Zone");
-                                //         return redirect()->route('login');
-                                //     } 
-                                // }
+                                if($user_details->role != 'admin'){
+                                    if($int_time < 8 || $int_time > 20){
+                                        $request->session()->flash('alert-class', 'alert-danger');
+                                        $request->session()->flash('message', "YBA is closed from the hours of 8pm to 8am Eastern Time Zone");
+                                        return redirect()->route('login');
+                                    } 
+                                }
                                 
                                 $tasks = Notification::where('user_id',$user_details->id)->where('is_read',false)->get();
                                 session(['tasks' => $tasks]);
