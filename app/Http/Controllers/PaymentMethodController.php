@@ -45,12 +45,14 @@ class PaymentMethodController extends Controller
         
         $data = $request->validate([
             'platform' => ['required'],
-            'details' =>['required']
+            'details' =>['required', "max:250","min:3"],
+            'contact' =>['required', "max:250","min:3"],
         ]);
         if($request->input('platform') == 'others'){
             $data = $request->validate([
                 'others' => ['required','regex:/^[\pL\s\-]+$/u','min:3'],
-                'details' =>['required']
+                'details' =>['required', "max:250","min:3"],
+                'contact' =>['required', "max:250","min:3"],
             ]);
         }
         if($data){
@@ -58,6 +60,7 @@ class PaymentMethodController extends Controller
                 $payment_method = new PaymentMethod();
                 $payment_method->platform = $request->input('platform');
                 $payment_method->details = $request->input('details');
+                $payment_method->contact = $request->input('contact');
                 if($request->input('platform') == 'others'){
                     $payment_method->platform = $request->input('others');
                 }
@@ -118,12 +121,14 @@ class PaymentMethodController extends Controller
         //
         $data = $request->validate([
             'platform' => ['required'],
-            'details' =>['required']
+            'details' =>['required', "max:250","min:3"],
+            'contact' =>['required', "max:250","min:3"],
         ]);
         if($request->input('platform') == 'others'){
             $data = $request->validate([
                 'others' => ['required','regex:/^[\pL\s\-]+$/u','min:3'],
-                'details' =>['required']
+                'details' =>['required', "max:250","min:3"],
+                'contact' =>['required', "max:250","min:3"],
             ]);
         }
         if($data){
@@ -131,6 +136,7 @@ class PaymentMethodController extends Controller
                 $payment_method = PaymentMethod::find($id);
                 $payment_method->platform = $request->input('platform');
                 $payment_method->details = $request->input('details');
+                $payment_method->contact = $request->input('contact');
                 if($request->input('platform') == 'others'){
                     $payment_method->platform = $request->input('others');
                 }

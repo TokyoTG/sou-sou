@@ -147,7 +147,7 @@ class PopulateGroupListener
         $payment_methods = '';
         foreach($methods as $index=>$method){
             ++$index;
-           $payment_methods .="(". $index. ").".  "\n Name: ". $method->platform . " " ." $method->platform-Details: ".  $method->details ."\n";
+           $payment_methods .="(". $index. ").".  "\n Name: ". $method->platform . " " ." $method->platform-Details: ".  $method->details ."\n". " "." $method->platform-Contacts: ". $method->contact ." \n";
            $top_user_name = $method->user_name;
         }
         $data = [

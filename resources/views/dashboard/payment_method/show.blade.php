@@ -26,7 +26,8 @@
                                 <div class="table-responsive">
                                
                                    <h5>{{$method->platform}}</h5>
-                                   <p>{{$method->details}}</p>
+                                   <p> Details: <br> {{$method->details}}</p>
+                                    <p>Contact Details: <br> {{$method->contact}}</p>
                                 </div>
                               
                             </div>

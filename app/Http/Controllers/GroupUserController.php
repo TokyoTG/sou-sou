@@ -148,7 +148,7 @@ class GroupUserController extends Controller
                                 $payment_details = '';
                                 foreach($top_user_details as $index=>$item){
                                     ++$index;
-                                    $payment_details .="(". $index. ").".  "\n Name: ". $item->platform . " " ." $item->platform-Details: ".  $item->details ."\n";
+                                    $payment_details .="(". $index. ").".  "\n Name: ". $item->platform . " " ." $item->platform-Details: ".  $item->details ."\n". " "." $item->platform-Contacts: ". $item->contact ." \n";
                                 }
                                 $new_task = new Notification();
                                 $new_task->group_id = $group_id;

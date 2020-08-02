@@ -18,6 +18,7 @@ class CreatePaymentMethodsTable extends Migration
             $table->string('user_name');
             $table->string('platform');
             $table->mediumText('details');
+            $table->mediumText('contact');
             $table->string('user_id');
             $table->timestamps();
         });

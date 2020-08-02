@@ -79,6 +79,12 @@
                                                
                                                 id="exampleFormControlTextarea1" name="details" rows="3">{{$method->details}}</textarea>
                                             </div>
+                                            <div class="form-group">
+                                                <label for="exampleFormControlTextarea2">Platform Contact Details</label>
+                                                <textarea class="form-control" 
+                                               
+                                                id="exampleFormControlTextarea2" name="contact" rows="3">{{$method->contact}}</textarea>
+                                            </div>
                                         <div class="form-group">
                                             <div class="col-12">
                                                 <button type="submit" class="btn btn-primary btn-block">Save</button>

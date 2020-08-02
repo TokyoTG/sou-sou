@@ -36,6 +36,7 @@
                                                         <tr>
                                                             <th>Platform</th>
                                                             <th>Details</th>
+                                                            <th>Contact Details</th>
                                                             <th>Action</th>
                                                         </tr>
                                                     </thead>
@@ -44,6 +45,7 @@
                                                     <tr>
                                                         <td>{{$item->platform}}</td>
                                                         <td>{{$item->details}}</td>
+                                                        <td>{{$item->contact}}</td>
                                                         <td>
                                                             <div class="btn-group mt-2 mr-1">
                                                             <button type="button" class="btn btn-primary dropdown-toggle"
@@ -116,6 +118,11 @@
                                 <label for="others" class="control-label mb-1">Platform Name</label>
                                 <input  name="others" type="text" class="form-control" aria-invalid="false">
                             </div>
+                            <div class="form-group">
+                                <label for="exampleFormControlTextarea2" class="control-label mb-1">Contact Details</label>
+                                <textarea class="form-control" id="exampleFormControlTextarea2" name="contact" rows="3"></textarea>
+                            </div>
+                           
                             <div class="form-group">
                                 <label for="exampleFormControlTextarea1">Platform Details</label>
                                 <textarea class="form-control" id="exampleFormControlTextarea1" name="details" rows="3"></textarea>
