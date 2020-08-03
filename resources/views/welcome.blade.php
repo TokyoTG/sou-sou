@@ -212,7 +212,7 @@
                    <p id="menu" onclick="menu()">Menu</p>
                    <div id="link-container">
                     <p id="close-btn" onclick="closeMenu(this)">+</p>
-                    <a href="{{ url('/home') }}" class="links">Home</a>
+                    <a href="{{ route('welcome') }}" class="links">Home</a>
                     {{-- <a href="#" class="links">About</a> --}}
                     @if ( Cookie::get('full_name') &&  Cookie::get('role'))
                     <a href="{{ route('logout') }}" class="links">Logout</a>
