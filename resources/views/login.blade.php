@@ -1,6 +1,8 @@
 @extends('layout.auth_base')
 
-
+@section('title')
+<title>YBA | Login </title> 
+@endsection
 @section("content")
 <div class="row justify-content-center">
 
@@ -16,12 +18,17 @@
                 <div class="text-center">
                   <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                 </div>
-                <form class="user">
+                      @if(Session::has('message'))
+                        <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
+                            {{ Session::get('message') }}</p>
+                      @endif
+                <form class="user" method="POST" action="{{route('login')}}">
+                  @csrf
                   <div class="form-group">
-                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                    <input type="email" class="form-control form-control-user" name="email" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
                   </div>
                   <div class="form-group">
-                    <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                    <input type="password" class="form-control form-control-user" name="password" id="exampleInputPassword" placeholder="Password">
                   </div>
                   <div class="form-group">
                     <div class="custom-control custom-checkbox small">
@@ -29,7 +36,7 @@
                       <label class="custom-control-label" for="customCheck">Remember Me</label>
                     </div>
                   </div>
-                  <button href="#" class="btn btn-primary btn-user btn-block" type="submit">
+                  <button  class="btn btn-primary btn-user btn-block" type="submit">
                     Login
                   </button>
                   <hr>

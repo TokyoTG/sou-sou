@@ -15,8 +15,26 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        Registered::class => [
-            SendEmailVerificationNotification::class,
+        UserAddedToGroupEvent::class=>[
+            \App\Listeners\IncreaseUserGroupCount::class,
+        ],
+        PaymentVerifiedEvent::class=>[
+            \App\Listeners\PaymentVerifiedListener::class,
+        ],
+        MoveUserToWaitListEvent::class=>[
+            \App\Listeners\MoveUserToWaitListListener::class,
+        ],
+        PopulateGroupEvent::class=>[
+            \App\Listeners\PopulateGroupListener::class,
+        ],
+        PopulateOldGroupEvent::class=>[
+            \App\Listeners\PopulateOldGroupListener::class,
+        ],
+        CheckWaitListEvent::class=>[
+            \App\Listeners\CheckWaitListListener::class,
+        ],
+        AddedToGroupMailEvent::class=>[
+            \App\Listeners\AddedToGroupMailListener::class,
         ],
     ];
 

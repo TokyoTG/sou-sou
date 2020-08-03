@@ -9,7 +9,7 @@
   <meta name="description" content="">
   <meta name="author" content="">
 
-  <title>SB Admin 2 - Blank</title>
+  @yield('title')
 
   <!-- Custom fonts for this template-->
   <link href="{{asset('dashboard/assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -20,10 +20,23 @@
 
 </head>
 
+
+<style>
+  .bg-login-image,.bg-register-image,.bg-password-image {
+  background: url("{{asset('dashboard/assets/img/MLM.jpg')}}");
+  background-position: center;
+  background-size: cover;
+}
+
+</style>
+
 <body class="bg-gradient-primary">
 
   <div class="container">
-
+  <a href="{{route('welcome')}}" class="btn btn-primary">
+      <h3>YBA</h3>
+      </a>
+   
         @yield('content')
 
 

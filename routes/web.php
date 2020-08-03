@@ -15,19 +15,24 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
-Route::get('/login', function () {
-    return view('login');
-})->name('login');
+Route::get('/login',"LoginController@index")->name('login');
+
+Route::post('/login',"LoginController@login")->name('login');
 
 Route::get('/register', function () {
     return view('register');
 })->name('register');
 
+Route::post('/register','RegisterController@index')->name('signup');
+
 Route::get('/forgot_pasword', function () {
     return view('forgot');
 })->name('forgot');
+
+Route::post('/forgot_pasword', 'ForgotPasswordController@index')->name('forgot');
+Route::post('/reset_password', 'ForgotPasswordController@reset')->name('reset');
 
 
 Route::get('/reset_password', function () {
@@ -37,36 +42,50 @@ Route::get('/reset_password', function () {
 
 
 Route::prefix('/dashboard')->group(function () {
-    Route::get('/home', function () {
-        return view('dashboard.index');
-    })->name('dashboard.index');
+   
+    Route::get('/logout', 'LogoutController@index')->name('logout');
+
+    Route::group(['middleware' => 'backend.auth'], function () {
+
+        Route::get('/home', 'PagesController@dashboard')->name('dashboard.index');
 
     //users section
-    Route::resource('users', 'UsersController');
+        Route::resource('users', 'UsersController');
 
-    //end users section
+        //end users section
 
-    //groups section
-    Route::resource('groups', 'GroupController');
+        //groups section
+        Route::resource('groups', 'GroupController');
 
-    //end groups section
+        Route::resource('group_users', 'GroupUserController');
+        //end groups section
 
-
-    Route::get('/settings', function () {
-        return view('dashboard.settings');
-    })->name('dashboard.settings');
+        Route::get('/list','GroupController@show_user_list' )->name('user_list');
 
 
-    Route::get('/notifications', function () {
-        return view('dashboard.notifications');
-    })->name('dashboard.notifications');
+        Route::resource('tasks', 'NotificationController');
 
 
-    Route::get('/complaints', function () {
-        return view('dashboard.complaints');
-    })->name('dashboard.complaints');
+        Route::get('/complaints', function () {
+            return view('dashboard.complaints');
+        })->name('dashboard.complaints');
 
-    Route::get('/wait_list', function () {
-        return view('dashboard.wait_list');
-    })->name('dashboard.wait_list');
+
+        //wait list 
+
+        Route::resource('wait_list', 'WaitListController');
+
+        Route::get('/gifts', 'PagesController@payments')->name('payments');
+
+        Route::post('/pause',"PagesController@platform")->name('platform');
+
+        Route::post('/generate', "WaitListController@generate_group")->name('generate');
+
+        Route::resource('gift_methods', 'PaymentMethodController');
+
+    });
+    
+
+   
+  
 });

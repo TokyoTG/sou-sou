@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,9 +9,9 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
-  <meta name="author" content="">
+  <meta name="author" content="Toyeeb Ganiu">
 
-  <title>SB Admin 2 - Blank</title>
+  @yield('title_page')
 
   <!-- Custom fonts for this template-->
   <link href="{{asset('dashboard/assets/vendor/fontawesome-free/css/all.min.css')}}" rel="stylesheet" type="text/css">
@@ -21,8 +23,39 @@
   .nav-tabs .nav-link.active{
     border-left: 3px solid #4e73df;
   }
+
+  .fa-eye{
+    font-size: 1.2em;
+  }
+  td{
+    text-align: center;
+  }
+
+  a:hover{
+    text-decoration: none;
+  }
+  .sidebar-brand-text{
+    text-transform: capitalize;
+  }
+  /* .container-fluid{
+    height: 500px;
+    overflow: auto;
+  } */
+  
 </style>
+
 </head>
+
+@php
+
+   function is_admins(){
+        return Cookie::get('role') !== null && Cookie::get('role') == "admin";
+    }
+
+    function is_members(){
+        return Cookie::get('role') !== null && Cookie::get('role') == "member";
+    }
+@endphp
 
 <body id="page-top">
 
@@ -34,10 +67,18 @@
 
       <!-- Sidebar - Brand -->
       <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{route('dashboard.index')}}">
-        <div class="sidebar-brand-icon rotate-n-15">
-          <i class="fas fa-laugh-wink"></i>
+        <div class="sidebar-brand-icon rotate-n-0">
+          <i class="fas fa-user-circle"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+        <div class="sidebar-brand-text mx-2">
+          @if(is_admins())
+            Super Admin
+          @elseif(is_members())
+            @if (Cookie::get('full_name') !== null)
+              {{ Cookie::get('full_name') }}  
+            @endif
+          @endif
+        </div>
       </a>
 
       <!-- Divider -->
@@ -58,38 +99,61 @@
         Menu
       </div>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('users.index')}}">
-         <i class="fa-fw fa fa-users"></i>
-          <span>Users</span></a>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('groups.index')}}">
-         <i class="fa-fw fa fa-folder"></i>
-          <span>Groups</span></a>
-    </li>
-      <!-- Nav Item - Charts -->
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('dashboard.wait_list')}}">
-         <i class="menu-icon fa fa-list-alt"></i>
-          <span>Wait List</span></a>
-      </li>
+   
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('dashboard.notifications')}}">
-         <i class="menu-icon fa fa-bell"></i>
-          <span>Notifications</span></a>
+@if(is_admins())
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('users.index')}}">
+            <i class="fa-fw fa fa-users"></i>
+            <span>Users</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('wait_list.index')}}">
+           <i class="menu-icon fa fa-list-alt"></i>
+            <span>Wait List</span></a>
+        </li>
+        {{-- <li class="nav-item">
+            <a class="nav-link" href="{{route('dashboard.complaints')}}">
+            <i class="menu-icon fa fa-list-alt"></i>
+            <span>Approved List</span></a>
+        </li> --}}
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('groups.index')}}">
+           <i class="fa-fw fa fa-folder"></i>
+            <span>Groups</span></a>
       </li>
       
-    <li class="nav-item">
-        <a class="nav-link" href="{{route('dashboard.complaints')}}">
-         <i class="menu-icon fa fa-list-alt"></i>
-          <span>Complaints</span></a>
-      </li>
+@endif
 
+
+    
+    
+@if(is_members())
+        <li class="nav-item">
+            <a class="nav-link" href="{{route('user_list')}}">
+            <i class="fa-fw fa fa-user-plus"></i>
+            <span>Wait List</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('tasks.index')}}">
+           <i class="menu-icon fa fa-tasks"></i>
+            <span>Tasks</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('payments')}}">
+           <i class="menu-icon fa fa-money-check"></i>
+            <span>Verify Gifts</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('gift_methods.index')}}">
+          <i class="fa-fw fa fa-money-check-alt"></i>
+            <span>Gift Methods</span></a>
+        </li>
+@endif
+      <!-- Nav Item - Charts -->
       <!-- Nav Item - Tables -->
       <li class="nav-item">
-        <a class="nav-link" href="{{route('dashboard.settings')}}">
+        <a class="nav-link" href="{{route('users.edit',Cookie::get('id'))}}">
           <i class="menu-icon fa fa-cogs"></i>
           <span>Settings</span></a>
       </li>
@@ -120,7 +184,7 @@
           </button>
 
           <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+          {{-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
             <div class="input-group">
               <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
               <div class="input-group-append">
@@ -129,7 +193,7 @@
                 </button>
               </div>
             </div>
-          </form>
+          </form> --}}
 
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
@@ -153,53 +217,52 @@
                 </form>
               </div>
             </li>
+            @php
+                $tasks = Session::get('tasks') ? Session::get('tasks') : array();
+                // var_dump($tasks) ;
+                // die();
+            @endphp
 
             <!-- Nav Item - Alerts -->
             <li class="nav-item dropdown no-arrow mx-1">
               <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <i class="fas fa-bell fa-fw"></i>
                 <!-- Counter - Alerts -->
-                <span class="badge badge-danger badge-counter">3+</span>
+         
+                   @if (count($tasks) > 0)
+                  <span class="badge badge-danger badge-counter">{{count($tasks)}}</span>
+          
+              @endif
+            
+              
               </a>
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
                 <h6 class="dropdown-header">
-                  Alerts Center
+                  New Tasks
                 </h6>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-primary">
-                      <i class="fas fa-file-alt text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 12, 2019</div>
-                    <span class="font-weight-bold">A new monthly report is ready to download!</span>
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-success">
-                      <i class="fas fa-donate text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 7, 2019</div>
-                    $290.29 has been deposited into your account!
-                  </div>
-                </a>
-                <a class="dropdown-item d-flex align-items-center" href="#">
-                  <div class="mr-3">
-                    <div class="icon-circle bg-warning">
-                      <i class="fas fa-exclamation-triangle text-white"></i>
-                    </div>
-                  </div>
-                  <div>
-                    <div class="small text-gray-500">December 2, 2019</div>
-                    Spending Alert: We've noticed unusually high spending for your account.
-                  </div>
-                </a>
-                <a class="dropdown-item text-center small text-gray-500" href="#">Show All Alerts</a>
+                @isset($tasks)
+                  @if (count($tasks) > 0)
+                      @foreach ($tasks as $item)
+                      <a class="dropdown-item d-flex align-items-center" href="{{route('tasks.show',$item->id)}}">
+                        <div class="mr-3">
+                          <div class="icon-circle bg-success">
+                            <i class="fas fa-donate text-white"></i>
+                          </div>
+                        </div>
+                        <div>
+                          <div class="small text-gray-500">{{date("D d M Y h:i:sa",strtotime($item->created_at))  }}</div>
+                          {{$item->title}}
+                        </div>
+                      </a>
+                      @endforeach
+                  @else
+                  
+                  @endif
+                    
+                @endisset
+                
+                    <a class="dropdown-item text-center small text-gray-500" href="{{route('tasks.index')}}">Show All Tasks</a>
               </div>
             </li>
 
@@ -208,25 +271,20 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">Valerie Luna</span>
-                <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60">
+              <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{Cookie::get('full_name')}}</span>
+              <div class="sidebar-brand-icon rotate-n-0">
+                <i class="fas fa-user-circle"></i>
+              </div>
+                {{-- <img class="img-profile rounded-circle" src="https://source.unsplash.com/QAB-WJcbgJk/60x60"> --}}
               </a>
               <!-- Dropdown - User Information -->
               <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Profile
-                </a>
-                <a class="dropdown-item" href="#">
+                <a class="dropdown-item" href="{{route('users.edit',Cookie::get('id'))}}">
                   <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
                   Settings
                 </a>
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Activity Log
-                </a>
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+              <a class="dropdown-item" href="{{route('logout')}}">
                   <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                   Logout
                 </a>
@@ -257,7 +315,7 @@
       <footer class="sticky-footer bg-white">
         <div class="container my-auto">
           <div class="copyright text-center my-auto">
-            <span>Copyright &copy; Your Website 2020</span>
+            <span>Copyright &copy; YBA 2020</span>
           </div>
         </div>
       </footer>
@@ -274,24 +332,6 @@
     <i class="fas fa-angle-up"></i>
   </a>
 
-  <!-- Logout Modal-->
-  <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">×</span>
-          </button>
-        </div>
-        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-        <div class="modal-footer">
-          <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          <a class="btn btn-primary" href="login.html">Logout</a>
-        </div>
-      </div>
-    </div>
-  </div>
 
   <!-- Bootstrap core JavaScript-->
   <script src="{{asset('dashboard/assets/vendor/jquery/jquery.min.js')}}"></script>
@@ -302,6 +342,7 @@
 
   <!-- Custom scripts for all pages-->
   <script src="{{asset('dashboard/assets/js/sb-admin-2.min.js')}}"></script>
+  @yield('custom_js')
   <script>
     let links = [...document.getElementsByClassName('nav-item')];
    var loc = window.location.href;
@@ -313,7 +354,9 @@
         }
       })
       })
-
+      setTimeout(function(){
+        $('.alert').hide();
+      },1500)
   </script>
 </body>
 

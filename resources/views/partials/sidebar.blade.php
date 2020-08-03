@@ -20,5 +20,5 @@
                         <a href="{{route('dashboard.complaints')}}"> <i class="menu-icon fa fa-list-alt"></i>Complaints</a>
                     </li>
                     <li class="links">
-                        <a href="{{route('dashboard.settings')}}"> <i class="menu-icon fa fa-cogs"></i>Settings</a>
+                        <a href="{{route('users.edit')}}"> <i class="menu-icon fa fa-cogs"></i>Settings</a>
                     </li>
