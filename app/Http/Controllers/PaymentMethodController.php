@@ -55,6 +55,7 @@ class PaymentMethodController extends Controller
         if($request->input('platform') == 'others'){
             $validator = Validator::make($request->all(), [
                 'platform' =>'required',
+                'others' => 'required|min:3',
                 'details' =>"required|max:250|min:3",
                 'contact' =>"required|max:250|min:3"
             ], $messages);
@@ -64,7 +65,7 @@ class PaymentMethodController extends Controller
             foreach ($errors->all() as $message) {
                 $request->session()->flash('alert-class', 'alert-danger');
                 $request->session()->flash('message', $message);
-                    return redirect()->route('payment_methods.index');
+                    return redirect()->route('gift_methods.index');
             }
         } else {
             try{
@@ -81,12 +82,12 @@ class PaymentMethodController extends Controller
 
                 $request->session()->flash('alert-class', 'alert-success');
                 $request->session()->flash('message', "Platform added successfully");
-                return redirect()->route('payment_methods.index');
+                return redirect()->route('gift_methods.index');
 
             }catch(\Exception $e){
                 $request->session()->flash('alert-class', 'alert-danger');
                 $request->session()->flash('message',"Something went wrong with your request, please try again");
-                return redirect()->route('payment_methods.index');
+                return redirect()->route('gift_methods.index');
         }
         
             
@@ -130,19 +131,31 @@ class PaymentMethodController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $data = $request->validate([
-            'platform' => ['required'],
-            'details' =>['required', "max:250","min:3"],
-            'contact' =>['required', "max:250","min:3"],
-        ]);
+        $messages = [
+            'required' => 'All input fields are required'
+        ];
+        $validator = Validator::make($request->all(), [
+            'platform' =>'required',
+            'details' =>"required|max:250|min:3",
+            'contact' =>"required|max:250|min:3"
+        ], $messages);
+   
         if($request->input('platform') == 'others'){
-            $data = $request->validate([
-                'others' => ['required','regex:/^[\pL\s\-]+$/u','min:3'],
-                'details' =>['required', "max:250","min:3"],
-                'contact' =>['required', "max:250","min:3"],
-            ]);
+            $validator = Validator::make($request->all(), [
+                'platform' =>'required',
+                'others' => 'required|min:3',
+                'details' =>"required|max:250|min:3",
+                'contact' =>"required|max:250|min:3"
+            ], $messages);
         }
-        if($data){
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            foreach ($errors->all() as $message) {
+                $request->session()->flash('alert-class', 'alert-danger');
+                $request->session()->flash('message', $message);
+                    return redirect()->route('gift_methods.index');
+            }
+        } else {
             try{
                 $payment_method = PaymentMethod::find($id);
                 $payment_method->platform = $request->input('platform');
@@ -154,12 +167,12 @@ class PaymentMethodController extends Controller
                 $payment_method->save();
                 $request->session()->flash('alert-class', 'alert-success');
                 $request->session()->flash('message', "Platform updated successfully");
-                return redirect()->route('payment_methods.index');
+                return redirect()->route('gift_methods.index');
             }catch(\Exception $e){
                 $request->session()->flash('alert-class', 'alert-danger');
                 $request->session()->flash('message',"Something went wrong with your request, please try again");
-                return redirect()->route('payment_methods.edit',$id);
-        }
+                return redirect()->route('gift_methods.edit',$id);
+            }
         }
     }
 
@@ -177,11 +190,11 @@ class PaymentMethodController extends Controller
             $method->delete();
             $request->session()->flash('alert-class', 'alert-success');
             $request->session()->flash('message', "Paymenthod was successfully");
-            return redirect()->route('payment_methods.index');
+            return redirect()->route('gift_methods.index');
         }catch(\Exception $e){
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message',"Something went wrong with your request, please try again");
-            return redirect()->route('payment_methods.index');
+            return redirect()->route('gift_methods.index');
     }
         
     }

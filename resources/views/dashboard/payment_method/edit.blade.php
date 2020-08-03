@@ -4,7 +4,7 @@
 <title>YBA | Method</title> 
     <h4>Edit Method</h4>
     <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
-    <a href="{{route('payment_methods.index')}}" class="btn btn-primary">Back</a>
+    <a href="{{route('gift_methods.index')}}" class="btn btn-primary">Back</a>
 @endsection
 
 
@@ -25,7 +25,7 @@
                             <div class="card-body">
                                 <div class="table-responsive ">
                                     <div class="col-lg-8">
-                                        <form method="POST" action={{route('payment_methods.update', $method->id)}}>
+                                        <form method="POST" action={{route('gift_methods.update', $method->id)}}>
                                             @csrf
                                             @method('PUT')
                                             <div class=" input-group mb-3">

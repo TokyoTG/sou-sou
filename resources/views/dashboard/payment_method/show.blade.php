@@ -4,7 +4,7 @@
 <title>YBA | Method</title> 
     <h4>Method</h4>
     <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
-    <a href="{{route('payment_methods.index')}}" class="btn btn-primary">Back</a>
+    <a href="{{route('gift_methods.index')}}" class="btn btn-primary">Back</a>
 @endsection
 
 

@@ -75,13 +75,13 @@ Route::prefix('/dashboard')->group(function () {
 
         Route::resource('wait_list', 'WaitListController');
 
-        Route::get('/payments', 'PagesController@payments')->name('payments');
+        Route::get('/gifts', 'PagesController@payments')->name('payments');
 
         Route::post('/pause',"PagesController@platform")->name('platform');
 
         Route::post('/generate', "WaitListController@generate_group")->name('generate');
 
-        Route::resource('payment_methods', 'PaymentMethodController');
+        Route::resource('gift_methods', 'PaymentMethodController');
 
     });
     

@@ -142,12 +142,12 @@
         <li class="nav-item">
           <a class="nav-link" href="{{route('payments')}}">
            <i class="menu-icon fa fa-money-check"></i>
-            <span>Verify Payments</span></a>
+            <span>Verify Gifts</span></a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="{{route('payment_methods.index')}}">
+          <a class="nav-link" href="{{route('gift_methods.index')}}">
           <i class="fa-fw fa fa-money-check-alt"></i>
-            <span>Payment Methods</span></a>
+            <span>Gift Methods</span></a>
         </li>
 @endif
       <!-- Nav Item - Charts -->

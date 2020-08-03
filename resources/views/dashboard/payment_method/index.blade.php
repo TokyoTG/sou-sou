@@ -53,15 +53,15 @@
                                                                 Actions<i class="icon"><span data-feather="chevron-down"></span></i>
                                                             </button>
                                                             <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="{{route('payment_methods.show',$item->id)}}">View Method</a>
-                                                                <a class="dropdown-item" href="{{route('payment_methods.edit',$item->id)}}">Edit Method</a>
+                                                                <a class="dropdown-item" href="{{route('gift_methods.show',$item->id)}}">View Method</a>
+                                                                <a class="dropdown-item" href="{{route('gift_methods.edit',$item->id)}}">Edit Method</a>
                                                                 <a 
                                                                 class="dropdown-item" 
                                                                 href="#"
                                                                 data-platform_id={{$item->id}}
                                                                 onclick="showDelete(this)"
                                                                 >Delete</a>
-                                                                <form action="{{ route('payment_methods.destroy',$item->id) }}" method="POST" id={{"platform".$item->id}}>
+                                                                <form action="{{ route('gift_methods.destroy',$item->id) }}" method="POST" id={{"platform".$item->id}}>
                                                                     @csrf
                                                                     <input name="_method" type="hidden" value="DELETE">
                                                                 </form>
@@ -100,7 +100,7 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" action={{route('payment_methods.store')}}>
+                        <form method="POST" action={{route('gift_methods.store')}}>
                             @csrf
                             <div class=" input-group mb-3">
                                 <div class="input-group-prepend">
