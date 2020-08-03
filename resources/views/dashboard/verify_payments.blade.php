@@ -1,9 +1,9 @@
 @extends('layout.base')
 
 @section('title')
-<title>YBA | Verify Payments </title> 
+<title>YBA | Verify Gifts </title> 
 <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
-    <h4>Verify Payments</h4>
+    <h4>Verify Gifts</h4>
 @endsection
 @section('contents')
   <div class="content">
@@ -12,7 +12,7 @@
                     <div class="col-md-12">
                         <div class="card">
                             <div class="card-header">
-                                <strong class="card-title">Payments to Verify</strong>
+                                <strong class="card-title">Gifts to Verify</strong>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -65,7 +65,7 @@
                                     </tbody>
                                 </table>
                                     @else
-                                       <p>You dont have any payments to verify</p> 
+                                       <p>You dont have any gifts to verify</p> 
                                     @endif
                                     
                                 @endisset
@@ -89,7 +89,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <p>You about to confirm this payment <span id="u-name"></span> as verified, are sure you want to proceed ?</p>
+                        <p>You about to confirm this gift <span id="u-name"></span> as verified, are sure you want to proceed ?</p>
                     </div>
                     <div class="modal-footer justify-content-center">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

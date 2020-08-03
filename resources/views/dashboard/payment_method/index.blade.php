@@ -1,8 +1,8 @@
 @extends('layout.base')
 
 @section('title')
-<title>YBA | Payment Methods </title> 
-    <h4>Payment Methods</h4>
+<title>YBA | Gift Methods </title> 
+    <h4>Gift Methods</h4>
     <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
 @endsection
 
@@ -73,7 +73,7 @@
                                                 </tbody>
                                             </table>
                                            @else
-                                               <p>You dont have any payment method, click on the top left button add</p>
+                                               <p>You dont have any gift method, click on the top left button add</p>
                                            @endif 
                                         @endisset
                                         
@@ -94,7 +94,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="myModalLabel">Add Payment Method</h5>
+                        <h5 class="modal-title" id="myModalLabel">Add Gift Method</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -153,7 +153,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Do you really want to delete this payment method? This process cannot be undone.</p>
+				<p>Do you really want to delete this gift method? This process cannot be undone.</p>
 			</div>
 			<div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

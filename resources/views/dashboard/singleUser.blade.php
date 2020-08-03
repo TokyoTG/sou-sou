@@ -44,6 +44,13 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <p>{{ isset($user_details['info']->email) ? $user_details['info']->email : "Not Set" }}</p>
+                                            
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label><b>Phone Number</b></label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ isset($user_details['info']->phone_number) ? $user_details['info']->phone_number : "Not Set" }}</p>
                                             </div>
                                         </div>
                                         {{-- <div class="row">

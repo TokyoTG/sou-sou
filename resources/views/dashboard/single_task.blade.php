@@ -43,7 +43,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                     </div>
                     <div class="modal-body">
-                        <p>You about to paying <span id="u-name"></span> as completed, are sure you want to proceed ?</p>
+                        <p>You about to mark gifting <span id="u-name"></span> as completed, are sure you want to proceed ?</p>
                     </div>
                     <div class="modal-footer justify-content-center">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
