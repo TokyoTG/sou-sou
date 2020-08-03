@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Cookie;
@@ -42,20 +43,30 @@ class PaymentMethodController extends Controller
     public function store(Request $request)
     {
         //
-        
-        $data = $request->validate([
-            'platform' => ['required'],
-            'details' =>['required', "max:250","min:3"],
-            'contact' =>['required', "max:250","min:3"],
-        ]);
+        $messages = [
+            'required' => 'All input fields are required'
+        ];
+        $validator = Validator::make($request->all(), [
+            'platform' =>'required',
+            'details' =>"required|max:250|min:3",
+            'contact' =>"required|max:250|min:3"
+        ], $messages);
+   
         if($request->input('platform') == 'others'){
-            $data = $request->validate([
-                'others' => ['required','regex:/^[\pL\s\-]+$/u','min:3'],
-                'details' =>['required', "max:250","min:3"],
-                'contact' =>['required', "max:250","min:3"],
-            ]);
+            $validator = Validator::make($request->all(), [
+                'platform' =>'required',
+                'details' =>"required|max:250|min:3",
+                'contact' =>"required|max:250|min:3"
+            ], $messages);
         }
-        if($data){
+        if ($validator->fails()) {
+            $errors = $validator->errors();
+            foreach ($errors->all() as $message) {
+                $request->session()->flash('alert-class', 'alert-danger');
+                $request->session()->flash('message', $message);
+                    return redirect()->route('payment_methods.index');
+            }
+        } else {
             try{
                 $payment_method = new PaymentMethod();
                 $payment_method->platform = $request->input('platform');
