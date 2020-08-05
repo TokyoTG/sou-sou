@@ -92,7 +92,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>You about to join <span ><strong id="g-name">GROUP NAME</strong> Group</span> , are sure you want to proceed ?</p>
+				<p>You about to join <span ><strong id="g-name">GROUP NAME</strong> flower</span> , are sure you want to proceed ?</p>
 			</div>
 			<div class="modal-footer justify-content-center">
                 <form action="{{ route('wait_list.store') }}" method="POST">

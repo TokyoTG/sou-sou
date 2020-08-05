@@ -77,7 +77,7 @@ class PopulateOldGroupListener
         $new_task->completed = false;
         $new_task->user_id = $user->user_id;
         $new_task->user_name = $user->user_name;
-        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user['user_name']} the top ranked person in the {$group_name} group with the following details : \n {$top_user['payment_details']} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
+        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user['user_name']} the top ranked person in the {$group_name} flower with the following details : \n {$top_user['payment_details']} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
         $new_task->save();
      }
 

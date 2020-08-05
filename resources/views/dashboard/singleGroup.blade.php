@@ -4,9 +4,9 @@
 
 @endsection
 @section('title')
-<title>YBA | Group</title> 
+<title>YBA | Flower</title> 
 <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
-    <h4>Group Name</h4>
+    <h4>Flower Name</h4>
 @endsection
 @section('newBtn')
 <p class="d-none d-sm-inline-block ">Status <span class="badge badge-success">active</span></p> 
@@ -26,7 +26,7 @@
             <div class="col-md-12">
                 <div class="card">       
                     <div class="card-header">
-                        <strong class="card-title">Group Members</strong>
+                        <strong class="card-title">Flower Members</strong>
                     </div>
                     <div class="card-body">
                     <div class="table-responsive">
@@ -35,7 +35,7 @@
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th>Group Name</th>
+                                        <th>Flower Name</th>
                                         <th>Level</th>
                                         <th>User Name</th>
                                         <th>Task Status</th>
@@ -103,7 +103,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Do you really want to remove <strong class="g-name">GROUP NAME</strong> from group? This process cannot be undone.</p>
+				<p>Do you really want to remove <strong class="g-name">GROUP NAME</strong> from flower? This process cannot be undone.</p>
 			</div>
 			<div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

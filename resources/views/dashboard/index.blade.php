@@ -75,7 +75,7 @@ btn-primary shadow-sm" data-toggle="modal" data-target="#myModal">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Current Group</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Current Flower</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{$member['groups']}} 
                         @if ($member['user_level'])
                             <span class="badge badge-success">{{$member['user_level']}} </span> 
@@ -153,7 +153,7 @@ btn-primary shadow-sm" data-toggle="modal" data-target="#myModal">
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Groups</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Flowers</div>
                       <div class="h5 mb-0 font-weight-bold text-gray-800">{{$admin['groups']}}</div>
                     </div>
                     <div class="col-auto">

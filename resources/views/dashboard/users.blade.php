@@ -30,7 +30,7 @@
                             <th>Name</th>
                             <th>Reg. Date</th>
                             <th>Top Times</th>
-                            <th>Groups Times</th>
+                            <th>Flowers Times</th>
                             <th>Action</th>
                         </tr>
                     </thead>

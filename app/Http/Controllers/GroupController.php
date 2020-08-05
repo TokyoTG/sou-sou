@@ -80,7 +80,7 @@ class GroupController extends Controller
                 foreach ($errors->all() as $message) {
                     $request->session()->flash('alert-class', 'alert-danger');
                     $request->session()->flash('message', $message);
-                    return redirect()->route('groups.index');
+                    return redirect()->route('flowers.index');
                 }
             } else {
                 try{
@@ -91,18 +91,18 @@ class GroupController extends Controller
                     $saved =  $group->save();
                   if($saved){
                         $request->session()->flash('alert-class', 'alert-success');
-                        $request->session()->flash('message', "Group created successfully");
-                        return redirect()->route('groups.index');
+                        $request->session()->flash('message', "Flower created successfully");
+                        return redirect()->route('flowers.index');
                     }else{
                           $request->session()->flash('alert-class', 'alert-danger');
                         $request->session()->flash('message', "Something bad happened, try again");
-                        return redirect()->route('groups.index');
+                        return redirect()->route('flowers.index');
                     }
                   
                 }catch(\Exception $e){
                     $request->session()->flash('alert-class', 'alert-danger');
                     $request->session()->flash('message', "Something bad happened, try again");
-                    return redirect()->route('groups.index');
+                    return redirect()->route('flowers.index');
                 }
             }
         }
@@ -168,14 +168,14 @@ class GroupController extends Controller
       
             if($request->input('request') == 'rename'){
                     $validator = Validator::make($request->all(), [
-                        'group_name' => 'required|alpha|min:3|max:16',
+                        'group_name' => 'required|min:3|max:16',
                     ]);
                     if ($validator->fails()) {
                         $errors = $validator->errors();
                         foreach ($errors->all() as $message) {
                             $request->session()->flash('alert-class', 'alert-danger');
                             $request->session()->flash('message', $message);
-                            return redirect()->route('groups.index');
+                            return redirect()->route('flowers.index');
                         }
                     } else {
                         try{
@@ -185,13 +185,13 @@ class GroupController extends Controller
                             GroupUser::where('group_id',$id)->update(['group_name' => $group->name]);
                             if($saved){
                                 $request->session()->flash('alert-class', 'alert-success');
-                                $request->session()->flash('message', "Group renamed successfully");
-                                return redirect()->route('groups.index');
+                                $request->session()->flash('message', "Flower renamed successfully");
+                                return redirect()->route('flowers.index');
                             }
                         }catch(\Exception $e){
                             $request->session()->flash('alert-class', 'alert-danger');
                             $request->session()->flash('message', "Something went wrong with you request, please try again");
-                            return redirect()->route('groups.index');
+                            return redirect()->route('flowers.index');
                         }
                     }
             }elseif($request->input('request') == 'status'){
@@ -201,13 +201,13 @@ class GroupController extends Controller
                     $saved =  $group->save();
                     if($saved){
                         $request->session()->flash('alert-class', 'alert-success');
-                        $request->session()->flash('message', "Group {$request->input('group_status')} successfully");
-                        return redirect()->route('groups.index');
+                        $request->session()->flash('message', "Flower {$request->input('group_status')} successfully");
+                        return redirect()->route('flowers.index');
                     }
                 }catch(\Exception $e){
                     $request->session()->flash('alert-class', 'alert-danger');
                     $request->session()->flash('message', "Something went wrong with you request, please try again");
-                    return redirect()->route('groups.index');
+                    return redirect()->route('flowers.index');
                 }
             }elseif($request->input('request') == 'split'){
                 $num_of_completed = GroupUser::where('group_id',$id)->where('task_status','completed')->count();
@@ -215,11 +215,11 @@ class GroupController extends Controller
                     event(new PaymentVerifiedEvent($id));
                     $request->session()->flash('alert-class', 'alert-success');
                     $request->session()->flash('message', "Request successfully");
-                    return redirect()->route('groups.index');
+                    return redirect()->route('flowers.index');
                 }else{
                     $request->session()->flash('alert-class', 'alert-danger');
-                    $request->session()->flash('message', "Group can not be split yet");
-                    return redirect()->route('groups.index');
+                    $request->session()->flash('message', "Flower can not be split yet");
+                    return redirect()->route('flowers.index');
                 }
             }
     }
@@ -250,12 +250,12 @@ class GroupController extends Controller
         
         
         $request->session()->flash('alert-class', 'alert-success');
-        $request->session()->flash('message', "Group and associated data has been deleted successfully");
-        return redirect()->route('groups.index');
+        $request->session()->flash('message', "Flower and associated data has been deleted successfully");
+        return redirect()->route('flowers.index');
         }catch(\Exception $e){
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message', "Something bad happened, try again");
-            return redirect()->route('groups.index');
+            return redirect()->route('flowers.index');
         }
        
     }

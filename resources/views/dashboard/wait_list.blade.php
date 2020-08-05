@@ -64,7 +64,7 @@
 
 @section('newBtn')
    @if(is_admin())
- <button class="d-none d-sm-inline-block btn  btn-primary shadow-sm" onclick="generateModal()">Generate Group</button>
+ <button class="d-none d-sm-inline-block btn  btn-primary shadow-sm" onclick="generateModal()">Generate Flower</button>
 @endif
 @endsection
 @section('contents')
@@ -108,7 +108,7 @@
                                   onclick="showModal(this,'addUser')"
                                   data-user_name={{$item->user_name}}
                                     
-                                  >Add to Group</a>
+                                  >Add to Flower</a>
 
                                   {{-- //START ADD USER TO GROUP FORM --}}
                                   <form action="{{route('group_users.store')}}" method="post" id={{"add".$item->id}}>
@@ -221,7 +221,7 @@
   <div class="modal-dialog">
       <div class="modal-content">
           <div class="modal-header">
-              <h5 class="modal-title" id="myModalLabel">Add <span class="u-name"> </span> to Group</h5>
+              <h5 class="modal-title" id="myModalLabel">Add <span class="u-name"> </span> to Flower</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
               </button>
@@ -231,7 +231,7 @@
                   <p >Please choose one to continue </p>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <label class="input-group-text" name="group" for="level">Chose group</label>
+                      <label class="input-group-text" name="group" for="level">Chose flower</label>
                     </div>
                     <select class="custom-select" id="group-name" name="group-name">
                       <option disabled selected value="">Select One</option>
@@ -240,7 +240,7 @@
                           <option value={{$item->name}}>{{$item->name}}</option>
                           @endforeach
                       @else
-                          All available groups are closed
+                          All available flowers are closed
                       @endif
                     </select>
                   </div>
@@ -281,7 +281,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>You about to create a new group from wait list, are sure you want to proceed ?</p>
+				<p>You about to create a new flower from wait list, are sure you want to proceed ?</p>
 			</div>
 			<div class="modal-footer justify-content-center">
                 <form action="{{ route('generate') }}" method="POST">

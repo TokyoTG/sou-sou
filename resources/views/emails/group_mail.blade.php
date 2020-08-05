@@ -123,7 +123,7 @@
                                             style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
                                             valign="top">Hi, <br> <br> <strong
                                                 style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; margin: 0;">You
-                                                have been added to a new group and you have new task to carry out</strong>
+                                                have been added to a new flower and you have new task to carry out</strong>
                                         </td>
                                     </tr>
                                     <tr

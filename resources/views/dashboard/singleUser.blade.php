@@ -20,7 +20,7 @@
                         <div class="card">
                             <ul class="nav flex-column nav-tabs user-tabs">
                                 <li class="nav-item"><a class="nav-link active" href="#user-details" data-toggle="tab">Details</a></li>
-                                <li class="nav-item"><a class="nav-link" href="#groups" data-toggle="tab">Groups</a></li>
+                                <li class="nav-item"><a class="nav-link" href="#groups" data-toggle="tab">Flowers</a></li>
                             </ul>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                                        
                                         @isset($user_details['group_info'])
                                             @if (count($user_details['group_info']) > 0)
-                                            <h4 class="line-head">User Groups</h4>
+                                            <h4 class="line-head">User Flowers</h4>
                                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
                                                         <tr>
@@ -98,7 +98,7 @@
                                                                     Actions<i class="icon"><span data-feather="chevron-down"></span></i>
                                                                 </button>
                                                                 <div class="dropdown-menu dropdown-menu-right">
-                                                                <a class="dropdown-item" href="{{route('groups.show',$group->group_id)}}">View Group</a>
+                                                                <a class="dropdown-item" href="{{route('flowers.show',$group->group_id)}}">View Flower</a>
                                                                 </div>
                                                                 </div>
                                                             </td>
@@ -107,7 +107,7 @@
                                                     </tbody>
                                                 </table>
                                             @else
-                                            <h6>The user is not in any group</h6>
+                                            <h6>The user is not in any flower</h6>
                                             @endif
                                             
                                         @endisset

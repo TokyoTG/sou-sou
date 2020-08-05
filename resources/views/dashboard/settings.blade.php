@@ -183,7 +183,7 @@
                                         <div class="tab-pane fade" id="platform">
                                         <div class="tile user-settings">
                                             <h5 class="line-head">Change System Status</h5>
-                                            <p>Pause the system from automatically creating new groups</p>
+                                            <p>Pause the system from automatically creating new flowers</p>
                                             <div class="row">
                                             <form method="post" action="{{route('platform')}}">
                                                 @csrf
@@ -193,7 +193,7 @@
                                                     <input type="radio" value="0" id="customRadio1" name="platform_status" class="custom-control-input" {{!$platform->status ? 'checked' : ''}}>
                                                     <label class="custom-control-label" for="customRadio1">{{!$platform->status ? 'Paused' : 'Pause'}}</label>
                                                     <p>
-                                                        <small class="muted text">Paused: no new group will be auto created</small>   
+                                                        <small class="muted text">Paused: no new flower will be auto created</small>   
                                                     </p>
                                                     
                                                     </div>
@@ -202,7 +202,7 @@
                                                     <input type="radio" value="1" id="customRadio2" name="platform_status" class="custom-control-input" {{$platform->status ? 'checked' : ''}}>
                                                     <label class="custom-control-label" for="customRadio2">{{$platform->status ? 'Unpaused' : 'Unpause'}}</label>
                                                     <p>
-                                                            <small class="muted text">Not Paused: the system from blocking new group creation</small>
+                                                            <small class="muted text">Not Paused: the system from blocking new flower creation</small>
                                                     </p>
                                                     
                                                     </div>

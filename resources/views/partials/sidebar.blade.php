@@ -8,7 +8,7 @@
                         <a href="{{route('users.index')}}"> <i class="menu-icon fa fa-users"></i>Users</a>
                     </li>
                      <li class="links">
-                        <a href="{{route('groups.index')}}"> <i class="menu-icon fa fa-folder"></i>Groups</a>
+                        <a href="{{route('flowers.index')}}"> <i class="menu-icon fa fa-folder"></i>Flowers</a>
                     </li>
                      <li class="links">
                         <a href="{{route('dashboard.wait_list')}}"> <i class="menu-icon fa fa-list-alt"></i>Wait List</a>

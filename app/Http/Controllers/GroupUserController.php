@@ -158,7 +158,7 @@ class GroupUserController extends Controller
                                 $new_task->completed = false;
                                 $new_task->user_name = $username;
                                 $new_task->user_id = $request->input('user_id');
-                                $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked person in the {$group_name} group with the following details : \n {$payment_details} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
+                                $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked person in the {$group_name} flower with the following details : \n {$payment_details} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
                                 $new_task->save();
                             }
                             
@@ -184,7 +184,7 @@ class GroupUserController extends Controller
                     }catch(\Exception $e){
                         if ($e->getCode() == 23000) {
                             $request->session()->flash('alert-class', 'alert-danger');
-                            $request->session()->flash('message',"User already exists in a group");
+                            $request->session()->flash('message',"User already exists in a flower");
                             return redirect()->route('wait_list.index');
                         }
                         return $e;
@@ -249,12 +249,12 @@ class GroupUserController extends Controller
             $group_user->delete();
             Group::where('name',$group_name)->decrement('members_number');
             $request->session()->flash('alert-class', 'alert-success');
-            $request->session()->flash('message', "User was successfully removed from the group");
-            return redirect()->route('groups.show',$group_id);
+            $request->session()->flash('message', "User was successfully removed from the flower");
+            return redirect()->route('flowers.show',$group_id);
         }catch(\Exception $e){
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message',"Something went wrong with your request, please try again");
-            return redirect()->route('groups.show',$group_id);
+            return redirect()->route('flowers.show',$group_id);
     }
 
     }

@@ -2,12 +2,12 @@
 
 @include('partials.auth_check')
 @section('title')
-<title>YBA | Groups </title> 
+<title>YBA | Flowers </title> 
     @if (is_admin())
-       <h4>Groups</h4>   
+       <h4>Flowers</h4>   
 
     @elseif(is_member())
-    <h4>My Groups</h4>
+    <h4>My Flowers</h4>
     
     @endif
   <link rel="stylesheet" href="{{asset('dashboard/assets/css/mystyle.css')}}">
@@ -29,7 +29,7 @@
 @endif
   <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">All Groups</h6>
+              <h6 class="m-0 font-weight-bold text-primary">All Flowers</h6>
             </div>
 
             <div class="card-body">
@@ -50,19 +50,19 @@
                             <tbody>
                             @foreach ($groups as $group)
                                 <tr>
-                                <form action="{{ route('groups.update',$group->id) }}" method="POST" id={{"update".$group->id}}>
+                                <form action="{{ route('flowers.update',$group->id) }}" method="POST" id={{"update".$group->id}}>
                                         @csrf
                                         <input type="hidden" name="group_status" class="input-status">
                                         <input type="hidden" name="group_name" class="input-name">
                                         <input type="hidden" name="request" class="request">
                                         <input name="_method" type="hidden" value="PUT">
                                  </form>
-                                 <form action="{{ route('groups.destroy',$group->id) }}" method="POST" id={{"delete".$group->id}}>
+                                 <form action="{{ route('flowers.destroy',$group->id) }}" method="POST" id={{"delete".$group->id}}>
                                     @csrf
                                     <input name="_method" type="hidden" value="DELETE">
                                 </form>
 
-                                <form action="{{ route('groups.update',$group->id) }}" method="POST" id={{"split".$group->id}}>
+                                <form action="{{ route('flowers.update',$group->id) }}" method="POST" id={{"split".$group->id}}>
                                     @csrf
                                     <input name="_method" type="hidden" value="PUT">
                                     <input type="hidden" name="request" class="request">
@@ -79,7 +79,7 @@
                                         <div class="dropdown-menu dropdown-menu-right">
 
                                             
-                                            <a class="dropdown-item" href="{{route('groups.show', $group->id)}}">View Group</a>
+                                            <a class="dropdown-item" href="{{route('flowers.show', $group->id)}}">View Flower</a>
 
 
                                             <a class="dropdown-item"
@@ -87,7 +87,7 @@
                                             data-group_name ={{$group->name}}
                                             data-request = {{ $group->status == 'open' ? 'closed' : "open" }}
                                             onclick="showModal(this,'close-group')"
-                                            >{{ $group->status == 'open' ? 'Close Group' : "Open Group" }}</a>
+                                            >{{ $group->status == 'open' ? 'Close Flower' : "Open Flower" }}</a>
 
                                             <a class="dropdown-item" 
                                             href="#" data-group_id={{$group->id}}
@@ -116,7 +116,7 @@
                                 </tr>
                             @endforeach
                     @else
-                        No Groups to display
+                        No flowers to display
                     @endif
                         </tbody>
                     </table>
@@ -134,7 +134,7 @@
                             <th>Name</th>
                             <th>Level</th>
                             <th>Task Status</th>
-                            <th>View Group</th>
+                            <th>View Flower</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -143,13 +143,13 @@
                         <td>{{$group->group_name}}</td>
                         <td>{{$group->user_level}}</td>
                         <td>{{$group->task_status}}</td>
-                        <td > <a href="{{route('groups.show', $group->group_id)}}"> View <i class="fa fa-eye"></i> </a> </td>
+                        <td > <a href="{{route('flowers.show', $group->group_id)}}"> View <i class="fa fa-eye"></i> </a> </td>
                         </tr>
                         @endforeach
                     </tbody>
                 </table>
                    @else
-                       <p>You not in any group yet, join the waiting list please.</p>
+                       <p>You not in any flower yet, join the waiting list please.</p>
                    @endif
                @endisset
                
@@ -165,21 +165,21 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Create New Group</h5>
+                <h5 class="modal-title" id="myModalLabel">Create New Flower</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-            <form method="POST" action="{{route('groups.store')}}">
+            <form method="POST" action="{{route('flowers.store')}}">
                 @csrf
                 <div class="form-group">
-                    <label for="name" class="control-label mb-1">Group Name</label>
+                    <label for="name" class="control-label mb-1">Flower Name</label>
                     <input id="name" name="name" type="text" class="form-control" aria-required="true" aria-invalid="false">
                 </div>
                     <div class="form-group">
                         <div class="col-12">
-                            <button type="submit" class="btn btn-primary btn-block">Create Group</button>
+                            <button type="submit" class="btn btn-primary btn-block">Create Flower</button>
                         </div>
                     </div>
                 </form>
@@ -203,7 +203,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Do you really want to delete <strong class="g-name">GROUP NAME</strong> group? This process cannot be undone.</p>
+				<p>Do you really want to delete <strong class="g-name">GROUP NAME</strong> flower? This process cannot be undone.</p>
 			</div>
 			<div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -225,7 +225,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Do you really want to split <strong class="g-name">GROUP NAME</strong> group? This process cannot be undone.</p>
+				<p>Do you really want to split <strong class="g-name">GROUP NAME</strong> flower ? This process cannot be undone.</p>
 			</div>
 			<div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -248,7 +248,7 @@
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 			</div>
 			<div class="modal-body">
-				<p>Do you really want to <span id="request-option"></span> <strong class="g-name">GROUP NAME</strong> group? This process cannot be undone.</p>
+				<p>Do you really want to <span id="request-option"></span> <strong class="g-name">GROUP NAME</strong> flower? This process cannot be undone.</p>
 			</div>
 			<div class="modal-footer justify-content-center">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
@@ -262,7 +262,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="myModalLabel">Rename Group</h5>
+                <h5 class="modal-title" id="myModalLabel">Rename Flower</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -274,7 +274,7 @@
                 </div>
                 <div class="form-group">
                     <div class="col-12">
-                        <button type="button" class="btn btn-primary btn-block"  onclick="renameGroup()">Rename Group</button>
+                        <button type="button" class="btn btn-primary btn-block"  onclick="renameGroup()">Rename Flower</button>
                     </div>
                 </div>
              

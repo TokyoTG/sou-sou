@@ -55,7 +55,7 @@ Route::prefix('/dashboard')->group(function () {
         //end users section
 
         //groups section
-        Route::resource('groups', 'GroupController');
+        Route::resource('flowers', 'GroupController');
 
         Route::resource('group_users', 'GroupUserController');
         //end groups section

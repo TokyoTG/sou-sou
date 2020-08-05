@@ -244,7 +244,7 @@ class WaitListController extends Controller
                     }
                 }else{
                     $request->session()->flash('alert-class', 'alert-danger');
-                    $request->session()->flash('message',"Could not create group, list members are not up to 15");
+                    $request->session()->flash('message',"Could not create flower, list members are not up to 15");
                     return redirect()->route('wait_list.index');
                 }
             }catch(\Exception $e){
@@ -256,7 +256,7 @@ class WaitListController extends Controller
 
         }else{
             $request->session()->flash('alert-class', 'alert-danger');
-            $request->session()->flash('message',"The platform is paused, no group can be generated");
+            $request->session()->flash('message',"The platform is paused, no flower can be generated");
             return redirect()->route('wait_list.index');
         }
         

@@ -118,9 +118,9 @@
             <span>Approved List</span></a>
         </li> --}}
         <li class="nav-item">
-          <a class="nav-link" href="{{route('groups.index')}}">
+          <a class="nav-link" href="{{route('flowers.index')}}">
            <i class="fa-fw fa fa-folder"></i>
-            <span>Groups</span></a>
+            <span>Flowers</span></a>
       </li>
       
 @endif
