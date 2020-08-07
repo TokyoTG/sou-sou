@@ -92,7 +92,8 @@ class PopulateGroupListener
                 }
                 $general_count++;
                 array_push($email_arrays,$new_member->user_email);
-                WaitList::where('user_id',$new_member->user_id)->delete();
+                $item = WaitList::find($new_member->id);
+                $item->delete();
             }
             
             event(new AddedToGroupMailEvent($email_arrays));

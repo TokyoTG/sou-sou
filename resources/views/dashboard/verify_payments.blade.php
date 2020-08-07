@@ -23,7 +23,6 @@
                                                 <tr>
                                                     <th>User Name</th>
                                                     <th>Status</th>
-                                                    <th>User Level</th>
                                                     <th>Action</th>
                                                 </tr>
                                             </thead>
@@ -32,7 +31,7 @@
                                             <tr>
                                             <td>{{$item->user_name}}</td>
                                             <td>{{$item->completed ? "Completed" : "Not Completed"}} <span class="badge badge-{{$item->verified ?"success"  :"secondary" }}">{{$item->verified ? "Verified" : "Not Verified"}}</span></td>
-                                            <td>{{$item->user_level}}</td>
+                                       
                                             <td>
                                                 <div class="btn-group mt-2 mr-1">
                                                     <button type="button" class="btn btn-primary dropdown-toggle"

@@ -85,6 +85,7 @@
                       <tr>
                         <th>User Name</th>
                         <th>Position</th>
+                        <th>Frequency</th>
                         <th>Date of Request</th>
                         <th>Action</th>
                       </tr>
@@ -94,6 +95,7 @@
                         <tr>
                           <td>{{$item->user_name}}</td>
                           <td>{{ position_prepare($item->position)}}</td>
+                          <td>{{$item->frequency}}</td>
                         <td>{{$item->created_at}}</td>
                         <td>
                             <div class="btn-group mt-2 mr-1">

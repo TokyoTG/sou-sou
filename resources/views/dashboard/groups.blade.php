@@ -133,7 +133,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Level</th>
-                            <th>Task Status</th>
+                            {{-- <th>Task Status</th> --}}
                             <th>View Flower</th>
                         </tr>
                     </thead>
@@ -142,7 +142,7 @@
                         <tr>
                         <td>{{$group->group_name}}</td>
                         <td>{{$group->user_level}}</td>
-                        <td>{{$group->task_status}}</td>
+                        {{-- <td>{{$group->task_status}}</td> --}}
                         <td > <a href="{{route('flowers.show', $group->group_id)}}"> View <i class="fa fa-eye"></i> </a> </td>
                         </tr>
                         @endforeach

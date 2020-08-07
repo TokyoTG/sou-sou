@@ -210,8 +210,8 @@ class GroupController extends Controller
                     return redirect()->route('flowers.index');
                 }
             }elseif($request->input('request') == 'split'){
-                $num_of_completed = GroupUser::where('group_id',$id)->where('task_status','completed')->count();
-                if($num_of_completed == 15){
+                $num_of_completed = Notification::where('group_id', $id)->where('verified',true)->count();;
+                if($num_of_completed == 0){
                     event(new PaymentVerifiedEvent($id));
                     $request->session()->flash('alert-class', 'alert-success');
                     $request->session()->flash('message', "Request successfully");

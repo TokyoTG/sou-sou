@@ -49,6 +49,8 @@ class MoveUserToWaitListListener
             $user_to_wait_list->user_email = $user['user_email'];
             $user_to_wait_list->position = $position;
             $user_to_wait_list->save(); 
+            $count = WaitList::where('user_id',$user['user_id'])->count();
+            WaitList::where('user_id',$user['user_id'])->update(['frequency'=> $count]);
             }
          
         }catch(\Exception $e){

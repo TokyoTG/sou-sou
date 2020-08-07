@@ -29,11 +29,7 @@ class WaitListController extends Controller
     {
         //
         $list = WaitList::orderBy('position', 'asc')->get();
-        //return count($list->unique('user_id')->take(1));
-        // $list = $list->unique('user_id');
-        // $list = $list->unique('user_id')->take(2);
         $groups = Group::where('status',"open")->get('name');
-        // return $list;
         $data = ['groups'=>$groups, 'list'=>$list];
         return view('dashboard.wait_list')->with('data', $data);
     }
@@ -62,24 +58,28 @@ class WaitListController extends Controller
             $check_user =   PaymentMethod::where('user_id',$user_id)->count();
             if($check_user < 2){
                 $request->session()->flash('alert-class', 'alert-danger');
-                $request->session()->flash('message',"You must have two methods of recieving payment before you can join waiting list");
+                $request->session()->flash('message',"You must have at least two methods of recieving gifts before you can join waiting list");
                 return redirect()->route('dashboard.index');
             }
-            $wait_list_count = count(WaitList::all());
-            $position = $wait_list_count + 1;
-            $wait_list = new WaitList;
-            $wait_list->user_id = Cookie::get('id');
-            $wait_list->user_name = Cookie::get('full_name');
-            $wait_list->user_email = Cookie::get('email');
-            $wait_list->position = $position;
-            $saved = $wait_list->save();
+                $wait_list_count = count(WaitList::all());
+                $position = $wait_list_count + 1;
+     
+                $wait_list = new WaitList;
+                $wait_list->user_id = Cookie::get('id');
+                $wait_list->user_name = Cookie::get('full_name');
+                $wait_list->user_email = Cookie::get('email');
+                $wait_list->position = $position;
+                $saved = $wait_list->save();
+      
+                $count = WaitList::where('user_id',Cookie::get('id'))->count();
+                WaitList::where('user_id',Cookie::get('id'))->update(['frequency'=> $count]);
+
             if($saved){
 
 
                 $wait_list = WaitList::orderBy('position', 'asc')->get();
-                $unique_list = $wait_list->unique('user_id')->take(8);
-                $new_unique =$wait_list->unique('user_id')->take(15);
-
+                $unique_list = $wait_list->take(8);
+                $new_unique =$wait_list->take(15);
 
                 //check if there any group t be filled
                 if(count($unique_list) >= 8){
@@ -229,7 +229,7 @@ class WaitListController extends Controller
         if($platform->status){
             try{
                 $wait_list = WaitList::orderBy('position', 'asc')->get();
-                $new_unique =$wait_list->unique('user_id')->take(15);
+                $new_unique =$wait_list->take(15);
 
                 if(count($new_unique) >= 15 ){
                     // return "ho";

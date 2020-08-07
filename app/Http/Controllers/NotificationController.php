@@ -122,10 +122,10 @@ class NotificationController extends Controller
         // return print_r($request->input());
         try{
             $task = Notification::find($id);
+            $user_id = Cookie::get('id');
             $request_type = $request->input('request');
             $time_left = intval($request->input('time_left'));
             if($request_type == "completion"){
-                // return $time_left;
                 if($time_left >= 0){
                      $task->completed = true;
                      $task->is_read = true;
@@ -146,15 +146,16 @@ class NotificationController extends Controller
                 $group_id = $request->input('group_id');
 
 
-                GroupUser::where('group_id',$group_id)->where('user_id',$user_id)->update(['task_status'=> 'completed']);
+                // GroupUser::where('group_id',$group_id)->where('user_id',$user_id)->update(['task_status'=> 'completed']);
 
               
                 $task->verified = true;
                 $task->save();
 
 
-                $num_of_completed = GroupUser::where('group_id', $group_id)->where('task_status','completed')->count();
-                if($num_of_completed == 15){
+                $num_of_completed = Notification::where('group_id', $group_id)->where('verified',true)->count();
+                // return $num_of_completed;
+                if($num_of_completed == 8){
                    
                     event(new PaymentVerifiedEvent($group_id));
                 }

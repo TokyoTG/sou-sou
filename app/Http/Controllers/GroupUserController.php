@@ -171,10 +171,8 @@ class GroupUserController extends Controller
                         event(new UserAddedToGroupEvent($event_data));
                         // Group::where('name',$group_name)->increment('members_number');
                         //$wait_list = WaitList::where('user_id',$request->input('user_id'))->where('id',$list_id)->get(['id']);
-                        $wait_list = WaitList::where('user_id',$request->input('user_id'))->get(['id']);
-                        if(count($wait_list) > 0){
-                            WaitList::destroy($wait_list->toArray());
-                        }
+                        $wait_list = WaitList::find($list_id);
+                        $wait_list->delete();
                         $emails = array();
                         array_push($emails, $user_details->user_email);
                         event(new AddedToGroupMailEvent($emails));

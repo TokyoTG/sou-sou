@@ -25,7 +25,7 @@ class CheckWaitListListener
     {
         //
         $wait_list = WaitList::orderBy('position', 'asc')->get();
-        $unique_list = $wait_list->unique('user_id')->take(8);
+        $unique_list = $wait_list->take(8);
 
 
          //check if there any group t be filled

@@ -26,8 +26,8 @@ class PaymentVerifiedListener
         if($platform->status){
             $group_id = $event->group_id;
             $email_arrays =array();
-            $num_of_completed = GroupUser::where('group_id',$group_id)->where('task_status','completed')->count();
-            if($num_of_completed == 15){
+            $num_of_completed = Notification::where('group_id', $group_id)->where('verified',true)->count();
+            if($num_of_completed == 8){
 
                 try{
                         //remove water
@@ -118,10 +118,7 @@ class PaymentVerifiedListener
                 event(new AddedToGroupMailEvent($email_arrays));
         
                 } catch(\Exception $e){
-                    if ($e->getCode() == 23000) {
-                        // Deal with duplicate key error  
-                    // dd('some duplicate key error');
-                    }
+
                 }
                 
             }
@@ -140,18 +137,4 @@ class PaymentVerifiedListener
         $group_user->task_status = "completed";
         $group_user->save();
     }
-
-
-    // public function groupMessageDispatcher($group_id,$user,$top_user,$group_name){
-    //     $new_task = new Notification();
-    //     $new_task->group_id = $group_id;
-    //     $new_task->verified = false;
-    //     $new_task->is_read = false;
-    //     $new_task->title = "Bless Top User";
-    //     $new_task->completed = false;
-    //     $new_task->user_id = $user->user_id;
-    //     $new_task->user_name = $user->user_name;
-    //     $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user->full_name} an amount of #1000 the top ranked person in the {$group_name} group with the following details: \n Account Number: {$top_user->account_number}  \n Bank Name : {$top_user->bank_name} .\n This should be done within 1 hour after recieving this message.  \n Signed YBA Admin";
-    //     $new_task->save();
-    // }
 }

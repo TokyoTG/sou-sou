@@ -45,7 +45,9 @@ class PopulateOldGroupListener
                 $this->groupMessageDispatcher($group['id'],$new_member,$top_user_details,$group['name']);
                 array_push($email_arrays,$new_member->user_email);
                 User::where('id',$new_member->user_id)->increment('group_times');
-                WaitList::where('user_id',$new_member->user_id)->delete();
+                
+                $item = WaitList::find($new_member->id);
+                $item->delete();
             }
 
 
