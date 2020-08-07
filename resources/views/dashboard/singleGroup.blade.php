@@ -9,8 +9,8 @@
     <h4>Flower Name</h4>
 @endsection
 @section('newBtn')
-<p class="d-none d-sm-inline-block ">Status <span class="badge badge-success">active</span></p> 
-<p class="d-none d-sm-inline-block ">No. of Members <span class="badge badge-primary">{{count($members)}}</span></p>
+<p class=" d-sm-inline-block ">Status <span class="badge badge-success">active</span></p> 
+<p class=" d-sm-inline-block ">No. of Members <span class="badge badge-primary">{{count($members)}}</span></p>
 @endsection
 
 

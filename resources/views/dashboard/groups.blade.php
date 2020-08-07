@@ -17,7 +17,7 @@
 
 @section('newBtn')
 @if(is_admin())
- <button class="d-none d-sm-inline-block btn  btn-primary shadow-sm" data-toggle="modal" data-target="#myModal"> New
+ <button class="d-sm-inline-block btn  btn-primary shadow-sm" data-toggle="modal" data-target="#myModal"> New
      <i class="fa fa-plus my-float"></i></button>
      
 @endif

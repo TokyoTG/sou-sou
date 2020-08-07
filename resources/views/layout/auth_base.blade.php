@@ -27,7 +27,7 @@
 
 <style>
   .bg-login-image,.bg-register-image,.bg-password-image {
-  background: url("{{asset('dashboard/assets/img/MLM.jpg')}}");
+  background: url("{{asset('dashboard/assets/img/YBA_Logo.png')}}");
   background-position: center;
   background-size: cover;
 }

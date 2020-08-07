@@ -64,7 +64,7 @@
 
 @section('newBtn')
    @if(is_admin())
- <button class="d-none d-sm-inline-block btn  btn-primary shadow-sm" onclick="generateModal()">Generate Flower</button>
+ <button class="d-sm-inline-block btn  btn-primary shadow-sm" onclick="generateModal()">Generate Flower</button>
 @endif
 @endsection
 @section('contents')

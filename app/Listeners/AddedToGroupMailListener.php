@@ -37,10 +37,7 @@ class AddedToGroupMailListener
                 Mail::to($email)->send(new GroupMail());
             } 
         }catch(\Exception $e){
-            if ($e->getCode() == 23000) {
-                // Deal with duplicate key error  
-            // dd('some duplicate key error');
-            }
+
         }
         
        

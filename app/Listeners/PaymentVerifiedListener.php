@@ -39,7 +39,7 @@ class PaymentVerifiedListener
                     $earths = GroupUser::where('group_id', $group_id)->where('user_level',"earth")->take(1)->first();
                     //$new_water_user = User::find($earths->user_id);
 
-                    $new_group_name = $earths->group_name ."_splittedHalf";
+                    $new_group_name = $this->generateGroupName();
                     $new_group = new Group();
                     $new_group->name = $new_group_name;
                     $new_group->status = "open";
@@ -136,5 +136,16 @@ class PaymentVerifiedListener
         $group_user->user_level = $user_level;
         $group_user->task_status = "completed";
         $group_user->save();
+    }
+
+    public function generateGroupName(){
+        $name = "";
+        $alphabets = ['a', 'b', 'A', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G', 'i', 'I', 'j', 'm', "M", 'y', 'z', 'w', 'Z'];
+
+        for ($i = 0; $i < 7; $i++) {
+            $index = mt_rand(0, count($alphabets) - 1);
+            $name .= $alphabets[$index];
+        }
+        return $name;
     }
 }
