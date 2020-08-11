@@ -233,7 +233,7 @@
                   <p >Please choose one to continue </p>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <label class="input-group-text" name="group" for="level">Chose flower</label>
+                      <label class="input-group-text" name="group" for="level">Choose flower</label>
                     </div>
                     <select class="custom-select" id="group-name" name="group-name">
                       <option disabled selected value="">Select One</option>
@@ -249,7 +249,7 @@
                   <p >Please choose one to continue </p>
                   <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                      <label class="input-group-text" name="level" for="level">Chose level</label>
+                      <label class="input-group-text" name="level" for="level">Choose level</label>
                     </div>
                     <select class="custom-select" id="level">
                       <option disabled selected value="">Select One</option>

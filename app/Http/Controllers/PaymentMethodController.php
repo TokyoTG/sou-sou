@@ -69,6 +69,14 @@ class PaymentMethodController extends Controller
             }
         } else {
             try{
+
+                $user_id = $request->cookie('id');
+                $check_new = PaymentMethod::where('user_id',$user_id)->where('platform',$request->input('platform'))->get();
+                if(count($check_new) > 0){
+                    $request->session()->flash('alert-class', 'alert-danger');
+                    $request->session()->flash('message',"You can not have two gift methods with the same platfrom");
+                    return redirect()->route('gift_methods.index');
+                }
                 $payment_method = new PaymentMethod();
                 $payment_method->platform = $request->input('platform');
                 $payment_method->details = $request->input('details');

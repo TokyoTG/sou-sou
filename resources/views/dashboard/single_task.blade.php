@@ -22,9 +22,21 @@
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
-                               
+                                    @php
+                                        $group_name = $top_user_data['group_name'];
+                                        $full_name = $top_user_data['full_name'];
+                                        $gift_methods = $top_user_data['gift_methods'];
+                                    @endphp
                                    <h5>{{$task->title}}</h5>
-                                   <p>{{$task->message}}</p>
+                                   <p>Hello  {{ Cookie::get('full_name') }},</p>
+                                   <p>In order to keep your fire position you are required to bless the water on the {{$group_name}} flower. The person to send your gift to is {{$full_name}}. Here are the preferred methods of receiving gifts:</p>
+                                  @foreach ($gift_methods as $index=>$item)
+                                     <p>Platform Name:  <strong>{{$item->platform}}</strong></p>
+                                        <li>Platform Details: {{$item->details}}</li>
+                                        <li>Platform Contact: {{$item->contact}}</li>
+                                        <br>
+                                  @endforeach
+                                   {{-- <p?>{{$task->message}}</p?> --}}
                                 </div>
                               
                             </div>

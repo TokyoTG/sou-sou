@@ -65,7 +65,7 @@ class PopulateGroupListener
                     //add user as water
                     $top_user_id = $new_member->user_id;
                     // $top_user = User::find($top_user_id);
-                    $top_user_details = $this->paymentDetails($top_user_id);
+                    // $top_user_details = $this->paymentDetails($top_user_id);
                     User::where('id',$top_user_id)->increment('top_times');
                     User::where('id',$top_user_id)->increment('group_times');
                     $this->addUsertoGroup($new_member,$new_group_name,'water',$new_group_id);
@@ -87,7 +87,7 @@ class PopulateGroupListener
                     //add user as fire
                     User::where('id',$new_member->user_id)->increment('group_times');
                     $this->addUsertoGroup($new_member,$new_group_name,'fire',$new_group_id);
-                    $this->groupMessageDispatcher($new_group_id,$new_member,$top_user_details,$new_group_name);
+                    $this->groupMessageDispatcher($new_group_id,$new_member);
             
                 }
                 $general_count++;
@@ -119,16 +119,20 @@ class PopulateGroupListener
     }
 
 
-    public function groupMessageDispatcher($group_id,$user,$top_user,$group_name){
+    public function groupMessageDispatcher($group_id,$user){
         $new_task = new Notification();
         $new_task->group_id = $group_id;
         $new_task->verified = false;
         $new_task->is_read = false;
-        $new_task->title = "Bless Top User";
+        $new_task->title = "TIme to Bless the Water!";
         $new_task->completed = false;
         $new_task->user_id = $user->user_id;
         $new_task->user_name = $user->user_name;
-        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user['user_name']} the top ranked person in the {$group_name} flower with the following details : \n {$top_user['payment_details']} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
+        // $new_task->message = "Hello {$user->user_name}, In order to keep your 
+        // fire position you are required to bless the water on the {$group_name} 
+        // flower. The person to send your gift to is {$top_user['user_name']}. 
+        // Here are the preferred methods of receiving gifts: \n {$top_user['payment_details']} . \n 
+        // You have 1 hour to send your gift using any of the listed methods. \n Signed,YBA Admin.";
         $new_task->save();
     }
 

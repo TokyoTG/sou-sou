@@ -122,8 +122,7 @@
                                         <td class="content-block"
                                             style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; vertical-align: top; margin: 0; padding: 0 0 20px;"
                                             valign="top">Hi, <br> <br> <strong
-                                                style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; margin: 0;">You
-                                                have been added to a new flower and you have new task to carry out</strong>
+                                                style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; margin: 0;">Congratulations, you have been added to a new flower! Please sign in and view your new task.</strong>
                                         </td>
                                     </tr>
                                     <tr
@@ -131,7 +130,7 @@
                                         <td class="content-block"
                                             style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 16px; vertical-align: top; margin: 0; padding: 0 0 20px;"
                                             valign="top">
-                                            You advised to sign-in now and check the task as it is to be completed within an hour.
+                                            The task is to be completed within an hour.
                                             <br> <br>
                                             Thanks,
                                             <br> <br>

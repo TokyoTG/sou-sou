@@ -116,11 +116,7 @@
            <i class="menu-icon fa fa-list-alt"></i>
             <span>Wait List</span></a>
         </li>
-        {{-- <li class="nav-item">
-            <a class="nav-link" href="{{route('dashboard.complaints')}}">
-            <i class="menu-icon fa fa-list-alt"></i>
-            <span>Approved List</span></a>
-        </li> --}}
+
         <li class="nav-item">
           <a class="nav-link" href="{{route('flowers.index')}}">
            <i class="fa-fw fa fa-folder"></i>
@@ -143,6 +139,11 @@
            <i class="menu-icon fa fa-tasks"></i>
             <span>Tasks</span></a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{{route('flowers.index')}}">
+           <i class="fa-fw fa fa-folder"></i>
+            <span>My Flowers</span></a>
+      </li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('payments')}}">
            <i class="menu-icon fa fa-money-check"></i>

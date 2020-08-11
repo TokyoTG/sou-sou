@@ -38,11 +38,11 @@ class PopulateOldGroupListener
             
             $top_user = GroupUser::where('group_id',$group['id'])->where('user_level','water')->first();
             // $top_user_info = User::find($top_user->user_id);
-            $top_user_details = $this->paymentDetails($top_user->user_id);
+            // $top_user_details = $this->paymentDetails($top_user->user_id);
 
             foreach($new_members as $new_member){
                 $this->addUsertoGroup($new_member,$group['name'],'fire',$group['id']);
-                $this->groupMessageDispatcher($group['id'],$new_member,$top_user_details,$group['name']);
+                $this->groupMessageDispatcher($group['id'],$new_member);
                 array_push($email_arrays,$new_member->user_email);
                 User::where('id',$new_member->user_id)->increment('group_times');
                 
@@ -70,16 +70,21 @@ class PopulateOldGroupListener
     }
 
 
-    public function groupMessageDispatcher($group_id,$user,$top_user,$group_name){
+    public function groupMessageDispatcher($group_id,$user){
         $new_task = new Notification();
         $new_task->group_id = $group_id;
         $new_task->verified = false;
         $new_task->is_read = false;
-        $new_task->title = "Bless Top User";
+        $new_task->title = "TIme to Bless the Water!";
         $new_task->completed = false;
         $new_task->user_id = $user->user_id;
         $new_task->user_name = $user->user_name;
-        $new_task->message = "Hello {$user->user_name} You are required to bless {$top_user['user_name']} the top ranked person in the {$group_name} flower with the following details : \n {$top_user['payment_details']} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
+        // $new_task->message = "Hello {$user->user_name}, In order to keep your fire 
+        // position you are required to bless the water on the {$group_name} flower. 
+        // The person to send your gift to is {$top_user['user_name']}. Here are the 
+        // preferred methods of receiving gifts: \n {$top_user['payment_details']} .
+        //  \n You have 1 hour to send your gift using any of the listed methods. \n Signed,YBA Admin.";
+     
         $new_task->save();
      }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\GroupUser;
 use Illuminate\Http\Request;
 use App\User;
+use App\PaymentMethod;
 
 use App\Providers\PaymentVerifiedEvent;
 
@@ -95,7 +96,16 @@ class NotificationController extends Controller
         $task->save();
         $tasks = Notification::where('user_id',$user_id)->where('is_read',false)->get();
         session(['tasks' => $tasks]);
-        return view('dashboard.single_task')->with('task',$task);
+        $top_user = GroupUser::where('group_id',$task->group_id)->where('user_level',"water")->first();
+        $top_user_details = User::find($top_user->user_id);
+        $gift_methods = PaymentMethod::where('user_id',$top_user->user_id)->get();
+        $top_user_data =[
+            'full_name' => $top_user_details->full_name,
+            'gift_methods' => $gift_methods,
+            'group_name' => $top_user->group_name
+        ];
+
+        return view('dashboard.single_task')->with('task',$task)->with('top_user_data',$top_user_data);
     }
 
     /**

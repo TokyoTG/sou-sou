@@ -144,21 +144,17 @@ class GroupUserController extends Controller
                                     return redirect()->route('wait_list.index');
                                 }
                                 User::where('id',$user_id)->increment('group_times');
+
+
                                 $group_user->task_status = "uncompleted";
-                                $payment_details = '';
-                                foreach($top_user_details as $index=>$item){
-                                    ++$index;
-                                    $payment_details .="(". $index. ").".  "\n Name: ". $item->platform . " " ." $item->platform-Details: ".  $item->details ."\n". " "." $item->platform-Contacts: ". $item->contact ." \n";
-                                }
                                 $new_task = new Notification();
                                 $new_task->group_id = $group_id;
                                 $new_task->verified = false;
-                                $new_task->title = "Bless Top User";
+                                $new_task->title = "TIme to Bless the Water!";
                                 $new_task->is_read = false;
                                 $new_task->completed = false;
                                 $new_task->user_name = $username;
                                 $new_task->user_id = $request->input('user_id');
-                                $new_task->message = "Hello {$username} You are required to bless {$top_user->full_name} the top ranked person in the {$group_name} flower with the following details : \n {$payment_details} within 1 hour(you can pay into any of the listed methods). \n Signed YBA Admin";
                                 $new_task->save();
                             }
                             
@@ -169,10 +165,14 @@ class GroupUserController extends Controller
                             'group_name'=>$group_name
                         ];
                         event(new UserAddedToGroupEvent($event_data));
-                        // Group::where('name',$group_name)->increment('members_number');
-                        //$wait_list = WaitList::where('user_id',$request->input('user_id'))->where('id',$list_id)->get(['id']);
+                       
+
+                        $members_count = GroupUser::where('group_id',$group_id)->count();
+                        Group::where('name',$group_name)->update(['members_number' => $members_count]);
+
                         $wait_list = WaitList::find($list_id);
                         $wait_list->delete();
+                        
                         $emails = array();
                         array_push($emails, $user_details->user_email);
                         event(new AddedToGroupMailEvent($emails));
@@ -245,7 +245,8 @@ class GroupUserController extends Controller
              $group_user = GroupUser::find($id);
              $group_id = $request->input('group_id');
             $group_user->delete();
-            Group::where('name',$group_name)->decrement('members_number');
+            $members_count = GroupUser::where('group_id',$group_id)->count();
+            Group::where('name',$group_name)->update(['members_number' => $members_count]);
             $request->session()->flash('alert-class', 'alert-success');
             $request->session()->flash('message', "User was successfully removed from the flower");
             return redirect()->route('flowers.show',$group_id);
