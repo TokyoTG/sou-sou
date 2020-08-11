@@ -368,7 +368,7 @@
       })
       setTimeout(function(){
         $('.alert').hide();
-      },1500)
+      },5000)
   </script>
 </body>
 
