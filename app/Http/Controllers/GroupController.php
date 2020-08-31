@@ -210,15 +210,15 @@ class GroupController extends Controller
                     return redirect()->route('flowers.index');
                 }
             }elseif($request->input('request') == 'split'){
-                $num_of_completed = Notification::where('group_id', $id)->where('verified',true)->count();;
-                if($num_of_completed == 8){
+                $num_of_memebers = GroupUser::where('group_id', $id)->count();
+                if($num_of_memebers == 15){
                     event(new PaymentVerifiedEvent($id));
                     $request->session()->flash('alert-class', 'alert-success');
                     $request->session()->flash('message', "Request successfully");
                     return redirect()->route('flowers.index');
                 }else{
                     $request->session()->flash('alert-class', 'alert-danger');
-                    $request->session()->flash('message', "Flower can not be split yet");
+                    $request->session()->flash('message', "Flower can not be split yet, members are not up to 15");
                     return redirect()->route('flowers.index');
                 }
             }

@@ -26,8 +26,8 @@ class PaymentVerifiedListener
         if($platform->status){
             $group_id = $event->group_id;
             $email_arrays =array();
-            $num_of_completed = Notification::where('group_id', $group_id)->where('verified',true)->count();
-            if($num_of_completed == 8){
+            // $num_of_completed = Notification::where('group_id', $group_id)->where('verified',true)->count();
+            // if($num_of_completed == 8){
 
                 try{
                         //remove water
@@ -121,7 +121,7 @@ class PaymentVerifiedListener
 
                 }
                 
-            }
+            // }
         }
         return redirect()->route('dashboard.index');
     }
