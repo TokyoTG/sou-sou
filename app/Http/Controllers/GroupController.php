@@ -73,7 +73,7 @@ class GroupController extends Controller
         ];
         if ($request->all()) {
             $validator = Validator::make($request->all(), [
-                'name' => 'required|alpha|min:3|max:16',
+                'name' => 'required|min:3|max:16',
             ], $messages);
             if ($validator->fails()) {
                 $errors = $validator->errors();

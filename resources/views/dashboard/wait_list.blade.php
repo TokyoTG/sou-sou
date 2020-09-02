@@ -239,7 +239,7 @@
                       <option disabled selected value="">Select One</option>
                       @if (count($groups) > 0)
                           @foreach ($groups as $item)
-                          <option value={{$item->name}}>{{$item->name}}</option>
+                          <option value="{{$item->name}}">{{$item->name}}</option>
                           @endforeach
                       @else
                           All available flowers are closed

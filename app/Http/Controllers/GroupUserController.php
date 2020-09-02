@@ -78,7 +78,7 @@ class GroupUserController extends Controller
                         $user_id=$request->input('user_id');
 
 
-                        $group = Group::where('name',$group_name)->get()[0];
+                        $group = Group::where('name',$group_name)->first();
                         $group_id = $group->id;
                         $group_count = $group->members_number;
                         $list_id = $request->input('list_id');
