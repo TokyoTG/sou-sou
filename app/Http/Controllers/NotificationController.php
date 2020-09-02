@@ -141,7 +141,7 @@ class NotificationController extends Controller
                      $task->is_read = true;
                      $tasks = Notification::where('user_id',$user_id)->where('is_read',false)->get();
                      session(['tasks' => $tasks]);
-                     $request->session()->flash('message', "Task has been mark completed, wait for the to verify it");
+                     $request->session()->flash('message', "Task has been mark completed, wait for the top user to verify it");
                 }else{
                     $request->session()->flash('alert-class', 'alert-danger');
                     $request->session()->flash('message',"Sorry you have exceeded the amount of time required to finish the task");
