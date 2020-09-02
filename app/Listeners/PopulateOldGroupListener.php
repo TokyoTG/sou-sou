@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Providers\PopulateOldGroupEvent;
 use App\Providers\AddedToGroupMailEvent;
+use App\Providers\CheckWaitListEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 
@@ -53,8 +54,9 @@ class PopulateOldGroupListener
 
             Group::where('id',$group['id'])->update(['status'=>'closed', "members_number" => 15]);
             event(new AddedToGroupMailEvent($email_arrays));
+            event(new CheckWaitListEvent());
         }
-        return redirect()->route('dashboard.index');
+        // return redirect()->route('dashboard.index');
     }
     
     public function addUsertoGroup($object, $group_name, $user_level,$group_id){
