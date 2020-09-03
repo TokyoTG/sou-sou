@@ -120,6 +120,7 @@ class GroupController extends Controller
         $group_name = Group::find($id)->name;
         $members = GroupUser::where('group_name', $group_name)->get();
         $tasks = Notification::where('group_id',$id)->where('completed',false)->where('verified',false)->get();
+        $can_view = $this->can_view_group_user(Cookie::get('id'));
         foreach($tasks as $task){
             $now = time(); 
             $your_date = strtotime($task->created_at);
@@ -141,7 +142,7 @@ class GroupController extends Controller
             }
         }
         // return $members;
-        return view('dashboard.singleGroup')->with('members',$members);
+        return view('dashboard.singleGroup')->with(compact('members','can_view'));
     }
 
     /**
@@ -265,6 +266,17 @@ class GroupController extends Controller
         $user_list  = WaitList::where('user_id',$user_id)->get();
         // return $user_list;
         return view('dashboard.user_list')->with('user_list', $user_list);
+    }
+
+    public function can_view_group_user($user_id){
+        $groups_in = GroupUser::where('user_id',$user_id)->get();
+        
+            foreach($groups_in as $item){
+                if($item->user_level == 'fire'){
+                    return false;
+                }
+            }
+            return true;
     }
 
 }

@@ -39,7 +39,10 @@
                                         <th>Level</th>
                                         <th>User Name</th>
                                         {{-- <th>Task Status</th> --}}
-                                        <th>Action</th>
+                                        @if ($can_view)
+                                         <th>Action</th>   
+                                        @endif
+                                        
                                     </tr>
                                 </thead>
                             <tbody>
@@ -52,6 +55,9 @@
                             <td>{{isset($member->user_name) ? $member->user_name : 'Not set' }}</td>
                             
                             {{-- <td>{{$member->task_status}}</td> --}}
+                            @if ($can_view)
+                                
+                           
                                     <td>
                                         <div class="btn-group mt-2 mr-1">
                                         <button type="button" class="btn btn-primary dropdown-toggle"
@@ -77,6 +83,7 @@
                                         </div>
                                     </div>
                                     </td>
+                                    @endif
                                 </tr>
                         @endforeach
                     @endisset 
