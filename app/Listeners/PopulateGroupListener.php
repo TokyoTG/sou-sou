@@ -42,8 +42,9 @@ class PopulateGroupListener
         // dd('we got here');
 
         $platform = Platform::first();
+        $groups_avail = Group::all();
         // return  "hi";
-        if($platform->status){
+        if($platform->status && count($groups_avail) < 1){
             // return  "hi";
             $new_members = $event->members_to_add;
             $new_group_name = $this->generateGroupName();
