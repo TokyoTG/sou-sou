@@ -1,3 +1,4 @@
+
 @extends('layout.base')
 
 @include('partials.auth_check')
@@ -48,7 +49,9 @@
                                 </tr>
                             </thead>
                             <tbody>
+                            
                             @foreach ($groups as $group)
+                               
                                 <tr>
                                 <form action="{{ route('flowers.update',$group->id) }}" method="POST" id={{"update".$group->id}}>
                                         @csrf
@@ -68,7 +71,7 @@
                                     <input type="hidden" name="request" class="request">
                                 </form>
                                 <td>{{ isset($group->name) ? $group->name : "Not Set" }}</td>
-                                <td>{{ isset($group->members_number) ? $group->members_number : "Not Set" }}</td>
+                                <td>{{count($group['group_users']) }}</td>
                                 <td>{{ isset($group->status) ? $group->status : "Not Set" }}</td>
                                 <td>
                                     <div class="btn-group mt-2 mr-1">

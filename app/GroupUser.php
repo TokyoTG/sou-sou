@@ -9,7 +9,9 @@ class GroupUser extends Model
     //
     protected $table = "group_users";
 
-    public function user(){
-        return $this->belongsTo('App\User',"user_id");
+    public function group(){
+        return $this->belongsTo('App\Group');
     }
+
+
 }

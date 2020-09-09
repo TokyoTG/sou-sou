@@ -14,6 +14,9 @@ use App\GroupUser;
 use App\Providers\PaymentVerifiedEvent;
 use App\WaitList;
 
+use App\Http\Resources\Group as GroupResource;
+use App\Http\Resources\GroupCollection;
+
 use Illuminate\Support\Facades\Validator;
 
 class GroupController extends Controller
@@ -37,10 +40,13 @@ class GroupController extends Controller
         
         if(Cookie::get('role') !== null && Cookie::get('role') == "admin"){
             $this->groups = Group::all();
+            $this->groups = new GroupCollection($this->groups);
+          
         }
         if(Cookie::get('role') !== null && Cookie::get('role') == "member"){
             $user_id = Cookie::get('id');
             $this->groups = GroupUser::where('user_id', $user_id)->get();
+            // $this->groups = new GroupResource($this->group);
         }
         // return $this->groups;
         return view('dashboard.groups')->with('groups', $this->groups);
@@ -117,6 +123,8 @@ class GroupController extends Controller
     public function show($id)
     {
         //
+        // $group_name = Group::find($id);
+        // return new GroupResource($group_name);
         $group_name = Group::find($id)->name;
         $members = GroupUser::where('group_name', $group_name)->get();
         $tasks = Notification::where('group_id',$id)->where('completed',false)->where('verified',false)->get();
