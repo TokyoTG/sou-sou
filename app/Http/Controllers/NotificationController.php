@@ -31,7 +31,7 @@ class NotificationController extends Controller
         foreach($all_tasks as $task){
             $now = time(); 
             $your_date = strtotime($task->created_at);
-            $datediff =60 - round(($now - $your_date) / 60);
+            $datediff =180 - round(($now - $your_date) / 60);
             if($datediff < 0 ){
                
                 if(!$task->verified && !$task->completed){
@@ -43,6 +43,7 @@ class NotificationController extends Controller
                         'user_id' => $user->id,
                         'user_name' => $user->full_name,
                         'group_id' => $task->group_id,
+                        'group_user_id' => $task->group_user_id,
                         'user_email' => $user->email 
                     ];
 
@@ -182,7 +183,7 @@ class NotificationController extends Controller
                         $request->session()->flash('message',"Something went wrong with your request, please try again");
                         return redirect()->route('tasks.index');
                 }
-        return $id;
+        // return $id;
 
     }
 

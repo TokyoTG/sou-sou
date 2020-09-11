@@ -42,8 +42,8 @@ class PopulateOldGroupListener
             // $top_user_details = $this->paymentDetails($top_user->user_id);
 
             foreach($new_members as $new_member){
-                $this->addUsertoGroup($new_member,$group['name'],'fire',$group['id']);
-                $this->groupMessageDispatcher($group['id'],$new_member);
+              $group_user =  $this->addUsertoGroup($new_member,$group['name'],'fire',$group['id']);
+                $this->groupMessageDispatcher($group['id'],$new_member,$group_user->id);
                 array_push($email_arrays,$new_member->user_email);
                 User::where('id',$new_member->user_id)->increment('group_times');
                 
@@ -69,13 +69,15 @@ class PopulateOldGroupListener
         $group_user->user_level = $user_level;
         $group_user->task_status = "uncompleted";
         $group_user->save();
+        return $group_user;
     }
 
 
-    public function groupMessageDispatcher($group_id,$user){
+    public function groupMessageDispatcher($group_id,$user,$group_user_id){
         $new_task = new Notification();
         $new_task->group_id = $group_id;
         $new_task->verified = false;
+        $new_task->group_user_id = $group_user_id;
         $new_task->is_read = false;
         $new_task->title = "TIme to Bless the Water!";
         $new_task->completed = false;

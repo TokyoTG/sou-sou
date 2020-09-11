@@ -40,7 +40,7 @@ class MoveUserToWaitListListener
             $users = $event->user;
             $position = count(WaitList::all()) + 1;
             foreach($users as $user){
-             GroupUser::where('user_id',$user['user_id'])->delete();
+            GroupUser::where('id',$user['group_user_id'])->delete();
             Group::where('id', $user['group_id'])->decrement('members_number');
             Notification::where('user_id',$user['user_id'])->where('group_id',$user['group_id'])->delete();
             $user_to_wait_list = new WaitList();
@@ -54,7 +54,7 @@ class MoveUserToWaitListListener
             }
          
         }catch(\Exception $e){
-           dd('something went wrong sending user back to waitlist');
+        //    dd('something went wrong sending user back to waitlist');
         }
        
     }

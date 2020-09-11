@@ -144,22 +144,13 @@ class GroupUserController extends Controller
                                     return redirect()->route('wait_list.index');
                                 }
                                 User::where('id',$user_id)->increment('group_times');
-
-
                                 $group_user->task_status = "uncompleted";
-                                $new_task = new Notification();
-                                $new_task->group_id = $group_id;
-                                $new_task->verified = false;
-                                $new_task->title = "TIme to Bless the Water!";
-                                $new_task->is_read = false;
-                                $new_task->completed = false;
-                                $new_task->user_name = $username;
-                                $new_task->user_id = $request->input('user_id');
-                                $new_task->save();
+                                
                             }
                             
                         }
                         $group_user->save();
+                        $this->addTask($username,$user_id,$group_id,$group_user->id);
                         $event_data = [
                             'user_id'=>$user_id,
                             'group_name'=>$group_name
@@ -256,5 +247,19 @@ class GroupUserController extends Controller
             return redirect()->route('flowers.show',$group_id);
     }
 
+    }
+
+
+    public function addTask($username,$user_id,$group_id,$group_user_id){
+        $new_task = new Notification();
+        $new_task->group_id = $group_id;
+        $new_task->verified = false;
+        $new_task->group_user_id = $group_user_id;
+        $new_task->title = "TIme to Bless the Water!";
+        $new_task->is_read = false;
+        $new_task->completed = false;
+        $new_task->user_name = $username;
+        $new_task->user_id = $user_id;
+        $new_task->save();
     }
 }

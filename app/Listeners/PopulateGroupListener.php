@@ -87,8 +87,8 @@ class PopulateGroupListener
                 if($general_count < 15 && $general_count > 6 ){
                     //add user as fire
                     User::where('id',$new_member->user_id)->increment('group_times');
-                    $this->addUsertoGroup($new_member,$new_group_name,'fire',$new_group_id);
-                    $this->groupMessageDispatcher($new_group_id,$new_member);
+                  $group_user =  $this->addUsertoGroup($new_member,$new_group_name,'fire',$new_group_id);
+                    $this->groupMessageDispatcher($new_group_id,$new_member,$group_user->id);
             
                 }
                 $general_count++;
@@ -117,12 +117,14 @@ class PopulateGroupListener
             $group_user->task_status = "completed";
         }
         $group_user->save();
+        return $group_user;
     }
 
 
-    public function groupMessageDispatcher($group_id,$user){
+    public function groupMessageDispatcher($group_id,$user,$group_user_id){
         $new_task = new Notification();
         $new_task->group_id = $group_id;
+        $new_task->group_user_id = $group_user_id;
         $new_task->verified = false;
         $new_task->is_read = false;
         $new_task->title = "TIme to Bless the Water!";
