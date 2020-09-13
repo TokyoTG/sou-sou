@@ -34,6 +34,7 @@
 
 #logo{
   height: 50px;
+  margin-top:10px;
   display: inline-block;
   width: 100px;
 }
