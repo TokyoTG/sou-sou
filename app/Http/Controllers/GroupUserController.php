@@ -176,7 +176,6 @@ class GroupUserController extends Controller
                             $request->session()->flash('message',"User already exists in a flower");
                             return redirect()->route('wait_list.index');
                         }
-                        return $e;
                         $request->session()->flash('alert-class', 'alert-danger');
                         $request->session()->flash('message',"Something went wrong with your request, please try again");
                         return redirect()->route('wait_list.index');

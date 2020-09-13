@@ -259,6 +259,5 @@ class UsersController extends Controller
             $request->session()->flash('message', "Something bad happened, try again");
             return redirect()->route('users.index');
         }
-        return $id;
     }
 }

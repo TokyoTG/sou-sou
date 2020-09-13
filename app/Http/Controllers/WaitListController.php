@@ -116,7 +116,6 @@ class WaitListController extends Controller
                 return redirect()->route('dashboard.index');
             }
         }catch(\Exception $e){
-            return $e;
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message',"Something went wrong, please try again");
             return redirect()->route('dashboard.index');
