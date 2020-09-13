@@ -32,13 +32,25 @@
   background-size: cover;
 }
 
+#logo{
+  height: 50px;
+  display: inline-block;
+  width: 100px;
+}
+
+#logo img{
+  width: 100%;
+  border-radius: 10px;
+  background: white;
+  height: 100%;
+}
 </style>
 
 <body class="bg-gradient-primary">
 
   <div class="container">
-  <a href="{{route('welcome')}}" class="btn btn-primary">
-      <h3>YBA</h3>
+  <a href="{{route('welcome')}}"  id="logo">
+      <img src="{{asset('dashboard/assets/img/YBA_Logo.png')}}" alt="logo" >
       </a>
    
         @yield('content')
