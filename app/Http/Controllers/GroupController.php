@@ -120,37 +120,47 @@ class GroupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request,$id)
     {
         //
         // $group_name = Group::find($id);
         // return new GroupResource($group_name);
-        $group_name = Group::find($id)->name;
-        $members = GroupUser::where('group_name', $group_name)->get();
-        $tasks = Notification::where('group_id',$id)->where('completed',false)->where('verified',false)->get();
-        $can_view = $this->can_view_group_user(Cookie::get('id'));
-        foreach($tasks as $task){
-            $now = time(); 
-            $your_date = strtotime($task->created_at);
-            $datediff =60 - round(($now - $your_date) / 60);
-            if($datediff < 0 ){
+        try{
+                        $group_name = Group::find($id)->name;
+            $members = GroupUser::where('group_name', $group_name)->get();
+            $tasks = Notification::where('group_id',$id)->where('completed',false)->where('verified',false)->get();
+            $can_view = $this->can_view_group_user(Cookie::get('id'));
+            foreach($tasks as $task){
+                $now = time(); 
+                $your_date = strtotime($task->created_at);
+                $datediff = 180 - round(($now - $your_date) / 60);
+                if($datediff < 0 ){
 
-                //removing user from group, deleting notification and reducing the number of people in the group
-                GroupUser::where('user_id',$task->user_id)->delete();
-                Notification::where('user_id',$task->user_id)->delete();
-                Group::where('id', $id)->decrement('members_number');
+                    //removing user from group, deleting notification and reducing the number of people in the group
+                    GroupUser::where('user_id',$task->user_id)->delete();
+                    Notification::where('user_id',$task->user_id)->delete();
+                    Group::where('id', $id)->decrement('members_number');
 
-                $position = count(WaitList::all()) + 1;
-                $user = User::find($task->user_id);
-                $add_new = new WaitList();
-                $add_new->user_id = $task->user_id;
-                $add_new->user_name = $user->full_name;
-                $add_new->position = $position;
-                $add_new->save();
+                    $position = count(WaitList::all()) + 1;
+                    $user = User::find($task->user_id);
+                    $add_new = new WaitList();
+                    $add_new->user_id = $task->user_id;
+                    $add_new->user_email = $user->email;
+                    $add_new->user_name = $user->full_name;
+                    $add_new->position = $position;
+                    $add_new->save();
+                    $count = WaitList::where('user_id',$task->user_id)->count();
+                    WaitList::where('user_id',$task->user_id)->update(['frequency'=> $count]);
+                }
             }
+            // return $members;
+            return view('dashboard.singleGroup')->with(compact('members','can_view'));
+        }catch(\Exception $e){
+            $request->session()->flash('alert-class', 'alert-danger');
+            $request->session()->flash('message', "Something bad happened, try again");
+            return redirect()->route('flowers.index');
         }
-        // return $members;
-        return view('dashboard.singleGroup')->with(compact('members','can_view'));
+
     }
 
     /**

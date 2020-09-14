@@ -150,7 +150,10 @@ class GroupUserController extends Controller
                             
                         }
                         $group_user->save();
-                        $this->addTask($username,$user_id,$group_id,$group_user->id);
+                        if($level == "fire"){
+                            $this->addTask($username,$user_id,$group_id,$group_user->id);
+                        }
+                       
                         $event_data = [
                             'user_id'=>$user_id,
                             'group_name'=>$group_name

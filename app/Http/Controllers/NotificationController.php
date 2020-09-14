@@ -26,15 +26,13 @@ class NotificationController extends Controller
         $user_id =  Cookie::get('id');
         $user_name =  Cookie::get('full_name');
         $tasks = Notification::where('user_id',$user_id)->get();
-        $all_tasks = Notification::all();
+        $all_tasks = Notification::where('completed',false)->where('verified',false)->get();
         $users = array();
         foreach($all_tasks as $task){
             $now = time(); 
             $your_date = strtotime($task->created_at);
-            $datediff =180 - round(($now - $your_date) / 60);
+            $datediff = 2 - round(($now - $your_date) / 60);
             if($datediff < 0 ){
-               
-                if(!$task->verified && !$task->completed){
                     //move user ot wait list when task is not verified
                     $to_delete = Notification::find($task->id);
                     $to_delete->delete();
@@ -49,7 +47,6 @@ class NotificationController extends Controller
 
                     array_push($users, $user_data);
                   
-               }
             }
         }
         if(count($users) > 0){
