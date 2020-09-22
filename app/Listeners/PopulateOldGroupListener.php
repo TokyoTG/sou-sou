@@ -42,7 +42,7 @@ class PopulateOldGroupListener
             // $top_user_details = $this->paymentDetails($top_user->user_id);
 
             foreach($new_members as $new_member){
-              $group_user =  $this->addUsertoGroup($new_member,$group['name'],'fire',$group['id']);
+                $group_user =  $this->addUsertoGroup($new_member,$group['name'],'fire',$group['id']);
                 $this->groupMessageDispatcher($group['id'],$new_member,$group_user->id);
                 array_push($email_arrays,$new_member->user_email);
                 User::where('id',$new_member->user_id)->increment('group_times');

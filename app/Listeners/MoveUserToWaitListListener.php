@@ -12,7 +12,7 @@ use App\Group;
 use App\User;
 use App\WaitList;
 use App\Notification;
-
+use App\Providers\UserRemovedEvent;
 
 
 class MoveUserToWaitListListener
@@ -52,6 +52,9 @@ class MoveUserToWaitListListener
             $count = WaitList::where('user_id',$user['user_id'])->count();
             WaitList::where('user_id',$user['user_id'])->update(['frequency'=> $count]);
             }
+
+            event(new UserRemovedEvent($users));
+
          
         }catch(\Exception $e){
         //    dd('something went wrong sending user back to waitlist');

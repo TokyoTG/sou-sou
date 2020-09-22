@@ -36,6 +36,9 @@ class EventServiceProvider extends ServiceProvider
         AddedToGroupMailEvent::class=>[
             \App\Listeners\AddedToGroupMailListener::class,
         ],
+        UserRemovedEvent::class=>[
+            \App\Listeners\UserRemovedListener::class
+        ]
     ];
 
     /**
