@@ -31,7 +31,7 @@ class NotificationController extends Controller
         foreach($all_tasks as $task){
             $now = time(); 
             $your_date = strtotime($task->created_at);
-            $datediff = 2 - round(($now - $your_date) / 60);
+            $datediff = 180 - round(($now - $your_date) / 60);
             if($datediff < 0 ){
                     //move user ot wait list when task is not verified
                     $to_delete = Notification::find($task->id);
