@@ -79,7 +79,7 @@ class UserRemovedListener
         $new_task->title = "Time to Bless the Water!";
         $new_task->completed = false;
         $new_task->user_id = $user->user_id;
-        $new_task->user_name = $user->user_name;
+        $new_task->user_name = $user->user->full_name;
         $new_task->save();
     }
 }

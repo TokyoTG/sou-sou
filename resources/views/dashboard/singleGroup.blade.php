@@ -50,9 +50,9 @@
 
                         @foreach ($members as $member)
                              <tr>
-                             <td>{{$member->group_name}}</td>
+                             <td>{{$member->group->name}}</td>
                              <td>{{$member->user_level}}</td>
-                            <td>{{isset($member->user_name) ? $member->user_name : 'Not set' }}</td>
+                            <td>{{isset($member->user->full_name) ? $member->user->full_name : 'Not set' }}</td>
                             
                             {{-- <td>{{$member->task_status}}</td> --}}
                             @if ($can_view)
@@ -69,13 +69,13 @@
                                         @if(Cookie::get('role') !== null && Cookie::get('role') == "admin")   
                                         <a class="dropdown-item" href="#"
                                         data-member_id={{$member->id}}
-                                     data-member_name ={{$member->user_name}}
+                                     data-member_name ={{$member->user->full_name}}
                                          onclick="showModal(this,'delete-user')"
                                         >Remove User</a>
                                         <form action="{{ route('group_users.destroy',$member->id) }}" method="POST" id={{"delete".$member->id}}>
                                             @csrf
                                             <input name="_method" type="hidden" value="DELETE">
-                                            <input type="hidden" name="group_name" value={{$member->group_name}}>
+                                            <input type="hidden" name="group_name" value={{$member->group->name}}>
                                             <input type="hidden" name="group_id" value={{$member->group_id}}>
                                             <input type="hidden" name="user_id" value={{$member->user_id}}>
                                         </form>

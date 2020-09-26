@@ -35,7 +35,7 @@
                                                 <label><b>Fullname</b></label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>{{ isset($user_details['info']->full_name)  ? $user_details['info']->full_name : "Not set" }}</p>
+                                                <p>{{ isset($user_details->full_name)  ? $user_details->full_name : "Not set" }}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -43,14 +43,14 @@
                                                 <label><b>Email</b></label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>{{ isset($user_details['info']->email) ? $user_details['info']->email : "Not Set" }}</p>
+                                                <p>{{ isset($user_details->email) ? $user_details->email : "Not Set" }}</p>
                                             
                                             </div>
                                             <div class="col-md-6">
                                                 <label><b>Phone Number</b></label>
                                             </div>
                                             <div class="col-md-6">
-                                                <p>{{ isset($user_details['info']->phone_number) ? $user_details['info']->phone_number : "Not Set" }}</p>
+                                                <p>{{ isset($user_details->phone_number) ? $user_details->phone_number : "Not Set" }}</p>
                                             </div>
                                         </div>
                                         {{-- <div class="row">
@@ -58,7 +58,7 @@
                                                 <label><b>No. of Groups</b></label>
                                             </div>
                                             <div class="col-md-6">
-                                                <span class="badge badge-primary">{{ isset($user_details['info']->groups_in) ? $user_details['info']->groups_in : "Not Set" }}</span>
+                                                <span class="badge badge-primary">{{ isset($user_details->groups_in) ? $user_details->groups_in : "Not Set" }}</span>
                                             </div>
                                         </div> --}}
                                     </div>
@@ -82,8 +82,8 @@
                                                     @foreach ($user_details->groups as $group)
                                                         <tr>
                                                             <td>
-                                                                {{ isset($group->group_name) ? $group->group_name : "Not Set" }}
-                                                                <span class="badge badge-success">{{ isset($group->status) ? $group->status : "Not Set" }}</span>
+                                                                {{ isset($group->group->name) ? $group->group->name : "Not Set" }}
+                                                                <span class="badge badge-success">{{ isset($group->group->status) ? $group->group->status : "Not Set" }}</span>
                                                             </td>
                                                             <td>
                                                                 {{ isset($group->user_level) ? $group->user_level : "Not Set" }}

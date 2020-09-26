@@ -250,8 +250,8 @@ class GroupController extends Controller
         //
         try {
             $group = Group::find($id);
-            $group_users = $group->group_users->pluck('id');
-            $notifications = $group->notifications->pluck('id');
+            $group_users = $group->group_users != null ? $group->group_users->pluck('id') : array();
+            $notifications = $group->notifications != null ? $group->notifications->pluck('id') : array();
             if ($group != null) {
                 $group->delete();
             }
@@ -268,6 +268,7 @@ class GroupController extends Controller
             $request->session()->flash('message', "Flower and associated data has been deleted successfully");
             return redirect()->route('flowers.index');
         } catch (\Exception $e) {
+            return $e;
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message', "Something bad happened, try again");
             return redirect()->route('flowers.index');

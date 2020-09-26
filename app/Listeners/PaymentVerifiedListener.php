@@ -29,7 +29,7 @@ class PaymentVerifiedListener
 
             try {
                 //remove water
-                // $water_id = GroupUser::where('group_id', $group_id)->where('user_level',"water")->get(['id']);
+                // $water_id = GroupUser::where('group_id', $group_id)->where('user_level', "water")->get(['id']);
                 GroupUser::where('group_id', $group_id)->where('user_level', "water")->delete();
 
 
@@ -48,7 +48,7 @@ class PaymentVerifiedListener
 
                 GroupUser::destroy($earths->id);
 
-                $this->addUsertoGroup($earths->user_id, $new_group_name, "water", $this->new_group_id);
+                $this->addUsertoGroup($earths->user_id, "water", $this->new_group_id);
                 User::where('id', $earths->user_id)->increment('top_times');
                 User::where('id', $earths->user_id)->increment('group_times');
 

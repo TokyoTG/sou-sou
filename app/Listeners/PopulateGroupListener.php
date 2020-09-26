@@ -126,7 +126,7 @@ class PopulateGroupListener
         $new_task->title = "TIme to Bless the Water!";
         $new_task->completed = false;
         $new_task->user_id = $user->user_id;
-        $new_task->user_name = $user->user_name;
+        $new_task->user_name = $user->user->full_name;
         // $new_task->message = "Hello {$user->user_name}, In order to keep your 
         // fire position you are required to bless the water on the {$group_name} 
         // flower. The person to send your gift to is {$top_user['user_name']}. 

@@ -143,7 +143,7 @@
                     <tbody>
                         @foreach ($groups as $group)
                         <tr>
-                        <td>{{$group->group_name}}</td>
+                        <td>{{$group->group->name}}</td>
                         <td>{{$group->user_level}}</td>
                         {{-- <td>{{$group->task_status}}</td> --}}
                         <td > <a href="{{route('flowers.show', $group->group_id)}}"> View <i class="fa fa-eye"></i> </a> </td>

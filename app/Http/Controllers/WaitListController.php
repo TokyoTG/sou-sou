@@ -87,7 +87,6 @@ class WaitListController extends Controller
                         if ($num_group_users == 7) {
 
                             $group_data = [
-                                'name' => $check_group->name,
                                 'id' => $check_group->id
                             ];
                             $data = [
@@ -114,6 +113,7 @@ class WaitListController extends Controller
                 return redirect()->route('dashboard.index');
             }
         } catch (\Exception $e) {
+            dd($e);
             $request->session()->flash('alert-class', 'alert-danger');
             $request->session()->flash('message', "Something went wrong, please try again");
             return redirect()->route('dashboard.index');
@@ -241,6 +241,7 @@ class WaitListController extends Controller
                     return redirect()->route('wait_list.index');
                 }
             } catch (\Exception $e) {
+                return $e;
                 $request->session()->flash('alert-class', 'alert-danger');
                 $request->session()->flash('message', "Something went wrong with your request, please try again");
                 return redirect()->route('wait_list.index');
