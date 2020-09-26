@@ -76,10 +76,9 @@
         <div class="sidebar-brand-text mx-2">
           @if(is_admins())
             Super Admin
-          @elseif(is_members())
-            @if (Cookie::get('full_name') !== null)
-              {{ Cookie::get('full_name') }}  
-            @endif
+          @endif
+          @if(is_members() && Cookie::get('full_name') !== null)
+              {{ Cookie::get('full_name') }} 
           @endif
         </div>
       </a>
@@ -269,9 +268,7 @@
                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                 @if(is_admins())
                   Super Admin
-                @elseif(is_members())
-
-                 (Cookie::get('full_name') !== null)
+                @elseif(is_members() && Cookie::get('full_name') !== null)
                   {{ Cookie::get('full_name') }}  
                 @endif
               </span>
