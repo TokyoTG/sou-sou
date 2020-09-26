@@ -19,7 +19,7 @@ class PopulateGroupListener
 {
 
 
-    
+
     /**
      * Create the event listener.
      *
@@ -44,7 +44,7 @@ class PopulateGroupListener
         $platform = Platform::first();
         $groups_avail = Group::all();
         // return  "hi";
-        if($platform->status && count($groups_avail) < 1){
+        if ($platform->status && count($groups_avail) < 1) {
             // return  "hi";
             $new_members = $event->members_to_add;
             $new_group_name = $this->generateGroupName();
@@ -59,61 +59,56 @@ class PopulateGroupListener
             $general_count = 0;
             $water_count = 0;
 
-            $email_arrays =array();
+            $email_arrays = array();
 
-            foreach($new_members as $new_member){
-                if( $general_count < 1 && $water_count == 0){
+            foreach ($new_members as $new_member) {
+                if ($general_count < 1 && $water_count == 0) {
                     //add user as water
                     $top_user_id = $new_member->user_id;
                     // $top_user = User::find($top_user_id);
                     // $top_user_details = $this->paymentDetails($top_user_id);
-                    User::where('id',$top_user_id)->increment('top_times');
-                    User::where('id',$top_user_id)->increment('group_times');
-                    $this->addUsertoGroup($new_member,$new_group_name,'water',$new_group_id);
+                    User::where('id', $top_user_id)->increment('top_times');
+                    User::where('id', $top_user_id)->increment('group_times');
+                    $this->addUsertoGroup($new_member->user_id, 'water', $new_group_id);
                     $water_count++;
                 }
-                if($general_count < 3 && $general_count > 0){
+                if ($general_count < 3 && $general_count > 0) {
                     //add user as earth
-                    User::where('id',$new_member->user_id)->increment('group_times');
-                    $this->addUsertoGroup($new_member,$new_group_name,'earth',$new_group_id);
-                
+                    User::where('id', $new_member->user_id)->increment('group_times');
+                    $this->addUsertoGroup($new_member->user_id, 'earth', $new_group_id);
                 }
-                if( $general_count < 7 && $general_count > 2){
+                if ($general_count < 7 && $general_count > 2) {
                     //add user as wind
-                    User::where('id',$new_member->user_id)->increment('group_times');
-                    $this->addUsertoGroup($new_member,$new_group_name,'wind',$new_group_id);
-                
+                    User::where('id', $new_member->user_id)->increment('group_times');
+                    $this->addUsertoGroup($new_member->user_id, 'wind', $new_group_id);
                 }
-                if($general_count < 15 && $general_count > 6 ){
+                if ($general_count < 15 && $general_count > 6) {
                     //add user as fire
-                    User::where('id',$new_member->user_id)->increment('group_times');
-                  $group_user =  $this->addUsertoGroup($new_member,$new_group_name,'fire',$new_group_id);
-                    $this->groupMessageDispatcher($new_group_id,$new_member,$group_user->id);
-            
+                    User::where('id', $new_member->user_id)->increment('group_times');
+                    $group_user =  $this->addUsertoGroup($new_member->user_id, 'fire', $new_group_id);
+                    $this->groupMessageDispatcher($new_group_id, $new_member, $group_user->id);
                 }
                 $general_count++;
-                array_push($email_arrays,$new_member->user_email);
+                array_push($email_arrays, $new_member->user_email);
                 $item = WaitList::find($new_member->id);
                 $item->delete();
             }
-            
-            event(new AddedToGroupMailEvent($email_arrays));
+
+            // event(new AddedToGroupMailEvent($email_arrays));
             return redirect()->route('dashboard.index');
         }
         return redirect()->route('dashboard.index');
     }
 
 
-    public function addUsertoGroup($object, $group_name, $user_level,$group_id){
+    public function addUsertoGroup($user_id, $user_level, $group_id)
+    {
         $group_user = new GroupUser();
-        $group_user->user_id = $object->user_id;
-        $group_user->user_name = $object->user_name;
-        $group_user->user_email = $object->user_email;
+        $group_user->user_id = $user_id;
         $group_user->group_id = $group_id;
-        $group_user->group_name = $group_name;
         $group_user->user_level = $user_level;
         $group_user->task_status = "uncompleted";
-        if($user_level == 'water' || $user_level == 'wind' || $user_level == 'earth'){
+        if ($user_level == 'water' || $user_level == 'wind' || $user_level == 'earth') {
             $group_user->task_status = "completed";
         }
         $group_user->save();
@@ -121,7 +116,8 @@ class PopulateGroupListener
     }
 
 
-    public function groupMessageDispatcher($group_id,$user,$group_user_id){
+    public function groupMessageDispatcher($group_id, $user, $group_user_id)
+    {
         $new_task = new Notification();
         $new_task->group_id = $group_id;
         $new_task->group_user_id = $group_user_id;
@@ -139,7 +135,8 @@ class PopulateGroupListener
         $new_task->save();
     }
 
-    public function generateGroupName(){
+    public function generateGroupName()
+    {
         $name = "";
         $alphabets = ['a', 'b', 'A', 'B', 'c', 'C', 'd', 'D', 'e', 'E', 'f', 'F', 'g', 'G', 'i', 'I', 'j', 'm', "M", 'y', 'z', 'w', 'Z'];
 
@@ -149,14 +146,15 @@ class PopulateGroupListener
         }
         return $name;
     }
-    public function paymentDetails ($top_user_id){
+    public function paymentDetails($top_user_id)
+    {
         $methods = PaymentMethod::where('user_id', $top_user_id)->get();
         $top_user_name = "";
         $payment_methods = '';
-        foreach($methods as $index=>$method){
+        foreach ($methods as $index => $method) {
             ++$index;
-           $payment_methods .="(". $index. ").".  "\n Name: ". $method->platform . " " ." $method->platform-Details: ".  $method->details ."\n". " "." $method->platform-Contacts: ". $method->contact ." \n";
-           $top_user_name = $method->user_name;
+            $payment_methods .= "(" . $index . ")." .  "\n Name: " . $method->platform . " " . " $method->platform-Details: " .  $method->details . "\n" . " " . " $method->platform-Contacts: " . $method->contact . " \n";
+            $top_user_name = $method->user_name;
         }
         $data = [
             'payment_details' => $payment_methods,

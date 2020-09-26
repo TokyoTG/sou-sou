@@ -11,11 +11,11 @@ use App\Group;
 
 class IncreaseUserGroupCount
 {
- 
+
     public function handle($event)
     {
         //
         $event_data = $event->event_data;
-        Group::where('name',$event_data['group_name'])->increment('members_number');
+        // Group::where('name',$event_data['group_name'])->increment('members_number');
     }
 }

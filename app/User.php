@@ -9,7 +9,23 @@ class User extends Model
     //
     protected $table = "users";
 
-    public function groups(){
-        $this->hasMany('App\GroupUser',"user_id");
+    protected $fillable = [
+        'full_name',
+        'phone_number',
+        'email',
+        'role',
+        'group_times',
+        'top_times',
+        'password'
+    ];
+
+    public function groups()
+    {
+        return  $this->hasMany('App\GroupUser');
+    }
+
+    public function wait_lists()
+    {
+        return $this->hasMany("App\WaitList");
     }
 }

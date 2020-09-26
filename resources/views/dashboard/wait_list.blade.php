@@ -93,7 +93,7 @@
                     <tbody>
                     @foreach ($list as $item)
                         <tr>
-                          <td>{{$item->user_name}}</td>
+                          <td>{{$item->user->full_name}}</td>
                           <td>{{ position_prepare($item->position)}}</td>
                           <td>{{$item->frequency}}</td>
                         <td>{{$item->created_at}}</td>
@@ -108,7 +108,7 @@
                                   <a class="dropdown-item" href="#"
                                   data-user_id={{$item->id}}
                                   onclick="showModal(this,'addUser')"
-                                  data-user_name={{$item->user_name}}
+                                  data-user_name={{$item->user->full_name}}
                                     
                                   >Add to Flower</a>
 
@@ -119,7 +119,8 @@
                                     <input type="hidden" name="group_name" class="group_name">
                                     <input type="hidden" name="list_id" value={{$item->id}}>
                                     <input type="hidden" name="user_id" value={{$item->user_id}}>
-                                    <input type="hidden" name="user_name" value={{$item->user_name}}>
+                                     <input type="hidden" name="user_email" value={{$item->user->email}}>
+                                    <input type="hidden" name="user_name" value={{$item->user->full_name}}>
                                   </form>
 
 
@@ -143,14 +144,14 @@
                                   href="#"
                                   onclick="showModal(this,'myModal')"
                                     data-user_id={{$item->id}}
-                                    data-user_name={{$item->user_name}}
+                                    data-user_name={{$item->user->full_name}}
                                     >Change Position</a>
 
                                   {{-- //REMOVE USER --}}
                                   <a class="dropdown-item" href="#"
                                   data-user_id={{$item->id}}
                                   onclick="showModal(this,'remove_user')"
-                                  data-user_name={{$item->user_name}}
+                                  data-user_name={{$item->user->full_name}}
                                   >Remove User</a>
                               </div>
                           </div>

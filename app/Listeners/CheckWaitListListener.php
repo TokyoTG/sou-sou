@@ -28,23 +28,23 @@ class CheckWaitListListener
         $unique_list = $wait_list->take(8);
 
 
-         //check if there any group t be filled
-         if(count($unique_list) >= 8){
-            $check_group = Group::where('status','open')->first();
-             if($check_group){
-                $num_group_users = GroupUser::where('group_id', $check_group->id)->count();
-                if($num_group_users == 7){
-                   
+        //check if there any group t be filled
+        if (count($unique_list) >= 8) {
+            $check_group = Group::where('status', 'open')->first();
+            if ($check_group) {
+                $num_group_users = count($check_group->group_users);
+                if ($num_group_users == 7) {
+
                     $group_data = [
-                        'name'=>$check_group->name,
-                        'id' =>$check_group->id
+                        'name' => $check_group->name,
+                        'id' => $check_group->id
                     ];
                     $data = [
                         'new_members' => $unique_list,
-                        'group_info' =>$group_data
+                        'group_info' => $group_data
                     ];
                     event(new PopulateOldGroupEvent($data));
-                } 
+                }
             }
         }
     }

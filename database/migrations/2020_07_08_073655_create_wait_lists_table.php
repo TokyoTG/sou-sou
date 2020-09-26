@@ -16,9 +16,7 @@ class CreateWaitListsTable extends Migration
         Schema::create('wait_list', function (Blueprint $table) {
             $table->id();
             $table->integer('position');
-            $table->string('user_name');
             $table->integer('frequency')->default(0);
-            $table->string('user_email');
             $table->string('user_id');
             $table->timestamps();
         });

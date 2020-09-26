@@ -66,8 +66,8 @@
                                 <div class="tab-pane fade" id="groups">
                                     <div class="tile user-settings">
                                        
-                                        @isset($user_details['group_info'])
-                                            @if (count($user_details['group_info']) > 0)
+                                        @isset($user_details->groups)
+                                            @if (count($user_details->groups) > 0)
                                             <h4 class="line-head">User Flowers</h4>
                                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
@@ -79,7 +79,7 @@
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                    @foreach ($user_details['group_info'] as $group)
+                                                    @foreach ($user_details->groups as $group)
                                                         <tr>
                                                             <td>
                                                                 {{ isset($group->group_name) ? $group->group_name : "Not Set" }}

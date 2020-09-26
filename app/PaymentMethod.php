@@ -8,4 +8,12 @@ class PaymentMethod extends Model
 {
     //
     protected $table = "payment_methods";
+
+    protected $fillable = [
+        'user_name',
+        'platform',
+        'details',
+        'contact',
+        'user_id'
+    ];
 }

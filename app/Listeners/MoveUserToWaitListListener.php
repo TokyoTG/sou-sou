@@ -36,29 +36,23 @@ class MoveUserToWaitListListener
     public function handle(MoveUserToWaitListEvent $event)
     {
         //
-        try{
+        try {
             $users = $event->user;
-            $position = count(WaitList::all()) + 1;
-            foreach($users as $user){
-            GroupUser::where('id',$user['group_user_id'])->delete();
-            Group::where('id', $user['group_id'])->decrement('members_number');
-            Notification::where('user_id',$user['user_id'])->where('group_id',$user['group_id'])->delete();
-            $user_to_wait_list = new WaitList();
-            $user_to_wait_list->user_id = $user['user_id'];
-            $user_to_wait_list->user_name = $user['user_name'];
-            $user_to_wait_list->user_email = $user['user_email'];
-            $user_to_wait_list->position = $position;
-            $user_to_wait_list->save(); 
-            $count = WaitList::where('user_id',$user['user_id'])->count();
-            WaitList::where('user_id',$user['user_id'])->update(['frequency'=> $count]);
+            $position = WaitList::count() + 1;
+            foreach ($users as $user) {
+                GroupUser::where('id', $user['group_user_id'])->delete();
+                Notification::where('group_user_id', $user['group_user_id'])->where('group_id', $user['group_id'])->delete();
+                $user_to_wait_list = new WaitList();
+                $user_to_wait_list->user_id = $user['user_id'];
+                $user_to_wait_list->position = $position;
+                $user_to_wait_list->save();
+                $count = WaitList::where('user_id', $user['user_id'])->count();
+                WaitList::where('user_id', $user['user_id'])->update(['frequency' => $count]);
             }
 
             event(new UserRemovedEvent($users));
-
-         
-        }catch(\Exception $e){
-        //    dd('something went wrong sending user back to waitlist');
+        } catch (\Exception $e) {
+            // dd('something went wrong sending user back to waitlist');
         }
-       
     }
 }
