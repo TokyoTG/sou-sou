@@ -9,105 +9,104 @@
 
 @section('newBtn')
  <button class="d-sm-inline-block btn  btn-primary shadow-sm" data-toggle="modal" data-target="#myModal"> New
-     <i class="fa fa-plus my-float"></i></button>
+     <i class="fa fa-plus"></i></button>
 @endsection
+
 @section('contents')
 
 @if(Session::has('message'))
 <p class="alert {{ Session::get('alert-class', 'alert-danger') }}">
     {{ Session::get('message') }}</p>
 @endif
-  <div class="card shadow mb-4">
+        <div class="card shadow mb-4">
             <div class="card-header py-3">
               <h6 class="m-0 font-weight-bold text-primary">All Users</h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
                 @isset($users)
-                <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Reg. Date</th>
-                            <th>Top Times</th>
-                            <th>Flowers Times</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                    @if(count($users) > 0)
-                        @foreach ($users as $user)
-                        @php
-    
-                        $now = time(); 
-                        $your_date = strtotime($user->created_at);
-                        $datediff = round(($now - $your_date) / 86400);   
-                        if($datediff < 1){
-                            $datediff = round(($now - $your_date) / 3600);
-                            $join_date = $datediff."Hours ago";
-                            if($datediff > 0){
-                                if($datediff > 1){
-                                    $join_date = $datediff." Hours ago";
-                                }else{
-                                    $join_date = $datediff." Hour ago";
-                                }
-                            }else{
-                                $datediff = round(($now - $your_date) / 60);
-                               
-                                if($datediff > 1){
-                                 $join_date = $datediff." Minutes ago";
-                                }else{
-                                    $join_date = $datediff." Minute ago";
-                                }
-                            }
-                          
-                        }elseif($datediff >= 2) {
-                              $join_date = $datediff." Days ago";
-                        }else{
-                                $join_date = "Yestarday";
-                              }
-                        @endphp
-                             
+                   
+                        @if(count($users) > 0)
+                            <table id="dataTable" class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Reg. Date</th>
+                                        <th>Top Times</th>
+                                        <th>Flowers Times</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                            @foreach ($users as $user)
+                                @php
+                                    $now = time(); 
+                                    $your_date = strtotime($user->created_at);
+                                    $datediff = round(($now - $your_date) / 86400);   
+                                    if($datediff < 1){
+                                        $datediff = round(($now - $your_date) / 3600);
+                                        $join_date = $datediff."Hours ago";
+                                        if($datediff > 0){
+                                            if($datediff > 1){
+                                                $join_date = $datediff." Hours ago";
+                                            }else{
+                                                $join_date = $datediff." Hour ago";
+                                            }
+                                    }else{
+                                        $datediff = round(($now - $your_date) / 60);
+                                    
+                                        if($datediff > 1){
+                                        $join_date = $datediff." Minutes ago";
+                                        }else{
+                                            $join_date = $datediff." Minute ago";
+                                        }
+                                    }
+                                    
+                                    }elseif($datediff >= 2) {
+                                        $join_date = $datediff." Days ago";
+                                    }else{
+                                            $join_date = "Yestarday";
+                                    }
+                                @endphp
                                 <tr>
                                     <td>{{$user->full_name}}</td>
-                                <td>{{$join_date}}</td>
+                                    <td>{{$join_date}}</td>
                                     <td>{{$user->top_times}}</td>
-                                    <td>{{$user->group_times}}</td>
-                                  
+                                    <td>{{$user->group_times}}</td>  
                                     <td>
                                         <div class="btn-group mt-2 mr-1">
-                                        <button type="button" class="btn btn-primary dropdown-toggle"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            Actions<i class="icon"><span data-feather="chevron-down"></span></i>
-                                        </button>
-                                        <div class="dropdown-menu dropdown-menu-right">
-                                            <a class="dropdown-item" href="{{route('users.show',$user->id)}}">View User</a>
-                                            <a 
-                                            class="dropdown-item" 
-                                            href="#"
-                                            data-user_id={{$user->id}}
-                                            data-user_name={{$user->full_name}}
-                                            onclick="showModal(this)"
-                                            >Delete</a>
-                                            <form action="{{ route('users.destroy',$user->id) }}" method="POST" id={{"user".$user->id}}>
-                                                @csrf
-                                                <input name="_method" type="hidden" value="DELETE">
-                                            </form>
+                                            <button type="button" class="btn btn-primary dropdown-toggle"
+                                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Actions<i class="icon"><span data-feather="chevron-down"></span></i>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-menu-right">
+                                                <a class="dropdown-item" href="{{route('users.show',$user->id)}}">View User</a>
+                                                <a 
+                                                class="dropdown-item" 
+                                                href="#"
+                                                data-user_id={{$user->id}}
+                                                data-user_name={{$user->full_name}}
+                                                onclick="showModal(this)"
+                                                >Delete</a>
+                                                <form action="{{ route('users.destroy',$user->id) }}" method="POST" id={{"user".$user->id}}>
+                                                    @csrf
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                </form>
+                                            </div>
                                         </div>
-                                    </div>
                                     </td>
                                 </tr>
-                         
-                        @endforeach
-                        </tbody> 
-                         
-                    </table>
-                    @endif
+                            @endforeach
+                                </tbody> 
+                            </table>
+                        @else
+                            <p>There are no users on the platform yet</p>
+                        @endif
                 @endisset
                   
               </div>
             </div>
-</div>
+        </div>
 
 
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -162,7 +161,6 @@
             </div>
             <div class="modal-footer">
             </div>
-
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div>

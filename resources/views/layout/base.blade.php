@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,10 +8,10 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
-<link rel="apple-touch-icon" sizes="180x180" href="{{asset('dashboard/assets/apple-touch-icon.png')}}">
-<link rel="icon" type="image/png" sizes="32x32" href="{{asset('dashboard/assets/favicon-32x32.png')}}">
-<link rel="icon" type="image/png" sizes="16x16" href="{{asset('dashboard/assets/favicon-16x16.png')}}">
-<link rel="manifest" href="{{asset('dashboard/assets/site.webmanifest')}}">
+  <link rel="apple-touch-icon" sizes="180x180" href="{{asset('dashboard/assets/apple-touch-icon.png')}}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{asset('dashboard/assets/favicon-32x32.png')}}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{asset('dashboard/assets/favicon-16x16.png')}}">
+  <link rel="manifest" href="{{asset('dashboard/assets/site.webmanifest')}}">
   <meta name="author" content="Toyeeb Ganiu 07069732084">
 
   @yield('title_page')
@@ -23,30 +22,30 @@
 
   <!-- Custom styles for this template-->
   <link href="{{asset('dashboard/assets/css/sb-admin-2.min.css')}}" rel="stylesheet">
-<style>
-  .nav-tabs .nav-link.active{
-    border-left: 3px solid #4e73df;
-  }
+  <style>
+    .nav-tabs .nav-link.active{
+      border-left: 3px solid #4e73df;
+    }
 
-  .fa-eye{
-    font-size: 1.2em;
-  }
-  td{
-    text-align: center;
-  }
+    .fa-eye{
+      font-size: 1.2em;
+    }
+    td{
+      text-align: center;
+    }
 
-  a:hover{
-    text-decoration: none;
-  }
-  .sidebar-brand-text{
-    text-transform: capitalize;
-  }
-  /* .container-fluid{
-    height: 500px;
-    overflow: auto;
-  } */
-  
-</style>
+    a:hover{
+      text-decoration: none;
+    }
+    .sidebar-brand-text{
+      text-transform: capitalize;
+    }
+    /* .container-fluid{
+      height: 500px;
+      overflow: auto;
+    } */
+    
+  </style>
 
 </head>
 
@@ -105,7 +104,7 @@
 
    
 
-@if(is_admins())
+      @if(is_admins())
         <li class="nav-item">
             <a class="nav-link" href="{{route('users.index')}}">
             <i class="fa-fw fa fa-users"></i>
@@ -120,41 +119,47 @@
         <li class="nav-item">
           <a class="nav-link" href="{{route('flowers.index')}}">
            <i class="fa-fw fa fa-folder"></i>
-            <span>Flowers</span></a>
-      </li>
+            <span>Flowers</span>
+          </a>
+        </li>
       
-@endif
+      @endif
 
 
     
     
-@if(is_members())
+      @if(is_members())
         <li class="nav-item">
-            <a class="nav-link" href="{{route('user_list')}}">
+          <a class="nav-link" href="{{route('user_list')}}">
             <i class="fa-fw fa fa-user-plus"></i>
-            <span>Wait List</span></a>
+            <span>Wait List</span>
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('tasks.index')}}">
            <i class="menu-icon fa fa-tasks"></i>
-            <span>Tasks</span></a>
+            <span>Tasks</span>
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('flowers.index')}}">
            <i class="fa-fw fa fa-folder"></i>
-            <span>My Flowers</span></a>
-      </li>
+            <span>My Flowers</span>
+          </a>
+        </li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('payments')}}">
            <i class="menu-icon fa fa-money-check"></i>
-            <span>Verify Gifts</span></a>
+            <span>Verify Gifts</span>
+          </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="{{route('gift_methods.index')}}">
-          <i class="fa-fw fa fa-money-check-alt"></i>
-            <span>Gift Methods</span></a>
+            <i class="fa-fw fa fa-money-check-alt"></i>
+              <span>Gift Methods</span>
+          </a>
         </li>
-@endif
+      @endif
       <!-- Nav Item - Charts -->
       <!-- Nav Item - Tables -->
       <li class="nav-item">
@@ -187,19 +192,6 @@
           <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
             <i class="fa fa-bars"></i>
           </button>
-
-          <!-- Topbar Search -->
-          {{-- <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form> --}}
-
           <!-- Topbar Navbar -->
           <ul class="navbar-nav ml-auto">
 
@@ -237,9 +229,7 @@
                    @if (count($tasks) > 0)
                   <span class="badge badge-danger badge-counter">{{count($tasks)}}</span>
           
-              @endif
-            
-              
+                  @endif
               </a>
               <!-- Dropdown - Alerts -->
               <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="alertsDropdown">
@@ -276,14 +266,14 @@
             <!-- Nav Item - User Information -->
             <li class="nav-item dropdown no-arrow">
               <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="mr-2 d-none d-lg-inline text-gray-600 small">
+                <span class="mr-2 d-none d-lg-inline text-gray-600 small">
                 @if(is_admins())
-                Super Admin
-              @elseif(is_members())
-                @if (Cookie::get('full_name') !== null)
+                  Super Admin
+                @elseif(is_members())
+
+                 (Cookie::get('full_name') !== null)
                   {{ Cookie::get('full_name') }}  
                 @endif
-              @endif
               </span>
               <div class="sidebar-brand-icon rotate-n-0">
                 <i class="fas fa-user-circle"></i>
