@@ -12,6 +12,7 @@ use App\Group;
 use App\User;
 use App\Platform;
 use App\WaitList;
+use Exception;
 
 class UserRemovedListener
 {
@@ -34,28 +35,32 @@ class UserRemovedListener
     public function handle($event)
     {
         //
-        $email_arrays = array();
-        foreach ($event->total_users  as $user) {
-
-            $user_on_wait_list = WaitList::orderBy('position', 'asc')->first();
-            if ($user_on_wait_list) {
-
-                $group_user = $this->addToGroup($user_on_wait_list->user_id, $user['group_id']);
-                array_push($email_arrays, $user_on_wait_list->user_email);
-
-                User::where('id', $user_on_wait_list->user_id)->increment('group_times');
-
-                $this->addTask($user['group_id'], $user_on_wait_list, $group_user->id);
-
-                //remove user from waitlist 
-                $user_on_wait_list->delete();
+        try{
+            $email_arrays = array();
+            $count = count($event->total_users);
+            $users_on_wait_list = WaitList::orderBy('position', 'asc')->take($count)->get();
+            foreach ($event->total_users  as $index=>$user) {
+                if (isset($users_on_wait_list[$index])) {
+                    $group_user = $this->addToGroup($users_on_wait_list[$index]->user_id, $user['group_id']);
+                    array_push($email_arrays, $users_on_wait_list[$index]->user_email);
+    
+                    User::where('id', $users_on_wait_list[$index]->user_id)->increment('group_times');
+    
+                    $this->addTask($user['group_id'], $users_on_wait_list[$index], $group_user->id);
+    
+                    //remove user from waitlist 
+                    $users_on_wait_list[$index]->delete();
+                }
             }
+    
+    
+            if (count($email_arrays) > 0) {
+                event(new AddedToGroupMailEvent($email_arrays));
+            }
+        }catch(Exception $e){
+            
         }
-
-
-        if (count($email_arrays) > 0) {
-            event(new AddedToGroupMailEvent($email_arrays));
-        }
+       
     }
 
     public function addToGroup($user_id, $group_id)
