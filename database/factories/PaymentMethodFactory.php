@@ -12,6 +12,6 @@ $factory->define(PaymentMethod::class, function (Faker $faker) {
         'details' => $faker->sentence,
         'user_name' => 'Prof. Jeffery Kreiger',
         'contact' => $faker->randomNumber(9),
-        'user_id' => 31
+        'user_id' => 1
     ];
 });
