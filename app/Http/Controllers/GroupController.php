@@ -13,6 +13,7 @@ use App\GroupUser;
 
 use App\Providers\PaymentVerifiedEvent;
 use App\WaitList;
+use App\Providers\MoveUserToWaitListEvent;
 
 use App\Http\Resources\Group as GroupResource;
 use App\Http\Resources\GroupCollection;
@@ -128,27 +129,30 @@ class GroupController extends Controller
             $members = $group->group_users;
             $tasks = Notification::where('group_id', $id)->where('completed', false)->where('verified', false)->get();
             $can_view = $this->can_view_group_user(Cookie::get('id'));
+            $users = array();
             foreach ($tasks as $task) {
                 $now = time();
                 $your_date = strtotime($task->created_at);
-                $datediff = 180 - round(($now - $your_date) / 60);
+                $datediff = 1 - round(($now - $your_date) / 60);
                 if ($datediff < 0) {
-
-                    //removing user from group, deleting notification and reducing the number of people in the group
-                    GroupUser::where('id', $task->group_user_id)->delete();
-                    Notification::where('user_id', $task->user_id)->delete();
-
-                    $position = WaitList::count() + 1;
+                    //move user ot wait list when task is not verified
+                    $to_delete = Notification::find($task->id);
+                    $to_delete->delete();
                     $user = User::find($task->user_id);
-                    $add_new = new WaitList();
-                    $add_new->user_id = $task->user_id;
-                    $add_new->user_email = $user->email;
-                    $add_new->user_name = $user->full_name;
-                    $add_new->position = $position;
-                    $add_new->save();
-                    $count = WaitList::where('user_id', $task->user_id)->count();
-                    WaitList::where('user_id', $task->user_id)->update(['frequency' => $count]);
+                    $user_data = [
+                        'user_id' => $user->id,
+                        'user_name' => $user->full_name,
+                        'group_id' => $task->group_id,
+                        'group_name' => $task->group->name,
+                        'group_user_id' => $task->group_user_id,
+                        'user_email' => $user->email
+                    ];
+    
+                    array_push($users, $user_data);
                 }
+            }
+            if (count($users) > 0) {
+                event(new MoveUserToWaitListEvent($users));
             }
             // return $members;
             return view('dashboard.singleGroup')->with(compact('members', 'can_view'));

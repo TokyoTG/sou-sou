@@ -41,7 +41,7 @@ class MoveUserToWaitListListener
             $position = WaitList::count() + 1;
             foreach ($users as $user) {
                 GroupUser::where('id', $user['group_user_id'])->delete();
-                Notification::where('group_user_id', $user['group_user_id'])->where('group_id', $user['group_id'])->delete();
+               // Notification::where('group_user_id', $user['group_user_id'])->where('group_id', $user['group_id'])->delete();
                 $user_to_wait_list = new WaitList();
                 $user_to_wait_list->user_id = $user['user_id'];
                 $user_to_wait_list->position = $position;

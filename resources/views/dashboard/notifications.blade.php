@@ -40,7 +40,7 @@
                                             @php
                                                  $now = time(); 
                                                  $your_date = strtotime($item->created_at);
-                                                 $datediff =60 - round(($now - $your_date) / 60);
+                                                 $datediff =180 - round(($now - $your_date) / 60);
                                                  if($datediff > 1){
                                                      $display = $datediff." minutes left";
                                                  }else{
